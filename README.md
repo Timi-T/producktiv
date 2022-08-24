@@ -1,0 +1,1 @@
+<h1>Please be sure to always work on your respective branches "Frontend and Backend" to avoid any merge conflicts</h1>
