@@ -1,0 +1,50 @@
+name: Node.js CI
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend/
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Checkout code to temp storage
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      #- run: |
+          #npm i
+          #npm run build
+          #npm test
+      - name: Deploy to Server
+        #if: ${{ success() }}
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: ""
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USER }}
+          TARGET: ${{ secrets.PRODUCKTIV_WKDIR }}
+          EXCLUDE: "/dist/, /node_modules/"
+      #- name: ssh into server and start application
+        #if: ${{ success() }}
+        #uses: appleboy/ssh-action@master
+        #with:
+          #host: ${{ secrets.HOST }}
+          #username: ${{ secrets.USER }}
+          #key: ${{ secrets.SERVER_SSH_KEY }}
+          #script: |
+            #pm2 delete all
+            #cd producktiv/frontend
+            #npm install
+            #pm2 start npm -- start
+
