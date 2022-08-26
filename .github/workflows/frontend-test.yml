@@ -1,7 +1,7 @@
 name: Productive-cicd
 on:
   push:
-    branches: [ "frontend", "master" ]
+    branches: [ "frontend" ]
 jobs:
   build:
     runs-on: ubuntu-latest
