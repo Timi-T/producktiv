@@ -13,7 +13,7 @@ nav h1 {
 
 nav button {
     font-weight: 600;
-    background: yellow;
+    background: var(--color-primary);
     color: black;
     border: 1px solid transparent;
     padding: 8px 12px;
