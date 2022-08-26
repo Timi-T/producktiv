@@ -22,7 +22,6 @@ jobs:
       - run: |
           npm i
           npm run build
-          npm test
       - name: Deploy to Server
         if: ${{ success() }}
         uses: easingthemes/ssh-deploy@main
