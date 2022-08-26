@@ -22,7 +22,7 @@ jobs:
       - run: |
           npm i
           npm run build
-          rm -r node modules
+          rm -r node_modules
       - name: Deploy to Server
         if: ${{ success() }}
         uses: easingthemes/ssh-deploy@main
