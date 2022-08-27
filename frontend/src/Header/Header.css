@@ -1,8 +1,8 @@
-nav {
+/* nav {
     margin-top: 0.5em;
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid black; */
+    border: 1px solid black;
     align-items: center;
     
 }
@@ -11,11 +11,12 @@ nav h1 {
     font-size: 1.5em;
 }
 
+
 nav button {
     font-weight: 600;
-    background: var(--color-primary);
+    background: lightgrey;
     color: black;
     border: 1px solid transparent;
     padding: 8px 12px;
     border-radius: 0.2em
-}
+} */

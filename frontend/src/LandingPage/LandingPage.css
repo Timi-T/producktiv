@@ -1,0 +1,37 @@
+.about-app, .login-section {
+    /* border: 1px solid green; */
+    flex: 1
+}
+
+.login-section {
+    background: var(--background-color);
+    flex: 2
+}
+
+.about-app  {
+    flex: 1.2;
+    background: #334155;
+    
+}
+
+.about-app h1 {
+    font-size: 3rem;
+    color: #f8fafc;
+    text-align: center
+}
+
+.login-header {
+    /* background: red; */
+    text-align: right;
+    padding: 2em;
+    font-size: .8em
+}
+
+.login-header .login-toggle {
+    text-decoration: underline;
+    border: none;
+    background: none;
+    color: blue;
+    /* padding: 3em; */
+    font-size: 1em
+}

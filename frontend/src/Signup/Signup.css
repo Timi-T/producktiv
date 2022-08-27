@@ -2,7 +2,7 @@
     margin: 0 auto;
     /* border: 1px solid red; */
     padding:10px;
-    width: 80%;
+    width: 70%;
     margin-top: 3.5em;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@
 }
 
 .signup-box h1 {
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .signup-box p {
@@ -21,45 +21,51 @@
 }
 
 .signup-heading {
-    flex: 5;
-    text-align: center;
+    /* text-align: center; */
     /* border: 1px solid black; */
     padding: 0.5em;
-    margin-bottom: 1em
+    margin-bottom: 1em;
+    width: 70%;
 }
 
 .signup-details {
+    width: 70%;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     gap: 1em;
-    /* border: 1px solid blue; */
-    /* background:yellow; */
     padding: 0.5em;
 }
 
 .signup-details input {
-    padding: 0.4em;
+    padding: 0.7em;
     margin-top: 0.1em;
-    width: 100%
+    width: 100%;
+    border: 1px solid darkblue;
+    border-radius: 6px;
+    transition: .3s ease-in-out;
+    font-size: .8em
 }
 
-/* .signup-details input:focus {
+.signup-details input:focus {
     outline: none;
-    border: 1px solid darkblue;
-} */
+    box-shadow: 0 0 0 1px darkblue;
+}
+
 
 .signup-details input[type="submit"] {
-    /* background: yellow; */
+    background: var(--btn-color-primary);
     font-weight: 600;
     border: 0;
-    transition: 0.2s ease-in
+    width: 50%
+    /* transition: 0.2s ease-in */
 }
 
-.signup-details input[type="submit"]:hover {
-    /* color: yellow; */
-    background: var(--color-primary)
-}
+/* .signup-details input[type="submit"]:hover {
+    color: var(--btn-color-primary);
+    background: darkblue
+} */
 
 .signup-details label span {
-    font-size: 0.87em
+    font-size: 0.87rem
 }
