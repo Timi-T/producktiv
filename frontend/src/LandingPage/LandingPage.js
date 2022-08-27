@@ -22,7 +22,6 @@ export default class LandingPage extends React.Component {
     return(
       <>
       <div className="about-app">
-      <h1></h1>
       </div>
       <div className="login-section">
         <div className="login-header">
