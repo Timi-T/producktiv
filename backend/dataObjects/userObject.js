@@ -3,9 +3,8 @@
 const sha1 = require('sha1');
 
 class User {
-  constructor(firstname, lastname, email, password) {
-    this.firstname = firstname;
-    this.lastname = lastname;
+  constructor(username, email, password) {
+    this.username = username;
     this.email = email;
     this.password = password;
     this.password = this.hashPwd();
