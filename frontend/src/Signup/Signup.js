@@ -21,7 +21,7 @@ export const Signup = () => {
         </div>
         <div className="password-box">
           <label><span>Password:</span><br />
-          <input type="password" id="sg-password" placeholder="password" required/>
+          <input type="password" id="sg-password" placeholder="password"  minlength="8" required/>
           </label>
         </div>
         <div className="submit-btn">
