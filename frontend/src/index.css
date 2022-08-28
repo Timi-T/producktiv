@@ -35,7 +35,7 @@ button, input[type="submit"] {
   cursor: pointer
 }
 
-/* login/signup slide in amnimation */
+/* login/signup slide in animation */
 @keyframes slidein {
   0% {
     transform: translateX(90%);
