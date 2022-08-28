@@ -40,7 +40,7 @@
 .signup-details input {
     padding: 0.7em;
     margin-top: 0.1em;
-    width: 100%;
+    width: 90%;
     border: 1px solid darkblue;
     border-radius: 6px;
     transition: .3s ease-in-out;
