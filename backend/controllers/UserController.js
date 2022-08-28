@@ -30,6 +30,7 @@ class UserController {
   }
 
   validateData(username, email, password) {
+    this.username = username;
     if (!username) {
       return { error: 'Missing username' };
     }
@@ -45,12 +46,13 @@ class UserController {
   async loginUser(req, res) {
     const { email } = req.body;
     const { password } = req.body;
+    this.email = email;
     const user = await db.get('users', { email, password: sha1(password) });
     if (user) {
-      const auth_key = uuid();
-      res.cookie('auth_key', auth_key);
-      redisClient.set(`auth_${auth_key}`, String(user._id));
-      res.status(200).send( auth_key );
+      const authKey = uuid();
+      res.cookie('auth_key', authKey);
+      redisClient.set(`auth_${authKey}`, String(user._id));
+      res.status(200).send(authKey);
     } else {
       res.status(401).send({ error: 'Unauthorized' });
     }
