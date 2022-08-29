@@ -1,9 +1,9 @@
 .signup-box {
     margin: 0 auto;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     padding:10px;
     width: 70%;
-    margin-top: 3.5em;
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,7 +30,7 @@
 
 .signup-details {
     width: 70%;
-    /* border: 1px solid black; */
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -68,4 +68,12 @@
 
 .signup-details label span {
     font-size: 0.87rem
+}
+
+.signup-success {
+    text-align: center;
+    /* width: 80%; */
+    background: green;
+    padding: 1em;
+
 }
