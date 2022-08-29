@@ -19,10 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-          npm i
-          npm run build
-          rm -r node_modules
       - name: Deploy to Server
         if: ${{ success() }}
         uses: easingthemes/ssh-deploy@main
