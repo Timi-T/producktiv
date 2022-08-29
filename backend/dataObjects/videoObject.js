@@ -2,11 +2,12 @@
 
 
 class Video {
-  constructor(videoName, videoId, userId, uploadDate) {
-    this.videoName =videoName;
+  constructor(videoName, videoId, userId, uploadDate, description) {
+    this.videoName = videoName;
     this.videoId = videoId;
     this.userId = userId;
     this.uploadDate = uploadDate;
+    this.description = description;
     this.comments = [];
     this.ratings = [];
     this.avgRating = 0;
