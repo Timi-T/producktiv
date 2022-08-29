@@ -50,7 +50,7 @@ class UserController {
     const user = await db.get('users', { email, password: sha1(password) });
     if (user) {
       const authKey = uuid();
-      res.cookie('auth_key', authKey);
+      res.cookie('auth_key', authKey, { maxAge: 86400, sameSite: 'strict' });
       redisClient.set(`auth_${authKey}`, String(user._id));
       res.status(200).send(authKey);
     } else {
@@ -62,13 +62,13 @@ class UserController {
   // user signs out
   async deleteUser (request, response) {
     const { id } = request.params;
-    const { headers } = request;
-    const cookie = headers.cookie;
-    const key = `auth_${cookie}`;
+    const cookie = request.cookies;
+    const value = cookie.auth_key;
+    const key = `auth_${value}`;
     const given = { _id: ObjectId(id) };
     const user = await dbClient.del('users', given);
     await redisClient.del(key);
-    response.clearCookie(key);
+    response.clearCookie('auth_key');
     if (user === 'Deleted') {
       response.send('User Deleted');
     } else {
@@ -79,11 +79,11 @@ class UserController {
   // This endpoint will be used to delete a token when a
   // user logs out
   async deleteToken (request, response) {
-    const { headers } = request;
-    const cookie = headers.cookie;
-    const key = `auth_${cookie}`;
+    const cookie = request.cookies;
+    const value = cookie.auth_key;
+    const key = `auth_${value}`;
     await redisClient.del(key);
-    response.clearCookie(key);
+    response.clearCookie('auth_key');
     response.send('GoodBye');
   }
 
