@@ -1,0 +1,1 @@
+Modules in this directory are used to build data objects which would be stored in the mongo database as documents.
