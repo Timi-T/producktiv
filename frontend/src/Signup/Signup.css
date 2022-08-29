@@ -1,6 +1,6 @@
 .signup-box {
     margin: 0 auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding:10px;
     width: 70%;
     margin-top: 2em;
@@ -41,7 +41,7 @@
     padding: 0.7em;
     margin-top: 0.1em;
     width: 90%;
-    /* border: 1px solid darkblue; */
+    border: 1px solid var(--text-color);
     border-radius: 6px;
     transition: .3s ease-in-out;
     font-size: .8em
@@ -49,7 +49,7 @@
 
 .signup-details input:focus {
     outline: none;
-    box-shadow: 0 0 0 1px darkblue;
+    box-shadow: 0 0 0 1px var(--text-color);
 }
 
 
@@ -57,7 +57,8 @@
     background: var(--btn-color-primary);
     font-weight: 600;
     border: 0;
-    width: 50%
+    width: 50%;
+    color: var(--text-color)
     /* transition: 0.2s ease-in */
 }
 
@@ -68,12 +69,4 @@
 
 .signup-details label span {
     font-size: 0.87rem
-}
-
-.signup-success {
-    text-align: center;
-    /* width: 80%; */
-    background: green;
-    padding: 1em;
-
 }
