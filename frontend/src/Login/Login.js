@@ -2,10 +2,16 @@ import React from 'react'
 import './Login.css'
 
 export class Login extends React.Component {
-  state = {
-    email: "",
-    password: ""
+  constructor(props){
+    super(props)
+    this.state = {
+        email: "eve.holt@reqres.in",
+        password: "cityslicka",
+        isLoading: false,
+        loginSuccess: null
+    }
   }
+
 
   handleChangeEmail = (event) => {
     this.setState({email: event.target.value})
@@ -16,8 +22,19 @@ export class Login extends React.Component {
   }
 
   handleLoginSubmit = (event) => {
-    console.log(this.state)
     event.preventDefault()
+    const {email, password} = this.state
+    fetch('https://reqres.in/api/login', {
+      method: "POST",
+      body: JSON.stringify({email, password}),
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then((response) => response.json())
+    .then((token) => {
+      this.props.setToken(token)
+    })
+    .catch((error) => console.log(error))
+    // console.log(this.state)
   }
 
   render() {

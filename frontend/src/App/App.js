@@ -22,19 +22,22 @@ setToken = (token) => {
 }
 
   render() {
+    const {token} = this.state
+    const setToken = this.setToken
     return (
-        <LandingPageBody>
-          <LandingPage/>
-        </LandingPageBody> 
-      // <BrowserRouter>
-      //   <Sidemenu>
-      //     <Routes>
-      //       <Route path="/" element={<Videospage/>}/>
-      //       <Route path="/videos" element={<Videospage/>}/>
-      //       <Route path="/courses" element={<Courses/>}/>
-      //     </Routes>
-      //   </Sidemenu>
-      // </BrowserRouter>
+        (!token ? (<LandingPageBody>
+          <LandingPage setToken={setToken}/>
+        </LandingPageBody>) :
+      <BrowserRouter>
+        <Sidemenu>
+          <Routes>
+            <Route path="/" element={<Videospage/>}/>
+            <Route path="/videos" element={<Videospage/>}/>
+            <Route path="/courses" element={<Courses/>}/>
+          </Routes>
+        </Sidemenu>
+      </BrowserRouter>
+        )
         
     );
   }

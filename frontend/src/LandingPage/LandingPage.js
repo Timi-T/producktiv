@@ -19,6 +19,7 @@ export default class LandingPage extends React.Component {
     const {isLoginScreen} = this.state
     const loginbtnText = isLoginScreen ? "Sign up now" : "Sign in"
     const loginMsgText =isLoginScreen ? "Not a member?" : "Already a member?"
+    // console.log(this.props)
     return(
       <>
       <div className="about-app">
@@ -29,7 +30,7 @@ export default class LandingPage extends React.Component {
             <button onClick={()=>this.toggleLoginSignup()} className="login-toggle">{loginbtnText}</button>
           </p>
         </div>
-      {isLoginScreen ? <Login/> : <Signup/>}
+      {isLoginScreen ? <Login setToken={this.props.setToken}/> : <Signup/>}
       </div>
       </>
     )
