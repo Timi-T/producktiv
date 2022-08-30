@@ -45,7 +45,7 @@ export class Signup extends React.Component {
       if (!response.ok) {
         throw Error(`${response.status}: ${response.statusText}`)
       }
-      return response
+      return response.json()
     })
     .then((data) => {
       this.setState({isLoading: false})
