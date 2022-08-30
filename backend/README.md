@@ -68,4 +68,46 @@
       <li>
     </ul>
   </li>
+  <li>
+    <h3>POST '/api/videos'</h3>
+    <ul>
+      <li>Requires a Cookie: After user logs in a cookie should be used to identify it so as to add to a video to databse and also add video to user's list</li>
+      <li>POST: Uploads video with a video name, description, category and video link Date and userId will be generated from backend</li>
+      <li>No parameters needed</li>
+      <li>The form requirements should be sent via request.body</li>
+      <li>
+        <p>Returns: 201 status code, with comment "Uploaded Video", when video is uploaded successfully</p>
+        <p>Returns: 300 status code, with comment "Video Exists", if a video of similar link exists in the database, Redirect to upload pop-op</p>
+        <p>Returns: 401 status code, with comment "Unauthorized", if user isn't found</p>
+      <li>
+    </ul>
+  </li>
+  <li>
+    <h3>GET '/api/videos/:id'</h3>
+    <ul>
+      <li>Requires no cookie or Authentication</li>
+      <li>GET: gets video with a video name, description, category and video link Date and userId will be generated from backend</li>
+      <li>parameters id: Id of the video, iT should exists with the video card</li>
+      <li>Nothing should be sent via request.body</li>
+      <li>
+        <p>Returns: 200 status code, with the video content</p>
+        <p>Returns: 401 status code, with comment "Unauthorized", if video isn't found</p>
+        <p>More features will be added when recently used video object is added to the database</p>
+      <li>
+    </ul>
+  </li>
+  <li>
+    <h3>DELETE '/api/videos/:id'</h3>
+    <ul>
+      <li>Requires a cookie: To retrieve user and delete the video from user's list of videos</li>
+      <li>DELETE: deletes video from database and user's list</li>
+      <li>parameters id: Id of the video, it should exists with the video card</li>
+      <li>Nothing should be sent via request.body</li>
+      <li>
+        <p>Returns: 200 status code, when deleted successfully with comment "Video Deleted"</p>
+        <p>Returns: 401 status code, with comment "Video Doesn't exists", if video isn't found</p>
+        <p>More features will be added when recently used video object is added to the database</p>
+      <li>
+    </ul>
+  </li>
 </ul>
