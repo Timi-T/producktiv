@@ -18,7 +18,7 @@ class UserController {
       const user = new User(username, email, password);
       const savedUser = await dbClient.post('users', user);
       if (savedUser === 'Saved') {
-        res.status(201).send();
+        res.status(201).send({ success: true });
       } else if (savedUser === 'User exists') {
         res.status(400).send({ error: 'User exists' });
       } else {
