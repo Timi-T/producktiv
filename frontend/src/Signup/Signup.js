@@ -14,6 +14,10 @@ export class Signup extends React.Component {
     }
   }
 
+  clearSignUpForm = () => {
+    this.setState({username: "", email: "", password: "" })
+  }
+
   handleChangeUsername = (event) => {
     this.setState({username: event.target.value})
   }
@@ -46,6 +50,7 @@ export class Signup extends React.Component {
     .then((data) => {
       this.setState({isLoading: false})
       this.setState({signUpSuccess: true})
+      this.clearSignUpForm()
     })
     .catch((error)=>{
       this.setState({isLoading: false})
