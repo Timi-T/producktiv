@@ -11,6 +11,7 @@ npx eslint controllers/UserController.js
 
 # Run eslint on files in dataObjects directory
 npx eslint dataObjects/userObject.js
+npx eslint dataObjects/videoObject.js
 
 # Run eslint on files in routes directory
 npx eslint routes/index.js
