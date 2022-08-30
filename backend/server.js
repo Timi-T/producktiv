@@ -12,9 +12,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 app.use(router);
-app.use(cors({
-  origin: '*'
-}));
+app.set('json spaces', 2)
 app.listen(5001, () => console.log('App listening on port 5001'));
 
