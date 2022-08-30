@@ -52,14 +52,8 @@ exports.createVideo = async (request, response) => {
   const video = new Video(videoName, userId, uploadDate, description, category, videoLink, videoStats);
   const vid = await dbClient.postVideo('videos', video);
   if (vid !== 'Video Exists') {
-    const findUser = { _id: ObjectId(userId) };
-    const get = await dbClient.get('users', findUser);
-    if (get) {
-      await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
-      response.status(201).send('Uploaded video');
-    } else {
-      response.status(401).send({ error: 'Unauthorized' });
-    }
+    await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
+    response.status(201).send({ message: 'Uploaded video' });
   } else {
     response.status(300).send('Video Exists');
   }
@@ -85,7 +79,7 @@ exports.getVideo = async (request, response) => {
     await redisClient.set(key, id.toString());
     response.status(200).send(video);
   } else {
-    response.status(401).send({ error: 'Video Unauthorized' });
+    response.status(404).send({ error: 'Not found' });
   }
 };
 
@@ -112,7 +106,7 @@ exports.deleteVideo = async (request, response) => {
   }
   const video = await dbClient.del('videos', { _id: ObjectId(id) });
   if (video === 'Deleted') {
-    response.status(200).send('Video Deleted');
+    response.status(200).send({ message: 'Video Deleted' });
   } else {
     response.status(401).send({ error: 'Video Doesn\'t exists' });
   }
