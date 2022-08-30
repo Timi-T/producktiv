@@ -50,7 +50,7 @@ export class Signup extends React.Component {
     .then((data) => {
       this.setState({isLoading: false})
       this.setState({signUpSuccess: true})
-      // this.clearSignUpForm()
+      this.clearSignUpForm()
     })
     .catch((error)=>{
       this.setState({isLoading: false})
