@@ -1,0 +1,65 @@
+.container {
+    background: var(--background-color);
+    display: flex;
+    flex-direction: row;
+    /* height: 100vh; */
+    /* position: relative */
+
+}
+.sidemenu-container {
+    position: sticky;
+    top: 0%;
+    flex:1;
+    background: var( --text-color);
+    height: 100vh;
+    text-align: center;
+}
+
+main {
+    flex: 3;
+    margin: auto 0;
+    text-align: center
+}
+
+.sidemenu {
+    display: flex;
+    flex-direction: column;
+    gap:3em;
+}
+
+.sidemenu h1, .item-link{
+    color: var(--background-color)
+}
+
+.menu-items {
+    /* background: red; */
+    border: 1px solid white;
+    /* text-align: center; */
+    padding: 20px
+}
+
+.item-link {
+    display: flex;
+    /* background: yellow; */
+    margin: 0 auto;
+    font-size: 1.5em;
+    text-decoration: none;
+    gap: .4em;
+    margin-bottom: .3em;
+    /* border: 1px solid white */
+}
+
+.item-text {
+    padding:.1em
+}
+
+.item-icon {
+    /* background: red; */
+    font-size:1.5em
+}
+
+.active {
+    color: blue;
+    background: yellow;
+
+}
