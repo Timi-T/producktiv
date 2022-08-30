@@ -17,4 +17,3 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(router);
 app.listen(5001, () => console.log('App listening on port 5001'));
-
