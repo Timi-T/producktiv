@@ -3,7 +3,7 @@
 const { MongoClient } = require('mongodb');
 
 class DBClient {
-  constructor () {
+   constructor () {
     const host = process.env.DB_HOST || 'localhost';
     const port = process.env.DB_PORT || 27017;
     const database = process.env.DB_DATABASE || 'producktiv';
@@ -12,7 +12,7 @@ class DBClient {
     client.connect();
     this.client = client;
     this.database = database;
-  }
+  } 
 
   async post (collectionName, document) {
     const db = this.client.db(this.database);
@@ -26,6 +26,23 @@ class DBClient {
       return false;
     }
     return 'User exists';
+  }
+
+  // This function will add videos to database
+  async postVideo (collectionName, object) {
+    const db = this.client.db(this.database);
+    const collection = db.collection(collectionName);
+    const videoExists = await this.get('videos', { videoLink: object.videoLink });
+    if (!videoExists) {
+      const savedVideo = await collection.insertOne(object);
+      if (savedVideo.ops.length > 0) {
+        return savedVideo.ops;
+      } else {
+        return 'false';
+      }
+    } else {
+      return 'Video Exists';
+    }
   }
 
   async get (collectionName, filterObj) {
