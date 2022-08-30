@@ -39,18 +39,18 @@ export class Signup extends React.Component {
       method: "POST",
       body: JSON.stringify({username, email, password}),
       headers: {'Content-Type': 'application/json'}
-
     })
     .then((response) => {
+      console.log(response)
       if (!response.ok) {
         throw Error(`${response.status}: ${response.statusText}`)
       }
-      return response.json()
+      return response
     })
     .then((data) => {
       this.setState({isLoading: false})
       this.setState({signUpSuccess: true})
-      this.clearSignUpForm()
+      // this.clearSignUpForm()
     })
     .catch((error)=>{
       this.setState({isLoading: false})
