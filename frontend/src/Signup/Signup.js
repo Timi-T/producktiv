@@ -30,25 +30,22 @@ export class Signup extends React.Component {
     event.preventDefault()
     this.setState({isLoading: true})
     const {email, password, username} = this.state
-    // Dummy api
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-    method: 'POST',
-    body: JSON.stringify({
-      title: 'foo',
-      body: 'bar',
-      userId: 1,
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
+
+    fetch('http://localhost:5001/api/users', {
+      method: "POST",
+      body: JSON.stringify({username, email, password}),
+      headers: {'Content-Type': 'application/json'}
+
     })
     .then((response) => {
+      if (!response.ok) {
+        throw Error(`${response.status}: ${response.statusText}`)
+      }
       return response.json()
     })
     .then((data) => {
       this.setState({isLoading: false})
       this.setState({signUpSuccess: true})
-      console.log(data)
     })
     .catch((error)=>{
       this.setState({isLoading: false})
@@ -61,7 +58,7 @@ export class Signup extends React.Component {
   
   render () {
     const {isLoading, signUpSuccess} = this.state
-    const message = "Creating account..."
+    const loadingText = "Creating account..."
     const signUpSuccessText = () => {
       if (signUpSuccess === null) {
         return <p>Create your Productiv account</p>
@@ -73,7 +70,7 @@ export class Signup extends React.Component {
     }
     return (
       <>
-       { isLoading ? <Loader message={message}/> : (
+       { isLoading ? <Loader loadingText={loadingText}/> : (
       <form onSubmit={this.handleSignUpSubmit}>
        
       <div className="signup-box">
