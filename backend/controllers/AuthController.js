@@ -16,7 +16,7 @@ class AuthController {
       const authKey = uuid();
       res.cookie('auth_key', authKey, { maxAge: 86400, sameSite: 'strict' });
       redisClient.set(`auth_${authKey}`, String(user._id));
-      res.status(200).send(authKey);
+      res.status(200).send({ token: authKey });
     } else {
       res.status(401).send({ error: 'Unauthorized' });
     }
