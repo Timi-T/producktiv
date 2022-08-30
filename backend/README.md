@@ -17,8 +17,11 @@
         <p>}</p>
       </li>
       <li>
-        <p>ON SUCCESS -> Returns Nothing</p>
+        <p>ON SUCCESS -> Returns a success message</p>
         <p>Status code -> 200 (OK)</p>
+        <p>{</p>
+        <p>- success: true</p>
+        <p>}</p>
       <li>
       <li>
         <p>ON FAILURE -> Returns An object</p>
