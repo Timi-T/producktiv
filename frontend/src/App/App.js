@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Videospage } from '../Videospage/Videospage';
 import { Courses } from '../Courses/Courses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
-import { Loader } from '../Loader/Loader';
 
 
 function getToken() {
@@ -28,7 +27,12 @@ constructor(props){
 }
 
 setToken = (token) => {
-  this.setState({token: token})
+  if (token === null){
+    this.setState({token: token, loggedIn: false})
+  } else {
+    this.setState({token: token, loggedIn: true})
+  }
+  
   sessionStorage.setItem('token', JSON.stringify(token));
 }
 
@@ -37,8 +41,29 @@ setErrorCode = (code) => {
 }
 
 logOut = () => {
-  sessionStorage.clear()
-  this.setState({token: undefined, loggedIn: false})
+  // this.setState({isLoading: true})
+    fetch('http://localhost:5001/api/users/logout', {
+      method: "DELETE",
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then((response) => {
+      console.log(response)
+      if (!response.ok) {
+        sessionStorage.clear()
+        this.setToken(null)
+        throw Error(`${response.status}: ${response.statusText}`)
+      }
+      return response
+      })
+    .then((token) => {
+      sessionStorage.clear()
+      this.setState({token: undefined, loggedIn: false})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  
 }
 
 logIn = (email, password) => {
@@ -46,6 +71,7 @@ logIn = (email, password) => {
     fetch('http://localhost:5001/api/login', {
       method: "POST",
       body: JSON.stringify({email, password}),
+      credentials: "include",
       headers: {'Content-Type': 'application/json'}
     })
     .then((response) => {
@@ -58,7 +84,6 @@ logIn = (email, password) => {
     .then((token) => {
       this.setState({isLoading: false})
       this.setToken(token)
-      this.setState({loggedIn: true})
       this.setErrorCode(null)
     })
     .catch((error) => {
@@ -69,7 +94,7 @@ logIn = (email, password) => {
 }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     const {isLoading, errorCode, token} = this.state
     const logIn = this.logIn
     const logOut = this.logOut
