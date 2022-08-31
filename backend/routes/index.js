@@ -7,6 +7,7 @@ const router = express.Router();
 const AuthController = require('../controllers/AuthController');
 const UserController = require('../controllers/UserController');
 const VideoController = require('../controllers/VideoController');
+const CategoryController = require('../controllers/CategoryController');
 
 // User Related API
 
@@ -26,10 +27,14 @@ router.get('/api/users', UserController.allUser);
 
 router.post('/api/videos', VideoController.createVideo);
 
-//router.get('/api/videos/:username', VideoController.getUserVideos);
+router.get('/api/videos', VideoController.getUserVideos);
 
 router.get('/api/videos/:id', VideoController.getVideo);
 
 router.delete('/api/videos/:id', VideoController.deleteVideo);
+
+// Category related API
+
+router.get('/api/categories/:name', CategoryController.getCategoryVideos);
 
 module.exports = router;

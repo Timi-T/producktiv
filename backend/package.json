@@ -24,8 +24,7 @@
     "redis": "^2.8.0",
     "sha1": "^1.1.1",
     "uuid": "^8.2.0",
-    "uuidv4": "^6.2.13",
-    "cookie-parser": "^1.4.6"
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.0",
