@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#=========Create infrastructure with terraform=========#
+#========= Create infrastructure with terraform =========#
 #OUTPUT='public_ip = "20.583.578.489"'
 
 echo "Applying terrraform manifest..."
@@ -31,7 +31,7 @@ fi
 echo "Done...3"
 sleep 1
 
-#=========Provision infrastructure using ansible=========#
+#========= Provision infrastructure using ansible =========#
 
 echo "Provisioning infrastructure using ansible"
 ansible-playbook provision.yml
