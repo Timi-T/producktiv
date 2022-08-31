@@ -21,6 +21,12 @@ class RedisClient {
     await this.client.expire(key, 1000 * 60 * 60 * 24);
   }
 
+  // This function will set key to a list of videos in redis and that key will only be used for 3 days
+  async setCategory (key, value) {
+    await this.client.set(key, value);
+    await this.client.expire(key, 1000 * 60 * 60 * 24 * 3);
+  }
+
   // This function will get key from redis and returns a value
   async get (key) {
     const getSet = util.promisify(this.client.get).bind(this.client);
