@@ -57,7 +57,6 @@ export class Signup extends React.Component {
       this.setState({signUpSuccess: false})
       console.log(error)
     })
-    
   }
 
   

@@ -30,7 +30,7 @@ export default class LandingPage extends React.Component {
             <button onClick={()=>this.toggleLoginSignup()} className="login-toggle">{loginbtnText}</button>
           </p>
         </div>
-      {isLoginScreen ? <Login setToken={this.props.setToken}/> : <Signup/>}
+      {isLoginScreen ? <Login errorCode={this.props.errorCode} isLoading={this.props.isLoading} logIn={this.props.logIn}/> : <Signup/>}
       </div>
       </>
     )

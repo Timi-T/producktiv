@@ -2,7 +2,7 @@ import { MdOutlineVideocam } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
 import './Sidemenu.css'
 
-export const Sidemenu = ({children}) => {
+export const Sidemenu = (props) => {
   const menuItems = [
     {
       path:"/videos",
@@ -22,6 +22,7 @@ export const Sidemenu = ({children}) => {
       <div className="sidemenu">
         <div className="sidemenu-heading">
           <h1>PRODUCTIV</h1>
+          <a onClick={() => props.logOut()} >logout</a>
         </div>
         <div className="menu-items">
           {
@@ -36,7 +37,7 @@ export const Sidemenu = ({children}) => {
         </div>
       </div>
     </div>
-    <main>{children}</main>
+    <main>{props.children}</main>
     </div>
   )
 }

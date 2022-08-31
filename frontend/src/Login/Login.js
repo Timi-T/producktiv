@@ -1,12 +1,13 @@
 import React from 'react'
+import { Loader } from '../Loader/Loader'
 import './Login.css'
 
 export class Login extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-        email: "eve.holt@reqres.in",
-        password: "cityslicka",
+        email: "crzctrl5789@xxmail.com",
+        password: "tonytony",
         isLoading: false,
         loginSuccess: null
     }
@@ -23,27 +24,30 @@ export class Login extends React.Component {
 
   handleLoginSubmit = (event) => {
     event.preventDefault()
-    const {email, password} = this.state
-    fetch('https://reqres.in/api/login', {
-      method: "POST",
-      body: JSON.stringify({email, password}),
-      headers: {'Content-Type': 'application/json'}
-    })
-    .then((response) => response.json())
-    .then((token) => {
-      this.props.setToken(token)
-    })
-    .catch((error) => console.log(error))
-    // console.log(this.state)
+    this.props.logIn(this.state.email, this.state.password)
   }
 
   render() {
+    // console.log(this.props)
+    const {errorCode} = this.props
+    const subTextPrompt = (errorCode) => {
+      if (errorCode !== null) {
+        if (errorCode === 401) {
+          return <p style={{color:"red"}}>Invalid username or password</p>
+        } else {
+          return <p style={{color:"red"}}>Sorry, an error occured! Try again. </p>
+        }
+      } else {
+        return <p>Create your Productiv account</p>
+      }
+    }
     return (
+      (this.props.isLoading ? <Loader loadingText={"Logging in..."}/> :
       <form onSubmit={this.handleLoginSubmit}>
       <div className="login-box">
         <div className="login-heading">
           <h1>LOGIN</h1>
-          <p>Log in to your Productiv account.</p>
+          {subTextPrompt(errorCode)}
         </div>
         <div className="login-details">
           <div className="email-box">
@@ -56,13 +60,13 @@ export class Login extends React.Component {
             <input type="password" id="password" placeholder="password" value={this.state.password} onChange={this.handleChangePassword} required/>
             </label>
           </div>
-          <div class="error"><p>Wrong email or password.</p></div>
+          <div className="error"><p>Wrong email or password.</p></div>
           <div className="submit-btn">
             <input type="submit" id="submit" value="Log In"/>
           </div>
         </div>  
       </div>
-      </form>
+      </form>)
     )
   }
 }
