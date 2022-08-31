@@ -362,7 +362,7 @@
             <p>}</p>
           </li>
           <li>
-            <p>When the video is not found</p>
+            <p>When the requested video is not found</p>
             <p>Status code -> 404 (Not found)</p>
             <p>Returns:</p>
             <p>{</p>
