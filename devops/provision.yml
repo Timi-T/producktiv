@@ -1,0 +1,20 @@
+---
+- name: Install Nginx and nodejs
+  hosts: producktivServer
+  become: True
+  become_user: root
+  tasks:
+    - name: "Install nginx"
+      apt: name=nginx update_cache=yes state=present
+    - name: "Add apt key for node source"
+      apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    - name: add repo for nodesource
+      apt_repository:
+            repo: 'deb https://deb.nodesource.com/node_16.x {{ ansible_distribution_release }} main'
+            update_cache: yes
+    - name: "Install node"
+      apt: name=nodejs update_cache=yes state=present
+    - name: "Install redis"
+      apt: pkg=redis-server state=latest update_cache=yes
+    - name: "Install mongodb"
+      apt: pkg=mongodb-org state=latest update_cache=yes
