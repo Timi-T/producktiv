@@ -373,4 +373,57 @@
       </li>
     </ul>
   </li>
+  <li>
+    <h3>GET '/api/videos'</h3>
+    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
+    <h4>using curl -> curl -XGET http://localhost:5001/api/videos --cookie "auth_key=SESSION_TOKEN"</h4>
+    <ul>
+      <li>Requires Authentication: True</li>
+      <li>Retrieves all videos from the user's list of videos</li>
+      <li>
+        Request argumets: None
+        Url parameter: None
+      </li>
+      <li>
+        <p>ON SUCCESS -> Returns a message</p>
+        <p>Status code -> 200 (OK)</p>
+        <p>[LIST OF ALL VIDEOS OF A USER]</p>
+      </li>
+      <li>
+        <p>ON FAILURE -> It doesn't fail because cookie guarantees userID</p>
+      </li>
+    </ul>
+  </li>
+
+
+ <li>
+    <h3>GET '/api/categories/:name'</h3>
+    <h4>using curl -> curl -XGET http://localhost:5001/api/categories/Programming</h4>
+    <ul>
+      <li>Requires Authentication: False</li>
+      <li>Retrieves all videos of a specific category and stores them for 3 days in redis for easier retrieval next time</li>
+      <li>
+        Request argumets: None
+        Url parameter: name of category
+      </li>
+      <li>
+        <p>ON SUCCESS -> Returns a message</p>
+        <p>Status code -> 200 (OK)</p>
+        <p>[RETURNS A LIST OF ALL VIDEOS BELONGING TO SIMILAR CATEGORY]</p>
+      </li>
+      <li>
+        <p>ON FAILURE -> Returns An object</p>
+        <ul>
+          <li>
+            <p>When sending a non existing category from command line</p>
+            <p>Status code -> 401 (Unauthorized)</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- error: "Category Doesn't exist"</p>
+            <p>}</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>

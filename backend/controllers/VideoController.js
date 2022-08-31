@@ -4,15 +4,15 @@ const uuid = require('uuid').v4;
 const util = require('util');
 const request = require('request');
 const Video = require('../dataObjects/videoObject');
+const Category = require('../dataObjects/categoryObject');
 const dbClient = require('../utils/db');
 const redisClient = require('../utils/redis');
 const Auth = require('./AuthController');
 const { ObjectId } = require('mongodb');
 const API_KEY = '';
 
-
 // Function to validate a submitted link
-async function getVideoObj(url) {
+async function getVideoObj (url) {
   const id = (url.split('?v='))[1];
   if (!id) {
     return false;
@@ -23,6 +23,7 @@ async function getVideoObj(url) {
 }
 
 // This call back will upload a video and add it to the user's video as well
+// and categories video list
 exports.createVideo = async (request, response) => {
   const cookie = request.cookies.auth_key;
   const userId = await redisClient.get(`auth_${cookie}`);
@@ -39,21 +40,30 @@ exports.createVideo = async (request, response) => {
   }
   try {
     videoStats = videoObj.items[0].statistics;
-    delete videoStats['favoriteCount'];
+    delete videoStats.favoriteCount;
     videoStats.commentCount = '0';
   } catch (err) {
     videoStats = {
       viewCount: '0',
       likeCount: '0',
       commentCount: '0'
-    }
+    };
   }
   const uploadDate = new Date().toJSON();
   const video = new Video(videoName, userId, uploadDate, description, category, videoLink, videoStats);
   const vid = await dbClient.postVideo('videos', video);
   if (vid !== 'Video Exists') {
     await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
-    response.status(201).send({ message: 'Uploaded video' });
+    const categoryName = await dbClient.get('categories', { name: category });
+    if (!categoryName) {
+      const categ = new Category(category);
+      await dbClient.client.db('producktiv').collection('categories').insertOne(categ);
+      await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
+      response.status(201).send({ message: 'Uploaded video' });
+    } else {
+      await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
+      response.status(201).send({ message: 'Uploaded video' });
+    }
   } else {
     response.status(300).send('Video Exists');
   }
@@ -61,7 +71,10 @@ exports.createVideo = async (request, response) => {
 
 // Get all videos posted by a user
 exports.getUserVideos = async (request, response) => {
-  
+  const cookie = request.cookies.auth_key;
+  const userId = await redisClient.get(`auth_${cookie}`);
+  const user = await dbClient.get('users', { _id: ObjectId(userId) });
+  response.status(200).send(user.videos);
 };
 
 // This callback function will get a video from database
@@ -96,13 +109,10 @@ exports.deleteVideo = async (request, response) => {
   const userId = await redisClient.get(`auth_${cookie}`);
   const user = await dbClient.get('users', { _id: ObjectId(userId) });
   for (const vid of user.videos) {
-    if (vid._id == id) {
+    if (vid._id === id) {
       await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $pull: { videos: vid } });
+      await dbClient.client.db('producktiv').collection('categories').updateOne({ name: vid.category }, { $pull: { videos: vid } });
     }
-  }
-  if (id !== user._id) {
-    response.status(401).send({ error: 'You do not have the permissions to delete this video' });
-    return;
   }
   const video = await dbClient.del('videos', { _id: ObjectId(id) });
   if (video === 'Deleted') {
