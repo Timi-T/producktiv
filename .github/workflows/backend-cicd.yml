@@ -41,10 +41,7 @@ jobs:
             pm2 delete all
             rm -r producktiv/backend
             cp -r /home/ubuntu/dump/backend /home/ubuntu/producktiv/backend
-            cd producktiv/backend
-            npm install
-            pm2 start npm -- start-server
-            cd -
-            cd producktiv/frontend
-            npm install
-            pm2 start npm -- start
+            npm install --prefix ./producktiv/backend
+            pm2 start npm -- producktiv/backend start
+            npm install --prefix ./producktiv/frontend
+            pm2 start npm -- producktiv/frontend start
