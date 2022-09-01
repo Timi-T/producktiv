@@ -45,6 +45,23 @@ class DBClient {
     }
   }
 
+  // This function will add category to database
+  async postCategory (collectionName, object) {
+    const db = this.client.db(this.database);
+    const collection = db.collection(collectionName);
+    const categoryExists = await this.get('categories', { name: object.name });
+    if (!categoryExists) {
+      const savedCategory = await collection.insertOne(object);
+      if (savedCategory.ops.length > 0) {
+        return 'Saved';
+      } else {
+        return 'false';
+      }
+    } else {
+      return 'Category Exists';
+    }
+  }
+
   async get (collectionName, filterObj) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -61,7 +78,7 @@ class DBClient {
     const collection = db.collection(collectionName);
     const documentArray = await collection.find(filterObj).toArray();
     if (documentArray.length > 0) {
-      await collection.deleteOne(documentArray[0]);
+      await collection.deleteOne(filterObj);
       return 'Deleted';
     }
     return false;
