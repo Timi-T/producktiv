@@ -33,7 +33,7 @@ setToken = (token) => {
     this.setState({token: token, loggedIn: true})
   }
   
-  sessionStorage.setItem('token', JSON.stringify(token));
+  // sessionStorage.setItem('token', JSON.stringify(token));
 }
 
 setErrorCode = (code) => {
@@ -45,18 +45,17 @@ logOut = () => {
     fetch('http://localhost:5001/api/users/logout', {
       method: "DELETE",
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'}
+      // headers: {'Content-Type': 'application/json'}
     })
     .then((response) => {
-      console.log(response)
       if (!response.ok) {
         sessionStorage.clear()
         this.setToken(null)
         throw Error(`${response.status}: ${response.statusText}`)
       }
-      return response
+      return response.json()
       })
-    .then((token) => {
+    .then((data) => {
       sessionStorage.clear()
       this.setState({token: undefined, loggedIn: false})
     })
