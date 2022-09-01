@@ -28,12 +28,11 @@ constructor(props){
 
 setToken = (token) => {
   if (token === null){
-    this.setState({token: token, loggedIn: false})
+    this.setState({token: null, loggedIn: false})
   } else {
     this.setState({token: token, loggedIn: true})
   }
-  
-  // sessionStorage.setItem('token', JSON.stringify(token));
+  sessionStorage.setItem('token', JSON.stringify(token));
 }
 
 setErrorCode = (code) => {
@@ -41,11 +40,9 @@ setErrorCode = (code) => {
 }
 
 logOut = () => {
-  // this.setState({isLoading: true})
-    fetch('http://localhost:5001/api/users/logout', {
+    fetch('http://localhost:5001/api/logout', {
       method: "DELETE",
       credentials: 'include',
-      // headers: {'Content-Type': 'application/json'}
     })
     .then((response) => {
       if (!response.ok) {
