@@ -1,0 +1,37 @@
+      <div class="recipe-submission">
+        <h1 style="text-align: center">Submit Recipe</h1>
+        <ion-icon name="close-outline"></ion-icon>
+        <form action="http://127.0.0.1:5001/api/v1/recipe/" enctype="multipart/form-data" method="POST">
+          <label for="username">Username</label><br>
+          <input type="text" name="username" id="username" required /><br>
+          <label for="recipe-name">Recipe name</label><br>
+          <input type="text" name="recipe-name" id="recipe-name" required /><br>
+          <label for="img">Upload photo of the meal</label><br>
+          <input type="file" id="img" name="img" accept="image/*" required /><br>
+          <label for="categorizing">Category</label><br>
+          <select name="category" id="categorizing" required /><br>
+          <option value="" disabled selected>Select your option</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Snack">Snack</option>
+          <option value="Dish">Dish</option>
+          <option value="Drink">Drink</option>
+          <option value="Salad">Salad</option>
+          <option value="Sauce">Sauce</option>
+          <option value="Soup">Soup</option>
+          <option value="Stew">Stew</option>
+          </select><br>
+          <label for="ingredients">Ingredients</label><br>
+          <textarea name="ingredients" rows="8" id="ingredients" placeholder="Please submit each ingredient on a new line.
+Example
+1 Cup of rice
+3 Cups of water
+1 TSP of salt" required></textarea>
+          <label for="preparation">Preparation</label><br>
+          <textarea name="preparation" rows="8" id="preparation" placeholder="Please submit each step on a new line.
+Example
+Put the rice in the bowl and wash it thoroughly.
+Add water, rice and some salt on a cooker on medium heat.
+Close the lid until it is cooked." required></textarea><br>
+          <input type="submit" />
+        </form>
+      </div>

@@ -1,0 +1,136 @@
+/**********************
+ * Recipe Submission  *
+ *********************/
+
+.recipe-submission {
+  display: block;
+  position: relative;
+  width: 65%;
+  height: 95%;
+  margin: 0 auto;
+  padding: 20px 30px;
+  margin-top: 15px;
+  border-radius: 25px;
+  border: none;
+  background-image: url("../images/Blur.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 20px;
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+}
+
+.recipe-submission h1 {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.recipe-submission::-webkit-scrollbar {
+  width: 0px;
+}
+
+.recipe-submission {
+  overflow: -moz-scrollbars-none;
+}
+
+.recipe-submission {
+  -ms-overflow-style: none;
+}
+
+.recipe-submission {
+  font-weight: bold;
+  color: #161f47;
+}
+
+.recipe-submission input,
+.recipe-submission textarea,
+.recipe-submission select {
+  margin-bottom: 10px;
+  outline: none;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 25px 0px;
+}
+
+.recipe-submission input[type="submit"] {
+  background: #5db85d;
+  color: white;
+  font-size: 120%;
+  border: 1px solid #5db85d;
+  border-radius: 150px;
+  margin-right: 20px;
+  padding: 10px 15px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.2s;
+  cursor: pointer;
+}
+
+.recipe-submission input[type="submit"]:hover {
+  background: #70cf70;
+}
+
+.recipe-submission input[type="text"] {
+  border: 1px solid #6f7b8c;
+  border-radius: 50px;
+}
+
+.recipe-submission input[type="file"]::file-selector-button {
+  background-color: #4267a1;
+  color: white;
+  font-size: 15px;
+  border: 1px solid #4267a1;
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 5px 5px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.2s;
+  cursor: pointer;
+}
+
+.recipe-submission input[type="file"]::file-selector-button:hover {
+  background-color: #90a9b2;
+}
+
+.recipe-submission textarea {
+  border: 1px solid #6f7b8c;
+  border-radius: 5px;
+  width: 100%;
+  resize: none;
+}
+
+.recipe-submission option {
+  font-size: 15px;
+  font-family: helvetica neue, helvetica, arial, sans-serif;
+}
+
+.recipe-submission select {
+  border: 1px solid #6F7B8C;
+  border-radius: 5px;
+  width: 35%;
+}
+
+.recipe-submission textarea:focus,
+.recipe-submission input[type="text"]:focus,
+.recipe-submission select:focus {
+  box-shadow: 0 0 5px #5db85d;
+  border: 1px solid #5db85d;
+}
+
+.recipe-submission ion-icon {
+  background: grey;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  right: 2%;
+  top: 1%;
+}
+
+.recipe-submission ion-icon:hover {
+  background: red;
+}
