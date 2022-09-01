@@ -2,6 +2,7 @@
     background: var(--background-color);
     display: flex;
     flex-direction: row;
+    /* background: red; */
     /* height: 100vh; */
     /* position: relative */
 
@@ -13,6 +14,14 @@
     background: var( --text-color);
     height: 100vh;
     text-align: center;
+    /* background: blue */
+}
+
+.sidemenu-box {
+    /* background: green; */
+    height: 95%;
+    /* border: 1px solid pink; */
+    margin: .5em
 }
 
 main {
@@ -24,42 +33,109 @@ main {
 .sidemenu {
     display: flex;
     flex-direction: column;
-    gap:3em;
+    align-items: center;
+    gap:5em;
+    /* border: 1px solid green; */
+}
+
+.sidemenu-heading {
+    width: 80%;
+    /* text-align: left; */
+    /* align-self: flex-start */
+    /* border: 1px solid red */
 }
 
 .sidemenu h1, .item-link{
     color: var(--background-color)
 }
 
+.sidemenu h1 {
+    /* background: red; */
+    /* text-align: center; */
+    border-bottom: 2px solid var(--btn-color-primary);
+    padding-top: .2em;
+}
+
+.user-details {
+    /* border: 1px solid red; */
+    margin-top: 1em;
+}
+
+.user-details p, .logout a{
+    /* border: 1px solid red; */
+    font-weight: 500;
+}
+
+.logout {
+    display: flex;
+    padding: .2em;
+    align-items: center;
+    gap: .2em;
+    color: white;
+    margin: 0 auto;
+    /* border: 1px solid red */
+}
+
+.logout a{
+    /* align-self: flex-start */
+    font-weight: 500;
+}
+
+.logout a:hover{
+    /* align-self: flex-start */
+    cursor: pointer;
+    /* color: var(--btn-color-primary); */
+    text-decoration: underline;
+}
+
+.logout-btn {
+    height:.3em
+}
+
 .menu-items {
     /* background: red; */
-    border: 1px solid white;
+    /* border: 1px solid white; */
+    width: 80%;
+    margin: 0 auto;
+    /* align-items: flex-start; */
     /* text-align: center; */
-    padding: 20px
+    padding: 1em;
+    gap: .5em;
 }
 
 .item-link {
     display: flex;
+    /* align-items: center; */
     /* background: yellow; */
-    margin: 0 auto;
-    font-size: 1.5em;
+    /* margin: 0 auto; */
+    font-size: 1.2em;
     text-decoration: none;
-    gap: .4em;
+    gap: .5em;
     margin-bottom: .3em;
+    padding: .1em;
+    border: 2px solid transparent;
+    border-radius: .3em;
+    /* justify-content: space-around; */
     /* border: 1px solid white */
 }
 
 .item-text {
-    padding:.1em
+    padding:.2em
 }
 
 .item-icon {
     /* background: red; */
-    font-size:1.5em
+    padding-left: .2em;
+    height: .6em;
+    font-size:1.4em;
 }
 
 .active {
-    color: blue;
-    background: yellow;
+    color: var(--text-color);
+    background: var(--btn-color-primary);
+    font-weight: 500;
+}
 
+.item-link:hover {
+    border: 2px solid var(--btn-color-primary);
 }
