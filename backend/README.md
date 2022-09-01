@@ -108,8 +108,8 @@
   <li>
     <h3>GET '/api/users'</h3>
     <ul>
-      <li>Requires Authentication: False</li>
-      <li>Gets a list of all registered users</li>
+      <li>Requires Authentication: True</li>
+      <li>Gets a list of all registered users if cookie is there</li>
       <li>
         Request argumets: None
       </li>
@@ -138,13 +138,13 @@
     <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
     <h4>using curl -> curl --cookie "auth_key=SESSION_TOKEN" 0.0.0.0:5001/api/logout -XDELETE ; echo ""</h4>
     <ul>
-
+      <li>
       <p>on command-line write this command</p>
       <p>redis-cli</p>
       <p>127.0.0.1:6379> get auth_SESSION_TOKEN</p>
       <p>127.0.0.1:6379> "630f8655e345ae2e037cb1bf"</p>
       <p>Above line shows that a session is stored in redis-cli, and the value is user's ID</p>
-
+      </li>
       <li>Requires Authentication: True</li>
       <li>Ends a current user session</li>
       <li>
@@ -168,6 +168,14 @@
             <p>- error: "Unauthorized User"</p>
             <p>}</p>
           </li>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
+            <p>}</p>
+          </li> 
         </ul>
       </li>
       <p>on command-line write this command</p>
@@ -207,6 +215,14 @@
             <p>Returns:</p>
             <p>{</p>
             <p>- error: "User does not exist"</p>
+            <p>}</p>
+          </li>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
             <p>}</p>
           </li>
         </ul>
@@ -252,6 +268,14 @@
             <p>Returns:</p>
             <p>{</p>
             <p>- error: "Unauthorized User"</p>
+            <p>}</p>
+          </li>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
             <p>}</p>
           </li>
           <li>
@@ -311,7 +335,15 @@
             <p>Status code -> 404 (Not found)</p>
             <p>Returns:</p>
             <p>{</p>
-            <p>- error: "Not found"</p>
+            <p>- error: "Video Doesn't exists"</p>
+            <p>}</p>
+          </li>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
             <p>}</p>
           </li>
         </ul>
@@ -350,11 +382,11 @@
             <p>}</p>
           </li>
           <li>
-            <p>When the current user tries to delete a video belonging to another user</p>
-            <p>Status code -> 401 (Unauthorized)</p>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
             <p>Returns:</p>
             <p>{</p>
-            <p>- error: "You do not have the permissions to delete this video"</p>
+            <p>- message: "Cookie Expired"</p>
             <p>}</p>
           </li>
           <li>
@@ -386,7 +418,17 @@
         <p>[LIST OF ALL VIDEOS OF A USER]</p>
       </li>
       <li>
-        <p>ON FAILURE -> It doesn't fail because cookie guarantees userID</p>
+        <p>ON FAILURE -> Returns An object</p>
+        <ul>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
+            <p>}</p>
+          </li>
+        </ul>
       </li>
     </ul>
   </li>
@@ -394,9 +436,10 @@
 
  <li>
     <h3>GET '/api/categories/:name'</h3>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/categories/Programming</h4>
+    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
+    <h4>using curl -> curl -XGET http://localhost:5001/api/categories/Programming --cookie "auth_key=SESSION_TOKEN"</h4>
     <ul>
-      <li>Requires Authentication: False</li>
+      <li>Requires Authentication: True</li>
       <li>Retrieves all videos of a specific category and stores them for 3 days in redis for easier retrieval next time</li>
       <li>
         Request argumets: None
@@ -416,6 +459,14 @@
             <p>Returns:</p>
             <p>{</p>
             <p>- error: "Category Doesn't exist"</p>
+            <p>}</p>
+          </li>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
             <p>}</p>
           </li>
         </ul>
