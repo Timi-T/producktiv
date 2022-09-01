@@ -45,37 +45,25 @@ class UserController {
 
   // This endpoint will be used to delete a user
   async deleteUser (request, response) {
-    const { id } = request.params;
-    const cookie = request.cookies;
-    const value = cookie.auth_key;
-    const user_id = await redisClient.get(value);
-    if (user_id !== id) {
-      response.status(401).send({ error: 'You do not have the permissions to delete this user' });
-      return;
-    }
-    const given = { _id: ObjectId(id) };
-    const key = `auth_${value}`;
-    const validateRequest = await Auth.sessionAuth(request, response);
-    if (!validateRequest) {
-      response.status(401).send({ error: 'Unauthorized User' });
-      return;
-    }
+    const cookie = request.cookies.auth_key;
+    const key = `auth_${cookie}`;
+    const userId = await redisClient.get(key);
+    const given = { _id: ObjectId(userId) };
     const user = await dbClient.del('users', given);
     if (user === 'Deleted') {
       await redisClient.del(key);
       response.clearCookie('auth_key');
-      response.status(204).send({ message: 'User Deleted' });
+      response.status(200).send({ message: 'User Deleted' });
     } else {
-      response.status(400).send({ error: 'User does not exist' });
+      response.status(401).send({ error: 'User does not exist' });
     }
   }
 
   // This endpoint will be used to delete a token when a
   // user logs out
   async deleteToken (request, response) {
-    const cookie = request.cookies;
-    const value = cookie.auth_key;
-    const key = `auth_${value}`;
+    const cookie = request.cookies.auth_key;
+    const key = `auth_${cookie}`;
     const validateRequest = await Auth.sessionAuth(request, response);
     if (!validateRequest) {
       response.status(401).send({ error: 'Unauthorized User' });
@@ -83,7 +71,7 @@ class UserController {
     }
     await redisClient.del(key);
     response.clearCookie('auth_key');
-    response.status(204).send({ message: 'GoodBye' });
+    response.status(200).send({ message: 'GoodBye' });
   }
 
   // This endpoint will be used to get all users 20 at time

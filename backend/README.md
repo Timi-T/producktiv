@@ -134,9 +134,17 @@
 
 
   <li>
-    <h3>DELETE '/api/users/logout'</h3>
-    <h4>using curl -> curl -XDELETE http://localhost:5001/api/logout</h4>
+    <h3>DELETE '/api/logout'</h3>
+    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
+    <h4>using curl -> curl --cookie "auth_key=SESSION_TOKEN" 0.0.0.0:5001/api/logout -XDELETE ; echo ""</h4>
     <ul>
+
+      <p>on command-line write this command</p>
+      <p>redis-cli</p>
+      <p>127.0.0.1:6379> get auth_SESSION_TOKEN</p>
+      <p>127.0.0.1:6379> "630f8655e345ae2e037cb1bf"</p>
+      <p>Above line shows that a session is stored in redis-cli, and the value is user's ID</p>
+
       <li>Requires Authentication: True</li>
       <li>Ends a current user session</li>
       <li>
@@ -144,7 +152,7 @@
       </li>
       <li>
         <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 204 (No content)</p>
+        <p>Status code -> 200 (No content)</p>
         <p>{</p>
             <p>- message: "Goodbye"</p>
         <p>}</p>
@@ -162,26 +170,30 @@
           </li>
         </ul>
       </li>
-      <p>The cookie for the current session is deleted</p>
+      <p>on command-line write this command</p>
+      <p>redis-cli</p>
+      <p>127.0.0.1:6379> get auth_SESSION_TOKEN</p>
+      <p>127.0.0.1:6379> (nil)</p>
+      <p>As you can see the token is removed from redis</p>
       <p>Redirect user to login</p>
     </ul>
   </li>
 
 
   <li>
-    <h3>DELETE '/api/users/:id'</h3>
+    <h3>DELETE '/api/signout'</h3>
     <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XDELETE http://localhost:5001/api/users/USER_ID --cookie "auth_key=SESSION_TOKEN"</h4>
+    <h4>using curl -> curl -XDELETE http://localhost:5001/api/signout --cookie "auth_key=SESSION_TOKEN"</h4>
     <ul>
       <li>Requires Authentication: True</li>
       <li>Deletes a user from the records</li>
+      <li>Deletes token from redis</li>
       <li>
         Request argumets: None
-        Url parameter: USER_ID
       </li>
       <li>
         <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 204 (No content)</p>
+        <p>Status code -> 200 (No content)</p>
         <p>{</p>
             <p>- message: "User Deleted"</p>
         <p>}</p>
@@ -190,24 +202,8 @@
         <p>ON FAILURE -> Returns An object</p>
         <ul>
           <li>
-            <p>When the user isn't logged in</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized User"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the user tries to delete another user</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "You do not have the permissions to delete this user"</p>
-            <p>}</p>
-          </li>
-          <li>
             <p>When the a user doesnt exist</p>
-            <p>Status code -> 400 (Bad request)</p>
+            <p>Status code -> 401 (Bad request)</p>
             <p>Returns:</p>
             <p>{</p>
             <p>- error: "User does not exist"</p>
