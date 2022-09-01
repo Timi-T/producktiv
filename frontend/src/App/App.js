@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Videospage } from '../Videospage/Videospage';
 import { Courses } from '../Courses/Courses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
+import {AppContext, defaultUser } from './AppContext'
 
 
 function getToken() {
@@ -18,25 +19,18 @@ class App extends React.Component {
 constructor(props){
   super(props)
   this.state = {
-    username: null,
-    loggedIn: false,
+    user: defaultUser,
     isLoading: false,
-    token: getToken(),
     errorCode: null
   }
 }
 
-setToken = (token) => {
-  if (token === null){
-    this.setState({token: null, loggedIn: false})
-  } else {
-    this.setState({token: token, loggedIn: true})
-  }
-  sessionStorage.setItem('token', JSON.stringify(token));
-}
-
 setErrorCode = (code) => {
   this.setState({errorCode: code})
+}
+
+updateUser = (currentUser) => {
+  this.setState({user: {...currentUser, isLoggedIn:true}})
 }
 
 logOut = () => {
@@ -47,14 +41,16 @@ logOut = () => {
     .then((response) => {
       if (!response.ok) {
         sessionStorage.clear()
-        this.setToken(null)
+        this.setState({user: defaultUser})
+        // this.setToken(null)
         throw Error(`${response.status}: ${response.statusText}`)
       }
       return response.json()
       })
     .then((data) => {
       sessionStorage.clear()
-      this.setState({token: undefined, loggedIn: false})
+      this.setState({user: defaultUser})
+      // this.setState({token: undefined, loggedIn: false})
     })
     .catch((error) => {
       console.log(error)
@@ -64,12 +60,14 @@ logOut = () => {
 
 logIn = (email, password) => {
   this.setState({isLoading: true})
-    fetch('http://localhost:5001/api/login', {
-      method: "POST",
-      body: JSON.stringify({email, password}),
-      credentials: "include",
-      headers: {'Content-Type': 'application/json'}
-    })
+    fetch('/userdata.json', 
+    // {
+    //   method: "POST",
+    //   body: JSON.stringify({email, password}),
+    //   credentials: "include",
+    //   headers: {'Content-Type': 'application/json'}
+    // }
+    )
     .then((response) => {
       if (!response.ok) {
         this.setErrorCode(response.status)
@@ -77,28 +75,30 @@ logIn = (email, password) => {
       }
       return response.json()
       })
-    .then((token) => {
+    .then((data) => {
       this.setState({isLoading: false})
-      this.setToken(token)
+      this.updateUser(data)
+      // this.setToken(token)
       this.setErrorCode(null)
     })
     .catch((error) => {
       this.setState({isLoading: false})
-      this.setState({loggedIn: false})
+      this.setState({user: defaultUser})
       console.log(error)
     })
 }
 
   render() {
-    // console.log(this.state)
-    const {isLoading, errorCode, token} = this.state
+    console.log(this.state)
+    const {isLoading, errorCode, user} = this.state
     const logIn = this.logIn
     const logOut = this.logOut
     return (
-       (!token ? (
+       (!user.token ? (
        <LandingPageBody>
           <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>
         </LandingPageBody>) :
+      <AppContext.Provider value={{user, logOut}}>
       <BrowserRouter>
         <Sidemenu logOut={logOut}>
           <Routes>
@@ -108,6 +108,8 @@ logIn = (email, password) => {
           </Routes>
         </Sidemenu>
       </BrowserRouter>
+      </AppContext.Provider>
+
         )
         
     );
