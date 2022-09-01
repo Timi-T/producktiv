@@ -45,33 +45,38 @@ class UserController {
 
   // This endpoint will be used to delete a user
   async deleteUser (request, response) {
-    const cookie = request.cookies.auth_key;
-    const key = `auth_${cookie}`;
-    const userId = await redisClient.get(key);
-    const given = { _id: ObjectId(userId) };
-    const user = await dbClient.del('users', given);
-    if (user === 'Deleted') {
-      await redisClient.del(key);
-      response.clearCookie('auth_key');
-      response.status(200).send({ message: 'User Deleted' });
-    } else {
-      response.status(401).send({ error: 'User does not exist' });
+    const validateRequest = await Auth.sessionAuth(request, response);
+    if (!validateRequest) {
+      response.status(401).send({ message: 'Cookie Expired' });
+    } else { 
+      const cookie = request.cookies.auth_key;
+      const key = `auth_${cookie}`;
+      const userId = await redisClient.get(key);
+      const given = { _id: ObjectId(userId) };
+      const user = await dbClient.del('users', given);
+      if (user === 'Deleted') {
+        await redisClient.del(key);
+        response.clearCookie('auth_key');
+        response.status(200).send({ message: 'User Deleted' });
+      } else {
+        response.status(401).send({ error: 'User does not exist' });
+      }
     }
   }
 
   // This endpoint will be used to delete a token when a
   // user logs out
   async deleteToken (request, response) {
-    const cookie = request.cookies.auth_key;
-    const key = `auth_${cookie}`;
     const validateRequest = await Auth.sessionAuth(request, response);
     if (!validateRequest) {
-      response.status(401).send({ error: 'Unauthorized User' });
-      return;
+      response.status(401).send({ message: 'Cookie Expired' });
+    } else {
+      const cookie = request.cookies.auth_key;
+      const key = `auth_${cookie}`;
+      await redisClient.del(key);
+      response.clearCookie('auth_key');
+      response.status(200).send({ message: 'GoodBye' });
     }
-    await redisClient.del(key);
-    response.clearCookie('auth_key');
-    response.status(200).send({ message: 'GoodBye' });
   }
 
   // This endpoint will be used to get all users 20 at time
