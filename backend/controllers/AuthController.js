@@ -14,7 +14,7 @@ class AuthController {
     const user = await db.get('users', { email, password: sha1(password) });
     if (user) {
       const authKey = uuid();
-      res.cookie('auth_key', authKey, { maxAge: 86400, sameSite: 'strict' });
+      res.cookie('auth_key', authKey, { maxAge: 1000 * 60 * 60 * 24, sameSite: 'strict' });
       redisClient.set(`auth_${authKey}`, String(user._id));
       res.status(200).send({ token: authKey });
     } else {
@@ -24,8 +24,8 @@ class AuthController {
 
   async sessionAuth(req, res) {
     const { auth_key } = req.cookies
-    const user_id = await redisClient.get(`auth_${auth_key}`);
-    if (user_id) {
+    const userId = await redisClient.get(`auth_${auth_key}`);
+    if (userId) {
       return true;
     }
     return false;
