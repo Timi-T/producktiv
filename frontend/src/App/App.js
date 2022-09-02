@@ -9,11 +9,11 @@ import { Sidemenu } from '../Sidemenu/Sidemenu';
 import {AppContext, defaultUser } from './AppContext'
 
 
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
+// function getToken() {
+//   const tokenString = sessionStorage.getItem('token');
+//   const userToken = JSON.parse(tokenString);
+//   return userToken?.token
+// }
 
 class App extends React.Component {
 constructor(props){
@@ -60,13 +60,13 @@ logOut = () => {
 
 logIn = (email, password) => {
   this.setState({isLoading: true})
-    fetch('/userdata.json', 
-    // {
-    //   method: "POST",
-    //   body: JSON.stringify({email, password}),
-    //   credentials: "include",
-    //   headers: {'Content-Type': 'application/json'}
-    // }
+    fetch('http://localhost:5001/api/login', 
+    {
+      method: "POST",
+      body: JSON.stringify({email, password}),
+      credentials: "include",
+      headers: {'Content-Type': 'application/json'}
+    }
     )
     .then((response) => {
       if (!response.ok) {
@@ -77,7 +77,7 @@ logIn = (email, password) => {
       })
     .then((data) => {
       this.setState({isLoading: false})
-      this.updateUser(data)
+      this.updateUser(data.user)
       // this.setToken(token)
       this.setErrorCode(null)
     })
@@ -89,7 +89,7 @@ logIn = (email, password) => {
 }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.user)
     const {isLoading, errorCode, user} = this.state
     const logIn = this.logIn
     const logOut = this.logOut

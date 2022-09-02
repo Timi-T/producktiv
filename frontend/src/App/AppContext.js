@@ -8,8 +8,8 @@ export const defaultUser = {
         "articles": [],
         "ratings": [],
         "avgRating": 0,
-        "isLoggedIn": true,
-        "token": "null"
+        "isLoggedIn": false,
+        "token": null
 }
 
 export const postVideo = () => {}
