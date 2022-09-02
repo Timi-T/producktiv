@@ -1,0 +1,68 @@
+.all-courses {
+    /* border: 1px solid red; */
+    height: 100%;
+    padding: 2em 2em
+}
+
+.all-courses h1 {
+    font-size: 1.5em;
+    /* border: 1px solid red; */
+    margin-bottom: 1em;
+}
+
+.categories {
+    display: flex;
+    /* justify-content: space-between; */
+    gap:1em;
+     /* border: 1px solid blue; */
+    /* background: green */
+}
+
+.categories label {
+    display:flex;
+    align-items: center;
+    gap: .2em;
+    border: 1px solid var(--text-color);
+    padding: .4em .5em;
+    border-radius: 1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--text-color)
+}
+
+/* .categories a:focus {
+    background: var(--text-color);
+    color: var(--btn-color-primary)
+}
+
+.categories a:visited {
+    color: none
+} */
+
+.categories label:hover {
+    cursor:pointer
+}
+
+#all, #programming, #art, #business, #lifestyle{
+    display: none
+}
+
+#all:checked + .selected,
+#programming:checked + .selected,
+#art:checked + .selected,
+#business:checked + .selected,
+#lifestyle:checked + .selected{
+    background: var(--text-color);
+    color: var(--btn-color-primary)
+}
+
+.videos-list {
+    margin-top:1em;
+    /* place-content: center; */
+    /* margin-bottom: .5em; */
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-gap: 10.6em;
+    row-gap: .8em;
+  }
+  

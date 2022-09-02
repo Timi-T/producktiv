@@ -26,8 +26,8 @@
 
 main {
     flex: 3;
-    margin: auto 0;
-    text-align: center
+    /* margin: auto 0; */
+    /* text-align: center */
 }
 
 .sidemenu {
@@ -123,6 +123,10 @@ main {
     padding:.2em
 }
 
+.item-text p {
+    color: var(--background-color)
+}
+
 .item-icon {
     /* background: red; */
     padding-left: .2em;
@@ -134,6 +138,10 @@ main {
     color: var(--text-color);
     background: var(--btn-color-primary);
     font-weight: 500;
+}
+
+.active p{
+    color: var(--text-color);
 }
 
 .item-link:hover {

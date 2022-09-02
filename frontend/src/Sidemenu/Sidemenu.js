@@ -42,7 +42,7 @@ export const Sidemenu = (props) => {
             menuItems.map((item, index) => {
               return <NavLink to={item.path} key={index} className="item-link">
                 <div className="item-icon">{item.icon}</div>
-                <div className="item-text">{item.name}</div>
+                <div className="item-text"><p>{item.name}</p></div>
               </NavLink>
             })
           }
