@@ -11,15 +11,26 @@ const Auth = require('./AuthController');
 const { ObjectId } = require('mongodb');
 const API_KEY = '';
 
+// This function will get the id of a video link
+async function getId(url) {
+  const getURL = util.promisify(request.get).bind(request);
+  const jsons = await getURL(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${url}&key=API_KEY`);
+  const data = JSON.parse(jsons.body);
+  const items = data.items[0];
+  return items;
+}
+
 // Function to validate a submitted link
 async function getVideoObj (url) {
-  const id = (url.split('?v='))[1];
-  if (!id) {
-    return false;
+  try {
+    const items = await getId(url);
+    const id = items.id.videoId;
+    const getURL = util.promisify(request.get).bind(request);
+    const jsons = await getURL(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${id}&key=API_KEY`);
+    return JSON.parse(jsons.body);
+  } catch (error) {
+    console.log(error);
   }
-  const getURL = util.promisify(request.get).bind(request);
-  const data = await getURL(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet%2CcontentDetails%2Cstatistics&id=${id}`);
-  return JSON.parse(data.body);
 }
 
 // This call back will upload a video and add it to the user's video as well
@@ -37,8 +48,11 @@ exports.createVideo = async (request, response) => {
     const { videoLink } = request.body;
     const uploadDate = new Date().toJSON();
     const videoObj = await getVideoObj(videoLink);
+    let videoThumbnail = '';
     let videoStats = {};
     try {
+      const items = await getId(videoLink);
+      videoThumbnail = items.snippet.thumbnails.medium.url;
       videoStats = videoObj.items[0].statistics;
       delete videoStats.favoriteCount;
       videoStats.commentCount = '0';
@@ -49,7 +63,7 @@ exports.createVideo = async (request, response) => {
         commentCount: '0'
       };
     }
-    const video = new Video(videoName, userId, uploadDate, description, category, videoLink, videoStats);
+    const video = new Video(videoName, userId, uploadDate, description, category, videoLink, videoStats, videoThumbnail);
     const vid = await dbClient.postVideo('videos', video);
     if (vid !== 'Video Exists') {
       await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
