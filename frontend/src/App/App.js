@@ -3,9 +3,10 @@ import React from 'react';
 import LandingPageBody from '../LandingPageBody/LandingPageBody';
 import LandingPage from '../LandingPage/LandingPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Videospage } from '../Videospage/Videospage';
-import { Courses } from '../Courses/Courses';
+import { Coursespage } from '../Coursespage/Coursespage';
+import { Usercourses } from '../Usercourses/Usercourses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
+import { Videopage } from '../Videopage/Videopage';
 import {AppContext, defaultUser } from './AppContext'
 
 
@@ -29,8 +30,16 @@ setErrorCode = (code) => {
   this.setState({errorCode: code})
 }
 
+getVideoDetails = (videoData) => {
+  console.log(videoData)
+}
+
 updateUser = (currentUser) => {
   this.setState({user: {...currentUser, isLoggedIn:true}})
+}
+
+resetUser = () => {
+  this.setState({user: defaultUser})
 }
 
 logOut = () => {
@@ -40,16 +49,15 @@ logOut = () => {
     })
     .then((response) => {
       if (!response.ok) {
-        sessionStorage.clear()
-        this.setState({user: defaultUser})
+
+        this.resetUser()
         // this.setToken(null)
         throw Error(`${response.status}: ${response.statusText}`)
       }
       return response.json()
       })
     .then((data) => {
-      sessionStorage.clear()
-      this.setState({user: defaultUser})
+      this.resetUser()
       // this.setState({token: undefined, loggedIn: false})
     })
     .catch((error) => {
@@ -93,18 +101,20 @@ logIn = (email, password) => {
     const {isLoading, errorCode, user} = this.state
     const logIn = this.logIn
     const logOut = this.logOut
+    const resetUser = this.resetUser
     return (
        (!user.token ? (
        <LandingPageBody>
           <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>
         </LandingPageBody>) :
-      <AppContext.Provider value={{user, logOut}}>
+      <AppContext.Provider value={{user, resetUser}}>
       <BrowserRouter>
         <Sidemenu logOut={logOut}>
           <Routes>
-            <Route path="/" element={<Videospage/>}/>
-            <Route path="/videos" element={<Videospage/>}/>
-            <Route path="/courses" element={<Courses/>}/>
+            <Route path="/" element={<Coursespage/>}/>
+            <Route path="/videos" element={<Coursespage/>}/>
+            <Route path="/courses" element={<Usercourses/>}/>
+            <Route path="/videoplay" element={<Videopage/>}/>
           </Routes>
         </Sidemenu>
       </BrowserRouter>

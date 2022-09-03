@@ -64,5 +64,7 @@
     grid-template-columns: 100px 100px 100px;
     grid-gap: 10.6em;
     row-gap: .8em;
+    animation-duration: 0.3s;
+    animation-name: slidein;
   }
   
