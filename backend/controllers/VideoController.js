@@ -47,8 +47,8 @@ exports.createVideo = async (request, response) => {
     const { category } = request.body;
     const { videoLink } = request.body;
     const uploadDate = new Date().toJSON();
+
     const videoObj = await getVideoObj(videoLink);
-    let videoThumbnail = '';
     let videoStats = {};
     let embedVideo = '';
     try {
@@ -65,7 +65,9 @@ exports.createVideo = async (request, response) => {
         commentCount: '0'
       };
     }
-    const video = new Video(videoName, userId, uploadDate, description, category, embedVideo, videoStats);
+    const user = await dbClient.get('users', { _id: ObjectId(userId) });
+    const userName = user.username;
+    const video = new Video(videoName, userId, uploadDate, description, category, embedVideo, videoStats, userName);
     const vid = await dbClient.postVideo('videos', video);
     if (vid !== 'Video Exists') {
       await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
