@@ -2,15 +2,14 @@
 
 
 class Video {
-  constructor(videoName, userId, uploadDate, description, category, videoLink, videoStats, videoThumbnail) {
+  constructor(videoName, userId, uploadDate, description, category, embedVideo, videoStats) {
     this.videoName = videoName;
     this.category = category;
     this.userId = userId;
     this.uploadDate = uploadDate;
     this.description = description;
-    this.videoLink = videoLink;
+    this.embedVideo = embedVideo;
     this.stats = videoStats
-    this.videoThumbnail = videoThumbnail;
     this.comments = [];
     this.ratings = [];
     this.avgRating = 0;
