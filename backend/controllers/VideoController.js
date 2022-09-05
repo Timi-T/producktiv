@@ -90,19 +90,21 @@ exports.createVideo = async (request, response) => {
 };
 
 // Get all videos posted by a user
-exports.getUserVideos = async (request, response) => {
+exports.getAllVideos = async (request, response) => {
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
-    const cookie = request.cookies.auth_key;
-    const userId = await redisClient.get(`auth_${cookie}`);
-    const user = await dbClient.get('users', { _id: ObjectId(userId) });
-    response.status(200).send({ videos: user.videos });
+    const video = await dbClient.getVideos('videos');
+    if (video) {
+      response.status(200).send({ video });
+    } else {
+      response.status(404).send({ error: 'No Video Doesn\'t exists' });
+    }
   }
 };
 
-// This callback function will get a video from database
+// This callback function will get all video from database
 exports.getVideo = async (request, response) => {
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
@@ -118,7 +120,7 @@ exports.getVideo = async (request, response) => {
     } else {
       response.status(404).send({ error: 'Video Doesn\'t exists' });
     }
-  }
+  } 
 };
 
 // This callback function will delete a video from database

@@ -1,6 +1,5 @@
 // Logic for user related endpoints
 
-
 const User = require('../dataObjects/userObject');
 const db = require('../utils/db');
 const dbClient = require('../utils/db');
@@ -53,6 +52,13 @@ class UserController {
       const key = `auth_${cookie}`;
       const userId = await redisClient.get(key);
       const given = { _id: ObjectId(userId) };
+      const videos = await dbClient.getVideos('videos');
+      for (const vid of videos) {
+        if (vid.userId === userId) {
+          const del = { userId };
+          const video = await dbClient.del('videos', del);
+	}
+      }
       const user = await dbClient.del('users', given);
       if (user === 'Deleted') {
         await redisClient.del(key);
@@ -89,6 +95,19 @@ class UserController {
     });
     response.send(users);
   }
-}
+
+  // Get all videos posted by a user
+  async getUserVideos (request, response) {
+    const validateRequest = await Auth.sessionAuth(request, response);
+    if (!validateRequest) {
+      response.status(401).send({ message: 'Cookie Expired' });
+    } else {
+      const cookie = request.cookies.auth_key;
+      const userId = await redisClient.get(`auth_${cookie}`);
+      const user = await dbClient.get('users', { _id: ObjectId(userId) });
+      response.status(200).send({ videos: user.videos });
+    }
+  }
+};
 
 module.exports = new UserController();
