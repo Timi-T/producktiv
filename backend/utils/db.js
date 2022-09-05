@@ -91,6 +91,28 @@ class DBClient {
     const users = await collection.find().sort({ username: 1 }).collation({ locale: 'en', caseLevel: true }).skip(20 * page).limit(20).toArray();
     return users;
   }
+
+  // This function will get all vidoes at once for deletion
+  async getVideos (collectionName) {
+    const db = this.client.db(this.database);
+    const collection = db.collection(collectionName);
+    const videos = await collection.find().toArray();
+    if (videos.length > 0) {
+      return videos;
+    }
+    return false;
+  }
+
+  // This function will get all vidoes at once for deletion from categories
+  async getCategs (collectionName, categName) {
+    const db = this.client.db(this.database);
+    const collection = db.collection(collectionName);
+    const categs = await collection.find(categName).toArray();
+    if (categs.length > 0) {
+      return categs;
+    }
+    return false;
+  }
 }
 
 module.exports = new DBClient();
