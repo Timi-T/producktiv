@@ -54,7 +54,7 @@ exports.createVideo = async (request, response) => {
     let embedVideo = '';
     try {
       const items = await getId(videoLink);
-      videoThumbnail = items.snippet.thumbnails.medium.url;
+      videoThumbnail = items.snippet.thumbnails.high.url;
       const vidId = items.id.videoId;
       embedVideo = `https://www.youtube.com/embed/${vidId}`;
       videoStats = videoObj.items[0].statistics;
