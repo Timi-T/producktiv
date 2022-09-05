@@ -23,11 +23,13 @@ router.delete('/api/logout', UserController.deleteToken);
 
 router.get('/api/users', UserController.allUser);
 
+router.get('/api/users/videos', UserController.getUserVideos);
+
 // Video related API
 
 router.post('/api/videos', VideoController.createVideo);
 
-router.get('/api/videos', VideoController.getUserVideos);
+router.get('/api/videos', VideoController.getAllVideos);
 
 router.get('/api/videos/:id', VideoController.getVideo);
 
