@@ -24,7 +24,7 @@ export const Coursespage = () => {
         })
       .then((data) => {
         console.log(data)
-        setVideos(data.video)
+        setVideos(data.videos)
         setIsLoading(false)
       })
       .catch((error)=>{
