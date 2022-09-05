@@ -232,6 +232,37 @@
       <p>Redirect to login</p>
     </ul>
   </li>
+  <li>
+    <h3>GET '/api/videos'</h3>
+    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
+    <h4>using curl -> curl -XGET http://localhost:5001/api/videos --cookie "auth_key=SESSION_TOKEN"</h4>
+    <ul>
+      <li>Requires Authentication: True</li>
+      <li>Retrieves all videos</li>
+      <li>
+        Request argumets: None
+        Url parameter: None
+      </li>
+      <li>
+        <p>ON SUCCESS -> Returns a message</p>
+        <p>Status code -> 200 (OK)</p>
+        <p>[LIST OF ALL VIDEOS]</p>
+      </li>
+      <li>
+        <p>ON FAILURE -> Returns An object</p>
+        <ul>
+          <li>
+            <p>When the there is no cookie or when given the wrong cookie</p>
+            <p>Status code -> 401</p>
+            <p>Returns:</p>
+            <p>{</p>
+            <p>- message: "Cookie Expired"</p>
+            <p>}</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 
 
   <li>
@@ -402,9 +433,9 @@
     </ul>
   </li>
   <li>
-    <h3>GET '/api/videos'</h3>
+    <h3>GET '/api/users/videos'</h3>
     <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/videos --cookie "auth_key=SESSION_TOKEN"</h4>
+    <h4>using curl -> curl -XGET http://localhost:5001/api/users/videos --cookie "auth_key=SESSION_TOKEN"</h4>
     <ul>
       <li>Requires Authentication: True</li>
       <li>Retrieves all videos from the user's list of videos</li>
