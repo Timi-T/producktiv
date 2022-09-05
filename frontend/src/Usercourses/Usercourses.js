@@ -8,6 +8,7 @@ export const Usercourses = () => {
   const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [errorMsg, setErrorMsg] = useState("")
   useEffect(() => {
   setIsLoading(true)
   fetch("http://localhost:5001/api/users/videos", { credentials: "include"})
@@ -24,7 +25,7 @@ export const Usercourses = () => {
       setIsLoading(false)
     })
     .catch((error)=>{
-      // resetUser()
+      setErrorMsg("Sorry, an error")
       console.log(error)
     })
   }, [])

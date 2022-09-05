@@ -8,42 +8,41 @@ import { Loader } from '../Loader/Loader'
 
 
 export const Coursespage = () => {
-  // const {resetUser} = React.useContext(AppContext)
+  const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const allVideos = []
-  const getVideos = () => {
+  const getVideos = (resource) => {
     setIsLoading(true)
-    fetch("/videos.json")
+    fetch(`http://localhost:5001/api/${resource}`, { credentials: "include"})
       .then((response) => {
         if (!response.ok) {
+          resetUser()
           throw Error(`${response.status}: ${response.statusText}`)
         }
         return response.json()
         })
       .then((data) => {
         console.log(data)
-        setVideos(data.videos)
+        setVideos(data.video)
         setIsLoading(false)
       })
       .catch((error)=>{
         // resetUser()
+        console.log(error)
       })
-
   }
 
   useEffect(() => {
-    getVideos()
+    getVideos("videos")
   }, [])
 
-  const categorySort = (category=undefined) => {
-    let sortedVideos = allVideos
-    console.log(allVideos)
-    if (category !== undefined) {
-      sortedVideos = allVideos.filter((video)=> video.category == category)
+  const categorySort = (categoryName=undefined) => {
+    if (categoryName !== undefined) {
+      getVideos(`categories/${categoryName}`)
+    } else {
+      getVideos("videos")
     }
-    console.log(sortedVideos)
-    setVideos(sortedVideos) 
   }
 
   const selectVideo = (id) => {
