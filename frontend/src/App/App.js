@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import LandingPageBody from '../LandingPageBody/LandingPageBody';
 import LandingPage from '../LandingPage/LandingPage';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import { Coursespage } from '../Coursespage/Coursespage';
 import { Usercourses } from '../Usercourses/Usercourses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
@@ -26,12 +26,16 @@ constructor(props){
   }
 }
 
-setErrorCode = (code) => {
-  this.setState({errorCode: code})
+componentDidMount() {
+  const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      this.updateUser(foundUser);
+    }
 }
 
-getVideoDetails = (videoData) => {
-  console.log(videoData)
+setErrorCode = (code) => {
+  this.setState({errorCode: code})
 }
 
 updateUser = (currentUser) => {
@@ -58,12 +62,12 @@ logOut = () => {
       })
     .then((data) => {
       this.resetUser()
+      localStorage.clear();
       // this.setState({token: undefined, loggedIn: false})
     })
     .catch((error) => {
       console.log(error)
     })
-  
 }
 
 logIn = (email, password) => {
@@ -86,6 +90,8 @@ logIn = (email, password) => {
     .then((data) => {
       this.setState({isLoading: false})
       this.updateUser(data.user)
+      console.log(data.user)
+      localStorage.setItem('user', JSON.stringify(data.user))
       // this.setToken(token)
       this.setErrorCode(null)
     })
@@ -105,19 +111,28 @@ logIn = (email, password) => {
     return (
        (!user.token ? (
        <LandingPageBody>
-          <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>
-        </LandingPageBody>) :
+        <Routes>
+        <Route path="/login" element={<LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>}/>
+        <Route
+              path="*"
+              element={<Navigate to="/login" replace/>}
+            />
+        </Routes>
+          {/* <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/> */}
+      </LandingPageBody>) :
       <AppContext.Provider value={{user, resetUser}}>
-      <BrowserRouter>
         <Sidemenu logOut={logOut}>
           <Routes>
-            <Route path="/" element={<Coursespage/>}/>
+            {/* <Route path="/" element={<Coursespage/>}/> */}
             <Route path="/videos" element={<Coursespage/>}/>
             <Route path="/courses" element={<Usercourses/>}/>
             <Route path="/videoplay" element={<Videopage/>}/>
+            <Route
+              path="*"
+              element={<Navigate to="/videos" replace/>}
+            />
           </Routes>
         </Sidemenu>
-      </BrowserRouter>
       </AppContext.Provider>
 
         )
