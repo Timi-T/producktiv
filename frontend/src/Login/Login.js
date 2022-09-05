@@ -60,7 +60,6 @@ export class Login extends React.Component {
             <input type="password" id="password" placeholder="password" value={this.state.password} onChange={this.handleChangePassword} required/>
             </label>
           </div>
-          <div className="error"><p>Wrong email or password.</p></div>
           <div className="submit-btn">
             <input type="submit" id="submit" value="Log In"/>
           </div>

@@ -8,14 +8,13 @@ export const defaultUser = {
         "articles": [],
         "ratings": [],
         "avgRating": 0,
-        "isLoggedIn": false,
         "token": null
 }
 
-export const postVideo = () => {}
+export const resetUser = () => {}
 
 export const AppContext = React.createContext({
   user: defaultUser,
-  postVideo: postVideo
+  resetUser: resetUser
 })
 

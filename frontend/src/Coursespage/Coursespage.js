@@ -11,13 +11,17 @@ export const Coursespage = () => {
   const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState("")
   const allVideos = []
   const getVideos = (resource) => {
+    setError("")
     setIsLoading(true)
     fetch(`http://localhost:5001/api/${resource}`, { credentials: "include"})
       .then((response) => {
         if (!response.ok) {
-          resetUser()
+          if (response.status === 401 ){
+            resetUser()
+          }
           throw Error(`${response.status}: ${response.statusText}`)
         }
         return response.json()
@@ -28,7 +32,8 @@ export const Coursespage = () => {
         setIsLoading(false)
       })
       .catch((error)=>{
-        // resetUser()
+        setIsLoading(false)
+        setError(error)
         console.log(error)
       })
   }
@@ -61,7 +66,7 @@ export const Coursespage = () => {
       <input type="radio" id="business" name="course-choice"/><label htmlFor="business" class="selected" onClick={()=>categorySort("Business")}><ImStatsDots/>Business</label>
       <input type="radio" id="lifestyle" name="course-choice"/><label htmlFor="lifestyle" class="selected" onClick={()=>categorySort("Lifestyle")}><ImAccessibility/>Lifestyle</label>
       </div>
-      { isLoading ? <Loader loadingText={"Loading content..."}/> : <div className="videos-list">
+      { isLoading ? <Loader loadingText={"Loading content..."}/> : (error.length !== 0 ? <div className="error"><p>There are no videos in this category. Add one?</p></div> :<div className="videos-list">
         {
           videos.map((item, index) => {
             return (
@@ -69,7 +74,7 @@ export const Coursespage = () => {
             )
           })
         }
-      </div>
+      </div>)
       }
     </div>
     </>

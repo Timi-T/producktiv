@@ -70,12 +70,3 @@
 .login-details label span {
     font-size: 0.87rem
 }
-
-.error{
-    display:none;
-    font-size: .8em;
-}
-
-.error p {
-    color: red
-}

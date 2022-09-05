@@ -69,3 +69,16 @@
     animation-name: slidein;
   }
   
+.error{
+    /* background: green; */
+    height: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+
+.error p {
+    /* color: red */
+}

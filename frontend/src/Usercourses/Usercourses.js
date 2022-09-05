@@ -8,13 +8,15 @@ export const Usercourses = () => {
   const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [errorMsg, setErrorMsg] = useState("")
+  const [error, setError] = useState("")
   useEffect(() => {
   setIsLoading(true)
   fetch("http://localhost:5001/api/users/videos", { credentials: "include"})
     .then((response) => {
       if (!response.ok) {
-        resetUser()
+        if (response.status === 401){
+          resetUser()
+        }
         throw Error(`${response.status}: ${response.statusText}`)
       }
       return response.json()
@@ -25,10 +27,11 @@ export const Usercourses = () => {
       setIsLoading(false)
     })
     .catch((error)=>{
-      setErrorMsg("Sorry, an error")
+      setIsLoading(false)
       console.log(error)
     })
   }, [])
+
   const selectVideo = (id) => {
     const video = videos.filter((vid)=> vid._id == id)
     return(video[0]) 
@@ -46,16 +49,16 @@ export const Usercourses = () => {
     {
       videos.length == 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
       <>
-      <p> View all the course videos you have submitted.</p>
-      <div className="videos-list">
-        {
-          videos.map((item, index) => {
-            return (
-            <Videocard selectVideo={selectVideo} id={item._id} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
-            )
-          })
-        }
-      </div>
+        <p> View all the course videos you have submitted.</p>
+        <div className="videos-list">
+          {
+            videos.map((item, index) => {
+              return (
+              <Videocard selectVideo={selectVideo} id={item._id} key={index} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
+              )
+            })
+          }
+        </div>
       </>
       )
     }

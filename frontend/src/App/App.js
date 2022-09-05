@@ -10,12 +10,6 @@ import { Videopage } from '../Videopage/Videopage';
 import {AppContext, defaultUser } from './AppContext'
 
 
-// function getToken() {
-//   const tokenString = sessionStorage.getItem('token');
-//   const userToken = JSON.parse(tokenString);
-//   return userToken?.token
-// }
-
 class App extends React.Component {
 constructor(props){
   super(props)
@@ -39,11 +33,12 @@ setErrorCode = (code) => {
 }
 
 updateUser = (currentUser) => {
-  this.setState({user: {...currentUser, isLoggedIn:true}})
+  this.setState({user: currentUser})
 }
 
 resetUser = () => {
   this.setState({user: defaultUser})
+  localStorage.clear();
 }
 
 logOut = () => {
@@ -55,14 +50,12 @@ logOut = () => {
       if (!response.ok) {
 
         this.resetUser()
-        // this.setToken(null)
         throw Error(`${response.status}: ${response.statusText}`)
       }
       return response.json()
       })
     .then((data) => {
       this.resetUser()
-      localStorage.clear();
       // this.setState({token: undefined, loggedIn: false})
     })
     .catch((error) => {
