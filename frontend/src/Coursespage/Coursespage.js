@@ -11,6 +11,7 @@ export const Coursespage = () => {
   // const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const allVideos = []
   const getVideos = () => {
     setIsLoading(true)
     fetch("/videos.json")
@@ -36,10 +37,12 @@ export const Coursespage = () => {
   }, [])
 
   const categorySort = (category=undefined) => {
-    let sortedVideos = vids
+    let sortedVideos = allVideos
+    console.log(allVideos)
     if (category !== undefined) {
-      sortedVideos = vids.filter((video)=> video.category == category)
+      sortedVideos = allVideos.filter((video)=> video.category == category)
     }
+    console.log(sortedVideos)
     setVideos(sortedVideos) 
   }
 
@@ -63,7 +66,7 @@ export const Coursespage = () => {
         {
           videos.map((item, index) => {
             return (
-            <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
+            <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
             )
           })
         }

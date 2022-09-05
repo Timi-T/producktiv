@@ -19,24 +19,35 @@ export const Usercourses = () => {
     const video = videos.filter((vid)=> vid._id == id)
     return(video[0]) 
   }
+
   // const userVideos = user.videos
   // console.log(userVideos)
   return(
     <>
-    {isLoading && <Loader loadingText={"Loading video..."}/>}
+    <div className="all-courses user-courses">
+    <h1 style={{marginBottom:".2em"}}>My Courses</h1>
+    {isLoading && <Loader loadingText={"Loading submitted courses..."}/>}
     {!isLoading &&
-    <div className="all-courses">
-    <div className="videos-list">
+    <>
     {
-      videos.map((item, index) => {
-        return (
-        <Videocard selectVideo={selectVideo} id={item._id} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
-        )
-      })
+      videos.length == 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
+      <>
+      <p> View all the course videos you have submitted.</p>
+      <div className="videos-list">
+        {
+          videos.map((item, index) => {
+            return (
+            <Videocard selectVideo={selectVideo} id={item._id} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
+            )
+          })
+        }
+      </div>
+      </>
+      )
+    }
+    </>
     }
     </div>
-    </div>
-    }
     </>
   )
 }
