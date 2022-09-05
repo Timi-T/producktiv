@@ -21,7 +21,8 @@ exports.getCategoryVideos = async (request, response) => {
         response.status(401).send({ error: 'Category Doesn\'t exist' });
       }
     } else {
-      response.status(200).send({ videos: values });
+      const videos = JSON.parse(values);
+      response.status(200).send({ videos });
     }
   }
 };
