@@ -18,7 +18,7 @@ exports.getCategoryVideos = async (request, response) => {
         await redisClient.setCategory(name, JSON.stringify(lists));
         response.status(200).send({ videos: category.videos });
       } else {
-        response.status(401).send({ error: 'Category Doesn\'t exist' });
+        response.status(404).send({ error: 'Category Doesn\'t exist' });
       }
     } else {
       const videos = JSON.parse(values);
