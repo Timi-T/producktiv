@@ -9,12 +9,13 @@ const dbClient = require('../utils/db');
 const redisClient = require('../utils/redis');
 const Auth = require('./AuthController');
 const { ObjectId } = require('mongodb');
+const API_KEY = process.env.API_KEY;
 
 
 // This function will get the id of a video link
 async function getId(url) {
   const getURL = util.promisify(request.get).bind(request);
-  const jsons = await getURL(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${url}&key={API_KEY}`);
+  const jsons = await getURL(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${url}&key=${API_KEY}`);
   const data = JSON.parse(jsons.body);
   const items = data.items[0];
   return items;
@@ -26,7 +27,7 @@ async function getVideoObj (url) {
     const items = await getId(url);
     const id = items.id.videoId;
     const getURL = util.promisify(request.get).bind(request);
-    const jsons = await getURL(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${id}&key={API_KEY}`);
+    const jsons = await getURL(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${id}&key=${API_KEY}`);
     return JSON.parse(jsons.body);
   } catch (error) {
     console.log(error);
@@ -95,9 +96,9 @@ exports.getAllVideos = async (request, response) => {
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
-    const video = await dbClient.getVideos('videos');
-    if (video) {
-      response.status(200).send({ video });
+    const videos = await dbClient.getVideos('videos');
+    if (videos) {
+      response.status(200).send({ videos });
     } else {
       response.status(404).send({ error: 'No Video Doesn\'t exists' });
     }
