@@ -1,61 +1,100 @@
 {
-    "videos": [{
-        "videoName": "React crash course",
-        "category": "Programming",
-        "userId": "630f5876dffb0a4fce2f21e8",
-        "uploadDate": "2022-09-01T12:38:15.096Z",
-        "description": "React crash course for people who know nothing about react and want to learn blah blah",
-        "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-        "_id": "6310a7b7ea23b0ffbaf9258"
-    },
-  
-    {
-      "videoName": "Stocks market",
-      "category": "Business",
+    "videos": [        {
+      "videoName": "Python",
+      "category": "Programming",
       "userId": "630f5876dffb0a4fce2f21e8",
-      "uploadDate": "2022-09-01T12:38:15.096Z",
-      "description": "A video about python",
-      "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-      "_id": "6310a7b7ea23b70ffbaf925"
+      "uploadDate": "2022-09-05T11:39:17.409Z",
+      "description": "tutorials on css",
+      "embedVideo": "https://www.youtube.com/embed/yfoY53QXEnI",
+      "userName": "Tony",
+      "videoThumbnail": "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+      "stats": {
+          "viewCount": "3843475",
+          "likeCount": "79803",
+          "commentCount": "0"
+      },
+      "comments": [],
+      "ratings": [],
+      "avgRating": 0,
+      "_id": "6315dfe9b23e18390aef6495"
   },
   
   {
-    "videoName": "How to save money",
-    "category": "Business",
+    "videoName": "Python",
+    "category": "Programming",
     "userId": "630f5876dffb0a4fce2f21e8",
-    "uploadDate": "2022-09-01T12:38:15.096Z",
-    "description": "A video about python",
-    "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-    "_id": "6310a7bb7ea23b70ffbaf9258"
-  },
-  
-  {
-    "videoName": "Drawing course",
-    "category": "Art",
-    "userId": "630f5876dffb0a4fce2f21e8",
-    "uploadDate": "2022-09-01T12:38:15.096Z",
-    "description": "A video about drawing",
-    "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-    "_id": "6310a7b7ea23bb70ffbaf9258"
-  },
-  
-   {
-        "videoName": "Python essentials",
-        "category": "Programming",
-        "userId": "630f5876dffb0a4fce2f21e8",
-        "uploadDate": "2022-09-01T12:38:15.096Z",
-        "description": "A video teaching the core features ot Python",
-        "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-        "_id": "6310a7b7ean23b70ffbaf9258"
+    "uploadDate": "2022-09-05T11:39:17.409Z",
+    "description": "tutorials on css",
+    "embedVideo": "https://www.youtube.com/embed/yfoY53QXEnI",
+    "userName": "Tony",
+    "videoThumbnail": "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+    "stats": {
+        "viewCount": "3843475",
+        "likeCount": "79803",
+        "commentCount": "0"
     },
+    "comments": [],
+    "ratings": [],
+    "avgRating": 0,
+    "_id": "6315dfe9b23e18390aef6495"
+},
+{
+    "videoName": "Python",
+    "category": "Programming",
+    "userId": "630f5876dffb0a4fce2f21e8",
+    "uploadDate": "2022-09-05T11:39:17.409Z",
+    "description": "tutorials on css",
+    "embedVideo": "https://www.youtube.com/embed/yfoY53QXEnI",
+    "userName": "Tony",
+    "videoThumbnail": "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+    "stats": {
+        "viewCount": "3843475",
+        "likeCount": "79803",
+        "commentCount": "0"
+    },
+    "comments": [],
+    "ratings": [],
+    "avgRating": 0,
+    "_id": "6315dfe9b23e18390aef6495"
+},
+{
+    "videoName": "Python",
+    "category": "Programming",
+    "userId": "630f5876dffb0a4fce2f21e8",
+    "uploadDate": "2022-09-05T11:39:17.409Z",
+    "description": "tutorials on css",
+    "embedVideo": "https://www.youtube.com/embed/yfoY53QXEnI",
+    "userName": "Tony",
+    "videoThumbnail": "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+    "stats": {
+        "viewCount": "3843475",
+        "likeCount": "79803",
+        "commentCount": "0"
+    },
+    "comments": [],
+    "ratings": [],
+    "avgRating": 0,
+    "_id": "6315dfe9b23e18390aef6495"
+},
   
-    {
-      "videoName": "Budget clothes for women",
-      "category": "Lifestyle",
-      "userId": "630f5876dffb0a4fce2f21e8",
-      "uploadDate": "2022-09-01T12:38:15.096Z",
-      "description": "A video about Budget clothes for women",
-      "videoLink": "https://www.youtube.com/watch?v=w7ejDZ8SWv8",
-      "_id": "6310a7b7ea23nb70ffbaf9258"
-  }]
+{
+  "videoName": "Python",
+  "category": "Programming",
+  "userId": "630f5876dffb0a4fce2f21e8",
+  "uploadDate": "2022-09-05T11:39:17.409Z",
+  "description": "tutorials on css",
+  "embedVideo": "https://www.youtube.com/embed/yfoY53QXEnI",
+  "userName": "Tony",
+  "videoThumbnail": "https://i.ytimg.com/vi/yfoY53QXEnI/mqdefault.jpg",
+  "stats": {
+      "viewCount": "3843475",
+      "likeCount": "79803",
+      "commentCount": "0"
+  },
+  "comments": [],
+  "ratings": [],
+  "avgRating": 0,
+  "_id": "6315dfe9b23e18390aef6495"
+}
+]
 }
