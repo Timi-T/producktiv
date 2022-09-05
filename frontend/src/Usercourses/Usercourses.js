@@ -25,6 +25,7 @@ export const Usercourses = () => {
     })
     .catch((error)=>{
       // resetUser()
+      console.log(error)
     })
   }, [])
   const selectVideo = (id) => {
