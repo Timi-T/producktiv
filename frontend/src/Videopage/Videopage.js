@@ -3,7 +3,7 @@ import { Loader } from '../Loader/Loader'
 import {useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom"
 import './Videopage.css'
-import { ImEye } from "react-icons/im";
+import { ImEye, ImArrowLeft2 } from "react-icons/im";
 import { FiThumbsUp } from "react-icons/fi";
 
 export const Videopage = () => {
@@ -24,7 +24,7 @@ export const Videopage = () => {
     {isLoading && <Loader loadingText={"Loading video..."}/>}
     {!isLoading && 
     <>
-    <NavLink to="/videos" className="back-to-courses">Back to courses</NavLink>
+    <NavLink to="/videos" className="back-to-courses"><ImArrowLeft2 style={{height:".8em"}}/> Back to courses</NavLink>
     <div className="all-courses video-display">
       <h1>{videoData.videoName}</h1>
       {/* <div className="video"> */}

@@ -5,16 +5,28 @@ import { Loader } from '../Loader/Loader'
 
 
 export const Usercourses = () => {
-  const {user} = React.useContext(AppContext)
-  const [videos, setVideos] = useState(user.videos)
+  const {resetUser} = React.useContext(AppContext)
+  const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    if (isLoading) {
-      setTimeout(() => {
-        setIsLoading(false)
-      }, 500)
-    }
-  }, [isLoading])
+  setIsLoading(true)
+  fetch("http://localhost:5001/api/users/videos", { credentials: "include"})
+    .then((response) => {
+      if (!response.ok) {
+        resetUser()
+        throw Error(`${response.status}: ${response.statusText}`)
+      }
+      return response.json()
+      })
+    .then((data) => {
+      console.log(data)
+      setVideos(data.videos)
+      setIsLoading(false)
+    })
+    .catch((error)=>{
+      // resetUser()
+    })
+  }, [])
   const selectVideo = (id) => {
     const video = videos.filter((vid)=> vid._id == id)
     return(video[0]) 
