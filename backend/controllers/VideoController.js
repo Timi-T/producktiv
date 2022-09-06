@@ -49,44 +49,46 @@ exports.createVideo = async (request, response) => {
     const { category } = request.body;
     const { videoLink } = request.body;
     const uploadDate = new Date().toJSON();
+    const items = await getId(videoLink);
 
-    const videoObj = await getVideoObj(videoLink);
-    let videoThumbnail = '';
-    let videoStats = {};
-    let embedVideo = '';
-    try {
-      const items = await getId(videoLink);
-      videoThumbnail = items.snippet.thumbnails.high.url;
+    if (items) {
+      const videoObj = await getVideoObj(videoLink);
+      const videoThumbnail = items.snippet.thumbnails.high.url;
       const vidId = items.id.videoId;
-      embedVideo = `https://www.youtube.com/embed/${vidId}`;
-      videoStats = videoObj.items[0].statistics;
-      delete videoStats.favoriteCount;
-      videoStats.commentCount = '0';
-    } catch (err) {
-      videoStats = {
-        viewCount: '0',
-        likeCount: '0',
-        commentCount: '0'
-      };
-    }
-    const user = await dbClient.get('users', { _id: ObjectId(userId) });
-    const userName = user.username;
-    const video = new Video(videoName, userId, uploadDate, description, category, embedVideo, videoStats, userName, videoThumbnail);
-    const vid = await dbClient.postVideo('videos', video);
-    if (vid !== 'Video Exists') {
-      await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
-      const categoryName = await dbClient.get('categories', { name: category });
-      if (!categoryName) {
-        const categ = new Category(category);
-        await dbClient.client.db('producktiv').collection('categories').insertOne(categ);
-        await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
-        response.status(201).send({ message: 'Uploaded video' });
+      const embedVideo = `https://www.youtube.com/embed/${vidId}`;
+      let videoStats = {};
+      try {
+        videoStats = videoObj.items[0].statistics;
+        delete videoStats.favoriteCount;
+        videoStats.commentCount = '0';
+      } catch (err) {
+        videoStats = {
+          viewCount: '0',
+          likeCount: '0',
+          commentCount: '0'
+        };
+      }
+      const user = await dbClient.get('users', { _id: ObjectId(userId) });
+      const userName = user.username;
+      const video = new Video(videoName, userId, uploadDate, description, category, embedVideo, videoStats, userName, videoThumbnail);
+      const vid = await dbClient.postVideo('videos', video);
+      if (vid !== 'Video Exists') {
+        await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
+        const categoryName = await dbClient.get('categories', { name: category });
+        if (!categoryName) {
+          const categ = new Category(category);
+          await dbClient.client.db('producktiv').collection('categories').insertOne(categ);
+          await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
+          response.status(201).send({ message: 'Uploaded video' });
+        } else {
+          await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
+          response.status(201).send({ message: 'Uploaded video' });
+        }
       } else {
-        await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $push: { videos: vid[0] } });
-        response.status(201).send({ message: 'Uploaded video' });
+        response.status(300).send('Video Exists');
       }
     } else {
-      response.status(300).send('Video Exists');
+      response.status(404).send('Video URL is incorrect');
     }
   }
 };
