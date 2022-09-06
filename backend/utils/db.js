@@ -32,7 +32,7 @@ class DBClient {
   async postVideo (collectionName, object) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
-    const videoExists = await this.get('videos', { videoLink: object.embedVideo });
+    const videoExists = await this.get('videos', { embedVideo: object.embedVideo });
     if (!videoExists) {
       const savedVideo = await collection.insertOne(object);
       if (savedVideo.ops.length > 0) {
