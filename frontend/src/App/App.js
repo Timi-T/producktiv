@@ -49,7 +49,6 @@ logOut = () => {
     })
     .then((response) => {
       if (!response.ok) {
-
         this.resetUser()
         throw Error(`${response.status}: ${response.statusText}`)
       }
@@ -72,8 +71,7 @@ logIn = (email, password) => {
       body: JSON.stringify({email, password}),
       credentials: "include",
       headers: {'Content-Type': 'application/json'}
-    }
-    )
+    })
     .then((response) => {
       if (!response.ok) {
         this.setErrorCode(response.status)

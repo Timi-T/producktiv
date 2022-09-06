@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppContext } from '../App/AppContext';
 import './Addcourse.css'
 
 export class Addcourse extends React.Component {
@@ -9,6 +10,8 @@ export class Addcourse extends React.Component {
         videoLink: "",
         category: "",
         description: "",
+        isLoading: false,
+        statusCode: null
     }
   }
 
@@ -30,8 +33,38 @@ export class Addcourse extends React.Component {
   }
 
   handleCourseSubmit = (event) => {
+    const {resetUser} = this.context
     event.preventDefault()
-    console.log(this.state)
+    this.setState({isLoading: true})
+    fetch('http://localhost:5001/api/videos', 
+    {
+      method: "POST",
+      body: JSON.stringify({
+        videoName: this.state.videoName,
+        videoLink: this.state.videoLink, 
+        category: this.state.category, 
+        description: this.state.description
+      }),
+      credentials: "include",
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response =>{
+      this.setState({statusCode: response.status})
+      if (!response.ok) {
+        if (response.status === 401){
+          resetUser()
+        }
+        throw Error(`${response.status}: ${response.statusText}`)
+      }
+      return response.json()
+    })
+    .then((response) => {
+      this.setState({isLoading: false})
+    })
+    .then((error) => {
+      console.log(error)
+    })
+    // console.log(this.state)
   }
 
   render() {
@@ -78,3 +111,4 @@ export class Addcourse extends React.Component {
     )
   }
 }
+Addcourse.contextType = AppContext
