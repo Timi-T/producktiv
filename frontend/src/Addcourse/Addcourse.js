@@ -49,6 +49,7 @@ export class Addcourse extends React.Component {
       headers: {'Content-Type': 'application/json'}
     })
     .then(response =>{
+      console.log(response.status)
       this.setState({statusCode: response.status})
       if (!response.ok) {
         if (response.status === 401){
