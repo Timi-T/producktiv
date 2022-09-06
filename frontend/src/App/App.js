@@ -7,7 +7,7 @@ import { Coursespage } from '../Coursespage/Coursespage';
 import { Usercourses } from '../Usercourses/Usercourses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
 import { Videopage } from '../Videopage/Videopage';
-import {AppContext, defaultUser } from './AppContext'
+import { AppContext, defaultUser } from './AppContext'
 
 
 class App extends React.Component {
@@ -106,10 +106,7 @@ logIn = (email, password) => {
        <LandingPageBody>
         <Routes>
         <Route path="/login" element={<LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>}/>
-        <Route
-              path="*"
-              element={<Navigate to="/login" replace/>}
-            />
+        <Route path="*" element={<Navigate to="/login" replace/>}/>
         </Routes>
           {/* <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/> */}
       </LandingPageBody>) :
@@ -120,10 +117,7 @@ logIn = (email, password) => {
             <Route path="/videos" element={<Coursespage/>}/>
             <Route path="/courses" element={<Usercourses/>}/>
             <Route path="/videoplay" element={<Videopage/>}/>
-            <Route
-              path="*"
-              element={<Navigate to="/videos" replace/>}
-            />
+            <Route path="*" element={<Navigate to="/videos" replace/>}/>
           </Routes>
         </Sidemenu>
       </AppContext.Provider>
