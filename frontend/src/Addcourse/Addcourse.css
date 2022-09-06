@@ -1,0 +1,67 @@
+.add-course-box {
+    margin-top: 1em
+}
+
+.submission-form{
+    padding-top: 1em
+}
+
+.submission-form h1, .submission-form p  {
+    text-align: center;
+    /* border: 1px solid red */
+}
+
+.course-details {
+    width: 70%;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 0.5em;
+    color: var(--text-color)
+}
+
+.course-details label span {
+    font-size: 0.8em
+}
+
+.course-details input, .category-box select {
+    padding: 0.7em;
+    margin-top: 0.1em;
+    width: 90%;
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    transition: .3s ease-in-out;
+    font-size: .8em;
+    text-align: left;
+    border: 1px solid #ccc;
+    color: var(--text-color)
+}
+
+.description-box textarea {
+    padding: 10px;
+    width: 90%;
+    height:10em;
+    resize:none;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: .3s ease-in-out;
+    color: var(--text-color);
+    /* font-size: 1em */
+}
+
+.course-details input[type="submit"] {
+    background: var(--btn-color-primary);
+    font-weight: 600;
+    border: 0;
+    width: 50%;
+    color: var(--text-color);
+    text-align: center
+    /* transition: 0.2s ease-in */
+}
+
+.course-details input:focus, textarea:focus,  .category-box select:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--text-color);
+}

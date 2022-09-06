@@ -8,6 +8,7 @@ import { Usercourses } from '../Usercourses/Usercourses';
 import { Sidemenu } from '../Sidemenu/Sidemenu';
 import { Videopage } from '../Videopage/Videopage';
 import { AppContext, defaultUser } from './AppContext'
+import { Addcourse } from '../Addcourse/Addcourse';
 
 
 class App extends React.Component {
@@ -117,6 +118,7 @@ logIn = (email, password) => {
             <Route path="/videos" element={<Coursespage/>}/>
             <Route path="/courses" element={<Usercourses/>}/>
             <Route path="/videoplay" element={<Videopage/>}/>
+            <Route path="/add-course" element={<Addcourse/>}/>
             <Route path="*" element={<Navigate to="/videos" replace/>}/>
           </Routes>
         </Sidemenu>
