@@ -85,10 +85,10 @@ exports.createVideo = async (request, response) => {
           response.status(201).send({ message: 'Uploaded video' });
         }
       } else {
-        response.status(300).send('Video Exists');
+        response.status(300).send({ message: 'Video Exists' });
       }
     } else {
-      response.status(404).send('Video URL is incorrect');
+      response.status(404).send({ message: 'Video URL is incorrect' });
     }
   }
 };
