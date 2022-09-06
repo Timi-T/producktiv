@@ -54,7 +54,7 @@ export const Usercourses = () => {
           {
             videos.map((item, index) => {
               return (
-              <Videocard selectVideo={selectVideo} id={item._id} key={index} videoName={item.videoName} videoLink={item.videoLink} description={item.description}/>
+              <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
               )
             })
           }
