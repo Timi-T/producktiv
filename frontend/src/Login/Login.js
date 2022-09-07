@@ -38,7 +38,7 @@ export class Login extends React.Component {
           return <p style={{color:"red"}}>Sorry, an error occured! Try again. </p>
         }
       } else {
-        return <p>Create your Productiv account</p>
+        return <p>Log in to your Productiv account</p>
       }
     }
     return (
