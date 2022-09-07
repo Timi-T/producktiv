@@ -15,7 +15,7 @@ export class Addcourse extends React.Component {
         category: "",
         description: "",
         isLoading: false,
-        statusCode: 201
+        statusCode: null
     }
   }
 
@@ -101,7 +101,9 @@ export class Addcourse extends React.Component {
           </div>
           <div className="video-link-box">
             <label><span> Video Link:</span><br />
-            <input type="url" id="video-link" placeholder="https://youtu.be/zdJEYhA2AZQ" pattern="https://youtu.be/.*" value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
+            <input type="url" id="video-link" placeholder="https://youtu.be/zdJEYhA2AZQ" pattern="https://youtu.be/.*" 
+            oninvalid="this.setCustomValidity('Enter User Name Here')"
+            oninput="this.setCustomValidity('')" value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
             </label>
           </div>
           <div className="category-box">
