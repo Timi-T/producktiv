@@ -50,8 +50,11 @@ exports.createVideo = async (request, response) => {
     const { videoLink } = request.body;
     const uploadDate = new Date().toJSON();
     const items = await getId(videoLink);
+    const regex = new RegExp("https:\/\/youtu.be\/.*");
 
-    if (items) {
+    if ((!regex.test(videoLink)) || (!items)) {
+      response.status(404).send({ message: 'Video URL is incorrect' });
+    } else {
       const videoObj = await getVideoObj(videoLink);
       const videoThumbnail = items.snippet.thumbnails.high.url;
       const vidId = items.id.videoId;
@@ -87,8 +90,6 @@ exports.createVideo = async (request, response) => {
       } else {
         response.status(300).send({ message: 'Video Exists' });
       }
-    } else {
-      response.status(404).send({ message: 'Video URL is incorrect' });
     }
   }
 };
