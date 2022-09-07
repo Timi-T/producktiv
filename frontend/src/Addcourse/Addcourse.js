@@ -102,8 +102,8 @@ export class Addcourse extends React.Component {
           <div className="video-link-box">
             <label><span> Video Link:</span><br />
             <input type="url" id="video-link" placeholder="https://youtu.be/zdJEYhA2AZQ" pattern="https://youtu.be/.*" 
-            oninvalid="this.setCustomValidity('Enter User Name Here')"
-            oninput="this.setCustomValidity('')" value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
+             onInvalid={e => e.target.setCustomValidity("This url does not match the right pattern. Valid Youtube video urls can be found in the share tab below the video")}
+             onInput={e => e.target.setCustomValidity("")} value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
             </label>
           </div>
           <div className="category-box">
