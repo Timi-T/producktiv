@@ -56,6 +56,11 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     white-space: normal;
+    font-weight: 400;
+    font-size:.8em
+  }
+
+  .author p {
     font-weight: 300;
     font-size:.8em
   }

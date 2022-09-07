@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Coursespage.css';
 import { AppContext } from '../App/AppContext';
-import { videos as vids } from './mockvideodata';
 import { ImStatsDots, ImPencil2, ImEmbed2, ImAccessibility } from "react-icons/im";
 import { Videocard } from '../Videocard/Videocard'; 
 import { Loader } from '../Loader/Loader'
@@ -12,7 +11,6 @@ export const Coursespage = () => {
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
-  const allVideos = []
   const getVideos = (resource) => {
     setError("")
     setIsLoading(true)
@@ -40,6 +38,7 @@ export const Coursespage = () => {
 
   useEffect(() => {
     getVideos("videos")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const categorySort = (categoryName=undefined) => {
@@ -51,7 +50,7 @@ export const Coursespage = () => {
   }
 
   const selectVideo = (id) => {
-    const video = videos.filter((vid)=> vid._id == id)
+    const video = videos.filter((vid)=> vid._id === id)
     return(video[0]) 
   }
 
@@ -70,7 +69,7 @@ export const Coursespage = () => {
         {
           videos.map((item, index) => {
             return (
-            <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
+            <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail} userName={`By: ${item.userName}`}/>
             )
           })
         }
