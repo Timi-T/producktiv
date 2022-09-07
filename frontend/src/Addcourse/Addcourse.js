@@ -1,6 +1,10 @@
 import React from 'react';
 import { AppContext } from '../App/AppContext';
 import './Addcourse.css'
+import { ImCheckmark } from "react-icons/im";
+import { Loader } from '../Loader/Loader';
+import { NavLink } from 'react-router-dom'
+
 
 export class Addcourse extends React.Component {
   constructor(props){
@@ -11,7 +15,7 @@ export class Addcourse extends React.Component {
         category: "",
         description: "",
         isLoading: false,
-        statusCode: null
+        statusCode: 201
     }
   }
 
@@ -49,10 +53,9 @@ export class Addcourse extends React.Component {
       headers: {'Content-Type': 'application/json'}
     })
     .then(response =>{
-      console.log(response.status)
       this.setState({statusCode: response.status})
       if (!response.ok) {
-        if (response.status === 401){
+        if (response.status === 401) {
           resetUser()
         }
         throw Error(`${response.status}: ${response.statusText}`)
@@ -62,19 +65,34 @@ export class Addcourse extends React.Component {
     .then((response) => {
       this.setState({isLoading: false})
     })
-    .then((error) => {
+    .catch((error) => {
+      this.setState({isLoading: false})
       console.log(error)
     })
-    // console.log(this.state)
   }
 
   render() {
+    const {isLoading, statusCode} = this.state
+    const errorCheck = (statusCode) => {
+      if (statusCode !== null) {
+        if (statusCode === 201) {
+          return <p style={{color:"green"}}><ImCheckmark/>&nbsp;&nbsp;Video has successfully been added.<br/>Take a look here:&nbsp;<NavLink to="/courses" style={{color:"var(--text-color)"}}>My courses</NavLink></p>
+        } else if (statusCode === 404) {
+          return <p style={{color:"red"}}>Youtube URL is not a valid video.</p>
+        } else if (statusCode === 300) {
+          return <p style={{color:"red"}}>This video already exists.</p>
+        } else {
+          return <p style={{color:"red"}}>Sorry, an error occured! Try again. </p>
+        }
+      }
+    }
     return (
       <div className="all-courses submission-form">
       <h1 style={{marginBottom:"0"}}>Add a course</h1>
       <p>Know some useful resources? Share so others can stay as producktiv as you! Please note that only Youtube video urls are currently accepted.</p>
-       <form onSubmit={this.handleCourseSubmit}>
+       {isLoading ? <Loader loadingText={"Submitting video..."}/> : <form onSubmit={this.handleCourseSubmit}>
       <div className="login-box add-course-box">
+        {errorCheck(statusCode)}
         <div className="course-details">
           <div className="video-name-box">
             <label><span>Video Name:</span><br />
@@ -83,7 +101,7 @@ export class Addcourse extends React.Component {
           </div>
           <div className="video-link-box">
             <label><span> Video Link:</span><br />
-            <input type="url" id="video-link" placeholder="https://youtu.be/zdJEYhA2AZQ" value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
+            <input type="url" id="video-link" placeholder="https://youtu.be/zdJEYhA2AZQ" pattern="https://youtu.be/.*" value={this.state.videoLink} onChange={this.handleChangeVideoLink} required/>
             </label>
           </div>
           <div className="category-box">
@@ -107,7 +125,7 @@ export class Addcourse extends React.Component {
           </div>
         </div>  
       </div>
-      </form>
+      </form>}
       </div>
     )
   }
