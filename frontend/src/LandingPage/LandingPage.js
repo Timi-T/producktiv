@@ -2,6 +2,8 @@ import React from 'react';
 import { Login } from '../Login/Login';
 import { Signup } from '../Signup/Signup';
 import './LandingPage.css'
+import bgduck from './bgduck.jpg'
+
 
 export default class LandingPage extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ export default class LandingPage extends React.Component {
     return(
       <>
       <div className="about-app">
+        {/* <img src={bgduck} width="500" height="400"></img> */}
       </div>
       <div className="login-section">
         <div className="login-header">

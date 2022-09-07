@@ -10,8 +10,27 @@
 
 .about-app  {
     flex: 1.2;
-    background: #334155;
+    background: #212b38;
+    /* background-image: url("bgduck.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-blend-mode: hue; */
+    /* background-position: bottom; */
+    position: relative;
+    /* background-size:100% auto; */
+}
+
+.about-app::after{
+    content: "";
+    background: url("bgduck.jpg");
+    opacity: 0.05;
+    top: 0;
+    left: -23%;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    /* background-size:100% auto; */
     
+    /* z-index: -1; */
 }
 
 .about-app h1 {

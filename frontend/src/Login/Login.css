@@ -41,10 +41,11 @@
     padding: 0.7em;
     margin-top: 0.1em;
     width: 90%;
-    border: 1px solid var(--text-color);
+    border: 1px solid #ccc;
     border-radius: 6px;
     transition: .3s ease-in-out;
     font-size: .8em;
+    
 }
 
 .login-details input:focus {
@@ -67,6 +68,7 @@
     background: darkblue
 } */
 
-.login-details label span {
-    font-size: 0.87rem
+.login-details label span, .signup-details label span {
+    font-size: 0.87rem;
+    color: var(--text-color)
 }
