@@ -17,7 +17,7 @@ router.post('/api/users', (req, res) => {
 
 router.post('/api/login', AuthController.loginUser);
 
-router.delete('/api/signout', UserController.deleteUser);
+router.delete('/api/users/flush', UserController.deleteUser);
 
 router.delete('/api/logout', UserController.deleteToken);
 

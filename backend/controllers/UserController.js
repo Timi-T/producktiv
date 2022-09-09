@@ -103,7 +103,7 @@ class UserController {
       delete user.email;
       delete user.password;
     });
-    response.send(users);
+    response.send({ users });
   }
 
   // Get all videos posted by a user

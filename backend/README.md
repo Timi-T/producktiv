@@ -59,22 +59,19 @@
 
   <li>
     <h3>POST '/api/login'</h3>
-    <h4>using curl -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
+    <p>the base64 generated will be Ym9iQGR5bGFuLmNvbTp0b3RvMTIzNCE=</p>
+    <h4>using curl -> curl -XPOST http://localhost:5001/api/login -H "Authorization: Basic Ym9iQGR5bGFuLmNvbTp0b3RvMTIzNCE="</h4>
     <ul>
       <li>Requires Authentication: False</li>
       <li>Authenticates a user and logs in the user</li>
       <li>
-        Request argumets:
-        <p>{</p>
-        <p>- email: string</p>
-        <p>- password: string</p>
-        <p>}</p>
+        Request argumets: None, requires headers
       </li>
       <li>
         <p>ON SUCCESS -> Returns a session token that expires after 24 hours</p>
         <p>Status code -> 200 (OK)</p>
         <p>{</p>
-        <p>- token: "xxxabc000"</p>
+        <p>- users information + token: "xxxabc000"</p>
         <p>}</p>
       </li>
       <li>
@@ -189,7 +186,7 @@
 
 
   <li>
-    <h3>DELETE '/api/signout'</h3>
+    <h3>DELETE '/api/users/flush'</h3>
     <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
     <h4>using curl -> curl -XDELETE http://localhost:5001/api/signout --cookie "auth_key=SESSION_TOKEN"</h4>
     <ul>
@@ -341,13 +338,13 @@
         <p>- videoName: "VIDEO_NAME"</p>
         <p>- description: "SHORT_DESCRIPTION"</p>
         <p>- category: "CATEGORY"</p>
-        <p>- videoLink: "VIDEO_LINK"</p>
-        <P>- uploadDate: "UPLOAD_DATE"</p>
-        <P>- userId: "USER_ID"</p>
-        <P>- stats: {"viewCount: '0', "likeCount": '0', "commentCount": '0'</p>
-        <P>- comments: [COMMENT IDS]</p>
-        <P>- ratings: [RATING IDS]</p>
-        <P>- avgRating: AVG_RATING</p>
+        <p>- embedLink: "EMBED_LINK"</p>
+        <p>- uploadDate: "UPLOAD_DATE"</p>
+        <p>- userId: "USER_ID"</p>
+        <p>- stats: {"viewCount: '0', "likeCount": '0', "commentCount": '0'</p>
+        <p>- comments: [COMMENT IDS]</p>
+        <p>- ratings: [RATING IDS]</p>
+        <p>- avgRating: AVG_RATING</p>
         <p>}</p>
       </li>
       <li>

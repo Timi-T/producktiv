@@ -9,8 +9,12 @@ const { ObjectId } = require('mongodb');
 class AuthController {
 
   async loginUser (req, res) {
-    const { email } = req.body;
-    const { password } = req.body;
+    const auth = req.headers.authorization;
+    const basic = auth.split(' ')[1];
+    const decoded = Buffer.from(basic, 'base64').toString('binary');
+    const values = decoded.split(':');
+    const email = values[0];
+    const password = values[1];
     const user = await db.get('users', { email, password: sha1(password) });
     if (user) {
       const authKey = uuid();
