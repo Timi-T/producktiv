@@ -59,6 +59,16 @@ class UserController {
           const video = await dbClient.del('videos', del);
 	}
       }
+      const categories = ['Programming', 'Arts', 'Life Style', 'Business'];
+      for (const category of categories) {
+        const categ = await dbClient.get('categories', { name: category });
+        const videos = categ.videos;
+	for (const vid of videos) {
+          if (vid.userId === userId) {
+            await dbClient.client.db('producktiv').collection('categories').updateOne({ name: category }, { $pull: { videos: vid } });
+	  }
+	}
+      }
       const user = await dbClient.del('users', given);
       if (user === 'Deleted') {
         await redisClient.del(key);
@@ -93,7 +103,7 @@ class UserController {
       delete user.email;
       delete user.password;
     });
-    response.send(users);
+    response.send({ users });
   }
 
   // Get all videos posted by a user
