@@ -100,11 +100,18 @@ exports.getAllVideos = async (request, response) => {
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
-    const videos = await dbClient.getVideos('videos');
-    if (videos) {
-      response.status(200).send({ videos });
+    const values = await redisClient.get('videos');
+    if (values) {
+      const videos = JSON.parse(values);
+      response.status(200).send({ videos }); 
     } else {
-      response.status(404).send({ error: 'No Video Doesn\'t exists' });
+      const videos = await dbClient.getVideos('videos');
+      if (videos) {
+        await redisClient.setCategory('videos', JSON.stringify(videos));
+        response.status(200).send({ videos });
+      } else {
+        response.status(404).send({ error: 'No Video Doesn\'t exists' });
+      }
     }
   }
 };
