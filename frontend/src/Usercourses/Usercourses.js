@@ -8,7 +8,6 @@ export const Usercourses = () => {
   const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState("")
   useEffect(() => {
   setIsLoading(true)
   fetch("http://localhost:5001/api/users/videos", { credentials: "include"})
@@ -33,7 +32,7 @@ export const Usercourses = () => {
   }, [])
 
   const selectVideo = (id) => {
-    const video = videos.filter((vid)=> vid._id == id)
+    const video = videos.filter((vid)=> vid._id === id)
     return(video[0]) 
   }
 
@@ -47,7 +46,7 @@ export const Usercourses = () => {
     {!isLoading &&
     <>
     {
-      videos.length == 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
+      videos.length === 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
       <>
         <p> View all the course videos you have submitted.</p>
         <div className="videos-list">

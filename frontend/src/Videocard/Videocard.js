@@ -1,5 +1,5 @@
 import "./Videocard.css"
-import { NavLink, Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 export const Videocard = (props) => {
   const data = props.selectVideo(props.id)
@@ -7,7 +7,7 @@ export const Videocard = (props) => {
     <Link to="/videoplay" state={{videoData: data}}
      className="videoplay">
     <article class="video">
-      <img src={props.videoThumbnail} />
+      <img src={props.videoThumbnail} alt="video-thumbnail"/>
       <div class="details">
         <div class="video-name">
           <h3>{props.videoName}</h3>
