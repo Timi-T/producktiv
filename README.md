@@ -54,7 +54,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 NB: Both Backend and Frontend must be running to have a fully functional application.
 
 ## Screenshots
+<img src="https://imgur.com/QxuLevX.png" alt="login">
+<img src="https://imgur.com/S3nkfeP.png" alt="signup">
 <img src="https://imgur.com/AUcU9Kq.png" alt="submission page">
 <img src="https://imgur.com/zJAIeGH.png" alt="my-courses page">
-<img src="https://imgur.com/QxuLevX.png" alt="login">
-<img src="https://imgur.com/S3nkfeP.png" alt="login">
+<img src="https://imgur.com/r3h7jBf.png" alt="videoplay">
+
+## License  
+Producktiv is under the MIT license. See the [LICENSE](https://github.com/sourcerer-io/sourcerer-app/blob/develop/LICENSE.md) for more information.
