@@ -16,6 +16,11 @@
     /* background-blend-mode: hue; */
     /* background-position: bottom; */
     position: relative;
+    padding: .3em .8em;
+    display: flex;
+    flex-direction: column;
+    gap:1em
+    /* text-align: center; */
     /* background-size:100% auto; */
 }
 
@@ -28,15 +33,34 @@
     bottom: 0;
     right: 0;
     position: absolute;
-    /* background-size:100% auto; */
-    
-    /* z-index: -1; */
+    pointer-events: none;
 }
 
 .about-app h1 {
-    font-size: 3rem;
-    color: #f8fafc;
-    text-align: center
+    font-size: 2.2em;
+    color: var(--btn-color-primary);
+    border-bottom: 1px solid white
+}
+
+.about-app p {
+    font-weight: 200;
+    font-size: .85em;
+    color: white;
+    /* padding: .3em .8em */
+}
+
+
+.about-app li {
+    padding: 0.05em;
+    list-style: none;
+}
+
+.about-app li p{
+    color: var(--btn-color-primary);
+}
+
+.about-app a{
+    color:white;
 }
 
 .login-header {
