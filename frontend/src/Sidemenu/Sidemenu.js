@@ -31,7 +31,7 @@ export const Sidemenu = (props) => {
       <div className="sidemenu-box">
         <div className="sidemenu">
           <div className="sidemenu-heading">
-            <h1>PRODUCTIV</h1>
+            <h1>PRODUCKTIV</h1>
             <div className="user-details">
               <p style={{color: "white"}}>Welcome, {data.user.username}!</p>
             </div>
