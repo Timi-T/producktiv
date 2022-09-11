@@ -48,7 +48,7 @@ export default class LandingPage extends React.Component {
           </ul>
         </div>
         <div>
-          <p><ImGithub/><a href="https://github.com/Timi-T/producktiv/">&nbsp;Link to Github Repo</a></p>
+          <p><ImGithub/><a href="https://github.com/Timi-T/producktiv/" target="_blank">&nbsp;Link to Github Repo</a></p>
         </div>
         
       </div>
