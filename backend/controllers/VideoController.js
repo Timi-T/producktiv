@@ -114,7 +114,7 @@ exports.createVideo = async (request, response) => {
   }
 };
 
-// Get all videos posted by a user
+// Get all videos posted by all users
 exports.getAllVideos = async (request, response) => {
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
