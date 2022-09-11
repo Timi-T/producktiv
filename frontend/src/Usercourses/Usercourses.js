@@ -2,6 +2,7 @@ import { AppContext } from '../App/AppContext';
 import { Videocard } from '../Videocard/Videocard';
 import React, { useState, useEffect } from 'react';
 import { Loader } from '../Loader/Loader'
+import './Usercourses.css'
 
 
 export const Usercourses = () => {
@@ -36,6 +37,30 @@ export const Usercourses = () => {
     return(video[0]) 
   }
 
+  const deleteVideo = (id) => {
+    const vids = videos.filter((vid)=> vid._id !== id)
+    fetch(`http://localhost:5001/api/videos/${id}`, { 
+      method: "DELETE",
+      credentials: "include" 
+    })
+    .then((response) => {
+      console.log(response)
+      if (!response) {
+        if (response.status === 401) {
+          resetUser()
+        }
+        throw Error(`${response.status}: ${response.statusText}`)
+      }
+      return response.json()
+    })
+    .then((response)=>{
+      setVideos(vids)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
   // const userVideos = user.videos
   // console.log(userVideos)
   return(
@@ -49,11 +74,11 @@ export const Usercourses = () => {
       videos.length === 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
       <>
         <p> View all the course videos you have submitted.</p>
-        <div className="videos-list">
+        <div className="videos-list user-courses">
           {
             videos.map((item, index) => {
               return (
-              <Videocard selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
+              <Videocard deleteVideo={deleteVideo} selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
               )
             })
           }

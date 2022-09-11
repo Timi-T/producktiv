@@ -78,6 +78,9 @@
     font-size: 1.3em;
 }
 
+.video .delete p{
+    display: none;
+}
 
 .error p {
     /* color: red */

@@ -1,12 +1,15 @@
 import "./Videocard.css"
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { ImBin } from "react-icons/im";
+
 
 export const Videocard = (props) => {
   const data = props.selectVideo(props.id)
   return (
-    <Link to="/videoplay" state={{videoData: data}}
-     className="videoplay">
+    
     <article class="video">
+      <Link to="/videoplay" state={{videoData: data}}
+     className="videoplay">
       <img src={props.videoThumbnail} alt="video-thumbnail"/>
       <div class="details">
         <div class="video-name">
@@ -19,7 +22,11 @@ export const Videocard = (props) => {
           <p>{props.userName}</p>
         </div>
       </div>
+      </Link>
+      <div class="delete">
+          <p onClick={() => props.deleteVideo(props.id)}><ImBin/>delete</p>
+      </div>
     </article>
-    </Link>
+    
   )
 }

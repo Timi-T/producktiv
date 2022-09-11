@@ -60,9 +60,12 @@
     font-size:.8em
   }
 
-  .author p {
+  .author p, .delete p {
     font-weight: 300;
     font-size:.8em
   }
   
+  .delete p:hover {
+    text-decoration: underline
+  }
   
