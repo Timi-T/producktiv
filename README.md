@@ -20,7 +20,10 @@ Firstly, you will need to [clone](https://help.github.com/en/articles/cloning-a-
 ```bash
 npm install
 ```
-3. **Start the app**
+3. **Install MongoDB**  
+   MongoDB installation process  
+
+4. **Start the app**
 In order to run the app(backend), use `npm run start-server`. You can change the script in the `package.json` file.
    
 ```bash
@@ -40,9 +43,6 @@ Open [http://localhost:5001](http://localhost:5000) to view it in the browser.
 ```bash
 npm install
 ```
-3. **Install MongoDB**  
-   MongoDB installation process  
-
 3. **Start the app**
    The frontend app was built using create-react-app. In order to run the app(frontend) in development mode use `npm start`. You can change the script in the `package.json` file.
    
