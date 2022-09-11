@@ -9,6 +9,7 @@ import { Sidemenu } from '../Sidemenu/Sidemenu';
 import { Videopage } from '../Videopage/Videopage';
 import { AppContext, defaultUser } from './AppContext'
 import { Addcourse } from '../Addcourse/Addcourse';
+import {Buffer} from 'buffer';
 
 
 class App extends React.Component {
@@ -65,14 +66,19 @@ logOut = () => {
 
 logIn = (email, password) => {
   this.setState({isLoading: true})
+  const combo = `${email}:${password}`;
+  const buffer = Buffer.from(combo).toString('base64');
+  const basic = `Basic ${buffer}`;
     fetch('http://localhost:5001/api/login', 
     {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      // body: JSON.stringify({email, password}),
       credentials: "include",
-      headers: {'Content-Type': 'application/json'}
+      // headers: {'Content-Type': 'application/json'}
+      headers: {Authorization: basic}
     })
     .then((response) => {
+      console.log(response)
       if (!response.ok) {
         this.setErrorCode(response.status)
         throw Error(`${response.status}: ${response.statusText}`)
