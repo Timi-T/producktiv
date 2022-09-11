@@ -69,7 +69,7 @@
     animation-name: slidein;
   }
   
-.error{
+.error, .notice{
     /* background: green; */
     height: 80%;
     display: flex;
@@ -78,10 +78,11 @@
     font-size: 1.3em;
 }
 
+.error p {
+    color: red
+}
+
 .video .delete p{
     display: none;
 }
 
-.error p {
-    /* color: red */
-}

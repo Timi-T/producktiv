@@ -65,7 +65,9 @@ export const Coursespage = () => {
       <input type="radio" id="business" name="course-choice"/><label htmlFor="business" class="selected" onClick={()=>categorySort("Business")}><ImStatsDots/>Business</label>
       <input type="radio" id="lifestyle" name="course-choice"/><label htmlFor="lifestyle" class="selected" onClick={()=>categorySort("Lifestyle")}><ImAccessibility/>Lifestyle</label>
       </div>
-      { isLoading ? <Loader loadingText={"Loading content..."}/> : (error.length !== 0 ? <div className="error"><p>There are no videos in this category. Add one?</p></div> :<div className="videos-list">
+      {error.length !== 0 && <div className="error"><p>Sorry, an error occured while loading videos. Try again.</p></div> }
+      { isLoading ? <Loader loadingText={"Loading content..."}/> : (
+        videos.length === 0 ? <div className="notice"><p>There are no videos in this category. Add one?</p></div> : <div className="videos-list">
         {
           videos.map((item, index) => {
             return (
