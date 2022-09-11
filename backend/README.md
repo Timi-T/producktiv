@@ -40,6 +40,11 @@ App listening on port 5001
   "password": "helloworld"
 }
 ```
+<p>Example:</p>
+
+```
+curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"username": "Samra", "email": "samsol40@gmail.com", "password": "helloworld"}'; echo ""
+```
 - Returns: a success message.
 ```
 {"success":true}
@@ -76,6 +81,11 @@ App listening on port 5001
 {
   headers: "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
 }
+```
+<p>Example:</p>
+
+```
+curl 0.0.0.0:5001/api/login -XPOST -H "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="; echo ""
 ```
 - Returns: The users information with the password that is hashed, and the other information like videos and you'll get a token that you will use as cookie.
 ```
@@ -128,6 +138,11 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
   "description": "This is a video trial to see if a vide can be installed"
 }
 ```
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XPOST -H "Content-Type: application/json" -d '{"videoName": "Trial #1 Video", "category":"Programming", "videoLink": "https://youtu.be/6tNS--WetLI", "description": "This is a video trial to see if a vide can be installed"}'; echo ""
+```
 - Returns: Uploaded Message.
 ```
 {"message":"Uploaded video"}
@@ -173,6 +188,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 
 - This will show all users.
 - Request body: None.
+
+<p>Example:</p>
+
+```
+ curl  0.0.0.0:5001/api/users -XGET; echo ""
+```
 - Returns: All the users.
 ```
 {
@@ -226,6 +247,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/videos -XGET; echo ""
+```
 - Returns: All the user's videos.
 ```
 {
@@ -270,6 +297,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request body: None.
+
+<p>Example:</p>
+
+```
+ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XGET; echo ""
+```
 - Returns: All the videos by all users.
 ```
 {
@@ -317,6 +350,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request Arguments: Id of the video.
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XGET; echo ""
+```
 - Returns: All of the information of a specific video.
 ```
 {
@@ -361,6 +400,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request Arguments: Name of a category.
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/categories/Programming -XGET; echo ""
+```
 - Returns: All of the information of a category.
 ```
 {
@@ -407,6 +452,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request Arguments: Id of a Video.
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XDELETE; echo""
+```
 - Returns: Successful message of deletion.
 ```
 {"message":"Video Deleted"}
@@ -428,6 +479,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/logout -XDELETE; echo ""
+```
 - Returns: Successful message of logging off.
 ```
 {"message":"GoodBye"}
@@ -443,6 +500,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 - Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/flush -XDELETE; echo ""
+```
 - Returns: Successful message of deleting a user.
 ```
 {"message":"User Deleted"}
