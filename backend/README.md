@@ -45,7 +45,7 @@ App listening on port 5001
 ```
 curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"username": "Samra", "email": "samsol40@gmail.com", "password": "helloworld"}'; echo ""
 ```
-- Returns: a success message.
+- Returns: a success message with status code 201.
 ```
 {"success":true}
 ```
@@ -58,10 +58,11 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
   "password": "helloworld"
 }
 ```
-- Returns: an error message and status code 400.
+- Returns: an error message with a status code 404.
 ```
 {"error":"Missing username"}
-`
+```
+
 <p>If a user of the same email exists.</p>
 
 ```
@@ -71,7 +72,7 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
   "password": "helloworld"
 }
 ```
-- Returns: an error message and status code 400.
+- Returns: an error message with a status code 400.
 ```
 {"error":"User exists"}
 ```
@@ -79,7 +80,7 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
 
 <h3>Login a user</h3>
 
-<p>Let's first create base64 encoded text using this link <a href="https://base64.guru/converter">for base converter</a>. From the above email and password you can create a text that will be encoded. Eg. samsol40@gmail.com:helloworld. Add a colon between the email and password. Convert this text to base64 in the link above.</p>
+<p>Let's first create base64 encoded text using this link <a href="https://base64.guru/converter">for base converter</a>. From the above email and password you can create a text that will be encoded. Example. samsol40@gmail.com:helloworld. Add a colon between the email and password. Convert this text to base64 in the link above.</p>
 
 <img src='./images/encoding.png' alt="encoded" align="center">
 
@@ -89,7 +90,7 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
 `POST '/api/login'`
 
 - This will login a user and create a token to be used as a cookie during a session.
-- Request Header: c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ=
+- Request Header:
 ```
 {
   headers: "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
@@ -100,7 +101,7 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
 ```
 curl 0.0.0.0:5001/api/login -XPOST -H "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="; echo ""
 ```
-- Returns: The users information with the password that is hashed, and the other information like videos and you'll get a token that you will use as cookie.
+- Returns: The users information with the password that is hashed, and the other information like videos and you'll get a token that you will use as cookie with status code 200.
 ```
 {
   "user": 
@@ -121,13 +122,13 @@ curl 0.0.0.0:5001/api/login -XPOST -H "Authorization: Basic c2Ftc29sNDBAZ21haWwu
 
 <p>If the user doesn't exist, you'll receive an error.</p>
 
-- Request Header: c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ=
+- Request Header:
 ```
 {
   headers: "Authorization: Basic c2FtcmFzb2xvbW9uNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
 }
 ```
-- Returns: error about an unauthorized user and status code 401.
+- Returns: error about an unauthorized user with status code 401.
 ```
 {"error":"Unauthorized"}
 ```
@@ -148,15 +149,15 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
   "videoName": "Trial #1 Video",
   "category": "Programming",
   "videoLink": "https://youtu.be/6tNS--WetLI",
-  "description": "This is a video trial to see if a vide can be installed"
+  "description": "This is a video trial to see if a video can be installed"
 }
 ```
 <p>Example:</p>
 
 ```
-curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XPOST -H "Content-Type: application/json" -d '{"videoName": "Trial #1 Video", "category":"Programming", "videoLink": "https://youtu.be/6tNS--WetLI", "description": "This is a video trial to see if a vide can be installed"}'; echo ""
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XPOST -H "Content-Type: application/json" -d '{"videoName": "Trial #1 Video", "category":"Programming", "videoLink": "https://youtu.be/6tNS--WetLI", "description": "This is a video trial to see if a video can be installed"}'; echo ""
 ```
-- Returns: Uploaded Message.
+- Returns: Uploaded Message with status code 201.
 ```
 {"message":"Uploaded video"}
 ```
@@ -169,10 +170,10 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
   "videoName": "Trial #1 Video",
   "category": "Programming",
   "videoLink": "https://youtu.be/6tNS--WetLI",
-  "description": "This is a video trial to see if a vide can be installed"
+  "description": "This is a video trial to see if a video can be installed"
 }
 ```
-- Returns: error message about expired session since cookie isn't provided and status code 401.
+- Returns: error message about expired session since cookie isn't provided with status code 401.
 ```
 {"message":"Cookie Expired"}
 ```
@@ -187,15 +188,15 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 {
   "category": "Programming",
   "videoLink": "https://youtu.be/6tNS--WetLI",
-  "description": "This is a video trial to see if a vide can be installed"
+  "description": "This is a video trial to see if a video can be installed"
 }
 ```
-- Returns: Error message about missing attribute and status code 404.
+- Returns: Error message about missing attribute with status code 404.
 ```
 {"error":"Missing Video Name"}
 ```
 
-<p>If someone tries to add a video that already exists in database.</p>
+<p>If someone tries to add a video that already exists in database..</p>
 
 - Request Cookie:
 ```
@@ -207,13 +208,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
   "videoName": "Trial #1 Video",
   "category": "Programming",
   "videoLink": "https://youtu.be/6tNS--WetLI",
-  "description": "This is a video trial to see if a vide can be installed"
+  "description": "This is a video trial to see if a video can be installed"
 }
 ```
-- Returns: Message about an existing video and status code 300.
-
+- Returns: Message about an existing video with status code 300.
 ```
-{ message: 'Video Exists' }
+{ message: "Video Exists"}
 ```
 
 <p>If a URL isn't valid.</p>
@@ -228,13 +228,12 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
   "videoName": "Trial #1 Video",
   "category": "Programming",
   "videoLink": "https://youtu.be/2_34seHytlro5609",
-  "description": "This is a video trial to see if a vide can be installed"
+  "description": "This is a video trial to see if a video can be installed"
 }
 ```
-- Returns: Message about video URL invalid and status code 404.
-
+- Returns: Message about video URL invalid with status code 404.
 ```
-{ message: 'Video URL is incorrect' }
+{message: "Video URL is incorrect"}
 ```
 ---
 <h3>Show all users</h3>
@@ -262,7 +261,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
         "category":"Programming",
         "userId":"631e0e61e3a5f0219ea3059e",
         "uploadDate":"2022-09-11T17:49:56.870Z",
-        "description":"This is a video trial to see if a vide can be installed",
+        "description":"This is a video trial to see if a video can be installed",
         "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
         "userName":"Samra",
         "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
@@ -308,7 +307,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/videos -XGET; echo ""
 ```
-- Returns: All the user's videos.
+- Returns: All the user's videos with status code 200.
 ```
 {
   "videos":
@@ -317,7 +316,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/u
     "category":"Programming",
     "userId":"631e0e61e3a5f0219ea3059e",
     "uploadDate":"2022-09-11T17:49:56.870Z",
-    "description":"This is a video trial to see if a vide can be installed",
+    "description":"This is a video trial to see if a video can be installed",
     "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
     "userName":"Samra",
     "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
@@ -337,7 +336,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/u
 
 <p>If there are no videos related to a user</p>
 
-- Returns: an empty list. 
+- Returns: an empty list.
 ```
 {"videos":[]}
 ```
@@ -358,7 +357,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
  curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XGET; echo ""
 ```
-- Returns: All the videos by all users.
+- Returns: All the videos by all users with status code 200.
 ```
 {
   "videos":
@@ -367,7 +366,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
     "category":"Programming",
     "userId":"631e0e61e3a5f0219ea3059e",
     "uploadDate":"2022-09-11T17:49:56.870Z",
-    "description":"This is a video trial to see if a vide can be installed",
+    "description":"This is a video trial to see if a video can be installed",
     "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
     "userName":"Samra",
     "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
@@ -388,7 +387,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 
 <p>If no video exists in the database</p>
 
-- Returns: error message and status code 404.
+- Returns: error message with status code 404.
 ```
 { error: 'No Videos Available' }
 ```
@@ -411,7 +410,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XGET; echo ""
 ```
-- Returns: All of the information of a specific video.
+- Returns: All of the information of a specific video with status code 200.
 ```
 {
   "video":
@@ -421,7 +420,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
       "category":"Programming",
       "userId":"631e0e61e3a5f0219ea3059e",
       "uploadDate":"2022-09-11T17:49:56.870Z",
-      "description":"This is a video trial to see if a vide can be installed",
+      "description":"This is a video trial to see if a video can be installed",
       "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
       "userName":"Samra",
       "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
@@ -439,7 +438,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
 ```
 <p>If a video by that id doesn't exist</p>
 
-- Returns: error message and status code 404.
+- Returns: error message with status code 404.
 ```
 { error: 'Video Doesn't exist' }
 ```
@@ -461,7 +460,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/categories/Programming -XGET; echo ""
 ```
-- Returns: All of the information of a category.
+- Returns: All of the information of a category with status code 200.
 ```
 {
   "videos":
@@ -470,7 +469,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/c
     "category":"Programming",
     "userId":"631e0e61e3a5f0219ea3059e",
     "uploadDate":"2022-09-11T17:49:56.870Z",
-    "description":"This is a video trial to see if a vide can be installed",
+    "description":"This is a video trial to see if a video can be installed",
     "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
     "userName":"Samra",
     "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
@@ -491,7 +490,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/c
 
 <p>If a category doesn't exist</p>
 
-- Returns: error message and status code 404.
+- Returns: error message with status code 404.
 ```
 { error: 'Category Doesn't exist' }
 ```
@@ -513,13 +512,13 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XDELETE; echo""
 ```
-- Returns: Successful message of deletion.
+- Returns: Successful message of deletion with status code 200.
 ```
 {"message":"Video Deleted"}
 ```
 <p>If the given ID of the video doesn't exist</p>
 
-- Returns: error message and status code 404.
+- Returns: error message with status code 404.
 ```
 {"error":"Video Doesn't exist"}
 ```
@@ -540,7 +539,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/logout -XDELETE; echo ""
 ```
-- Returns: Successful message of logging off.
+- Returns: Successful message of logging off and status code 200.
 ```
 {"message":"GoodBye"}
 ```
@@ -561,7 +560,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 ```
 curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/flush -XDELETE; echo ""
 ```
-- Returns: Successful message of deleting a user.
+- Returns: Successful message of deleting a user with status code 200.
 ```
 {"message":"User Deleted"}
 ```
@@ -569,6 +568,6 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/u
 
 - Returns: error message with status code 401.
 ```
-{ error: 'User does not exist' }
+{error: 'User does not exist'}
 ```
 ---
