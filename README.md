@@ -21,7 +21,13 @@ Firstly, you will need to [clone](https://help.github.com/en/articles/cloning-a-
 npm install
 ```
 3. **Install MongoDB**  
-   MongoDB installation process  
+   [MongoDB installation guide for ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/) (NB: Install your OS equivalent)
+   After installing, open your terminal and run:
+```bash
+sudo systemctl start mongod
+```
+(NB: run your OS equivalent of this command)
+
 
 4. **Start the app**
 In order to run the app(backend), use `npm run start-server`. You can change the script in the `package.json` file.
@@ -29,7 +35,7 @@ In order to run the app(backend), use `npm run start-server`. You can change the
 ```bash
 npm run start-server
 ```
-Open [http://localhost:5001](http://localhost:5000) to view it in the browser.
+App will be hosted at [http://localhost:5001](http://localhost:5001). You can now test with the [API endpoints](./backend/README.md).
 
 
 ## Frontend
