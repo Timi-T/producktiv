@@ -58,15 +58,28 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
   "password": "helloworld"
 }
 ```
-- Returns: an error message.
+- Returns: an error message and status code 400.
 ```
 {"error":"Missing username"}
+`
+<p>If a user of the same email exists.</p>
+
+```
+{
+  "username": "Samra",
+  "email": "samrasol40@gmail.com",
+  "password": "helloworld"
+}
+```
+- Returns: an error message and status code 400.
+```
+{"error":"User exists"}
 ```
 ---
 
-<h3>Login in a user</h3>
+<h3>Login a user</h3>
 
-<p>Let's first create base64 encoded text using this link <a>https://base64.guru/converter</a>. From the above email and password you can create a text that will be encoded. Eg. samsol40@gmail.com:helloworld. Add a colon between the email and password. Convert this text to base64 in the link above.</p>
+<p>Let's first create base64 encoded text using this link <a href="https://base64.guru/converter">for base converter</a>. From the above email and password you can create a text that will be encoded. Eg. samsol40@gmail.com:helloworld. Add a colon between the email and password. Convert this text to base64 in the link above.</p>
 
 <img src='./images/encoding.png' alt="encoded" align="center">
 
@@ -75,8 +88,8 @@ curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"use
 
 `POST '/api/login'`
 
-- This will login in a user and create a token to be used as a cookie during a session.
-- Request Header: 
+- This will login a user and create a token to be used as a cookie during a session.
+- Request Header: c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ=
 ```
 {
   headers: "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
@@ -108,13 +121,13 @@ curl 0.0.0.0:5001/api/login -XPOST -H "Authorization: Basic c2Ftc29sNDBAZ21haWwu
 
 <p>If the user doesn't exist, you'll receive an error.</p>
 
-- Request Header:
+- Request Header: c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ=
 ```
 {
   headers: "Authorization: Basic c2FtcmFzb2xvbW9uNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
 }
 ```
-- Returns: error about an unauthorized user
+- Returns: error about an unauthorized user and status code 401.
 ```
 {"error":"Unauthorized"}
 ```
@@ -159,7 +172,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
   "description": "This is a video trial to see if a vide can be installed"
 }
 ```
-- Returns: error message about expired session since cookie isn't provided.
+- Returns: error message about expired session since cookie isn't provided and status code 401.
 ```
 {"message":"Cookie Expired"}
 ```
@@ -177,12 +190,54 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
   "description": "This is a video trial to see if a vide can be installed"
 }
 ```
-- Returns: Error message about missing attribute.
+- Returns: Error message about missing attribute and status code 404.
 ```
 {"error":"Missing Video Name"}
 ```
+
+<p>If someone tries to add a video that already exists in database.</p>
+
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/6tNS--WetLI",
+  "description": "This is a video trial to see if a vide can be installed"
+}
+```
+- Returns: Message about an existing video and status code 300.
+
+```
+{ message: 'Video Exists' }
+```
+
+<p>If a URL isn't valid.</p>
+
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/2_34seHytlro5609",
+  "description": "This is a video trial to see if a vide can be installed"
+}
+```
+- Returns: Message about video URL invalid and status code 404.
+
+```
+{ message: 'Video URL is incorrect' }
+```
 ---
-<h3>Showing all users</h3>
+<h3>Show all users</h3>
 
 `GET '/api/users'`
 
@@ -237,7 +292,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 {"users":[]}
 ```
 ---
-<h3>Showing user's videos</h3>
+<h3>Show user's videos</h3>
 
 `GET '/api/users/videos'`
 
@@ -282,7 +337,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/u
 
 <p>If there are no videos related to a user</p>
 
-- Returns: 
+- Returns: an empty list. 
 ```
 {"videos":[]}
 ```
@@ -333,7 +388,7 @@ cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
 
 <p>If no video exists in the database</p>
 
-- Returns: error message.
+- Returns: error message and status code 404.
 ```
 { error: 'No Videos Available' }
 ```
@@ -384,9 +439,9 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
 ```
 <p>If a video by that id doesn't exist</p>
 
-- Returns: error message.
+- Returns: error message and status code 404.
 ```
-{ error: 'Video Doesn't exists' }
+{ error: 'Video Doesn't exist' }
 ```
 ---
 <h3>Get category</h3>
@@ -436,7 +491,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/c
 
 <p>If a category doesn't exist</p>
 
-- Returns: error message
+- Returns: error message and status code 404.
 ```
 { error: 'Category Doesn't exist' }
 ```
@@ -464,12 +519,12 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/v
 ```
 <p>If the given ID of the video doesn't exist</p>
 
-- Returns: error message
+- Returns: error message and status code 404.
 ```
-{"error":"Video Doesn't exists"}
+{"error":"Video Doesn't exist"}
 ```
 ---
-<h3>Log out a user</h3>
+<h3>Logout a user</h3>
 
 `DELETE '/api/logout'`
 
@@ -512,7 +567,7 @@ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/u
 ```
 <p>If the given cookie is wrong</p>
 
-- Returns: error message
+- Returns: error message with status code 401.
 ```
 { error: 'User does not exist' }
 ```
