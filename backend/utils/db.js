@@ -1,6 +1,7 @@
 // Mongo database controller
 
 const { MongoClient } = require('mongodb');
+const Category = require('../dataObjects/categoryObject');
 
 class DBClient {
    constructor () {
@@ -12,7 +13,18 @@ class DBClient {
     client.connect();
     this.client = client;
     this.database = database;
-  } 
+    this.setupDB(['Art', 'Business', 'Lifestyle', 'Programming']);
+  }
+
+  async setupDB (categories) {
+    categories.forEach(async (category) => {
+      const categoryExist = await this.get('categories', { name: category });
+      if (!categoryExist) {
+        const categ = new Category(category);
+        await this.client.db('producktiv').collection('categories').insertOne(categ);
+    }
+    });
+  }
 
   async post (collectionName, document) {
     const db = this.client.db(this.database);
