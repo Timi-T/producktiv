@@ -4,7 +4,8 @@ const { MongoClient } = require('mongodb');
 const Category = require('../dataObjects/categoryObject');
 
 class DBClient {
-   constructor () {
+  // This function will connect to mongodb
+  constructor () {
     const host = process.env.DB_HOST || 'localhost';
     const port = process.env.DB_PORT || 27017;
     const database = process.env.DB_DATABASE || 'producktiv';
@@ -26,6 +27,7 @@ class DBClient {
     });
   }
 
+  // This function will add documents to a collection
   async post (collectionName, document) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -40,7 +42,7 @@ class DBClient {
     return 'User exists';
   }
 
-  // This function will add videos to database
+  // This function will add videos to a collection
   async postVideo (collectionName, object) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -57,7 +59,7 @@ class DBClient {
     }
   }
 
-  // This function will add category to database
+  // This function will add category to a collection
   async postCategory (collectionName, object) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -74,6 +76,7 @@ class DBClient {
     }
   }
 
+  // This function will get a document from a colletion
   async get (collectionName, filterObj) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -84,7 +87,7 @@ class DBClient {
     return false;
   }
 
-  // This function will delete a user from databse when user logs out
+  // This function will delete a user from a collection when user logs out
   async del (collectionName, filterObj) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);
@@ -96,7 +99,7 @@ class DBClient {
     return false;
   }
 
-  // This function will get all users from database 20 at a time
+  // This function will get all users from a collection 20 at a time
   async getAll (collectionName, page) {
     const db = this.client.db(this.database);
     const collection = db.collection(collectionName);

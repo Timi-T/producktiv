@@ -1,507 +1,573 @@
-<h1>API documentation</h1>
-<h3>Endpoints and expected payloads</h1>
-<ul>
+<h2>API docs</h2>
+<hr>
+<p>On the main README you've seen how the app works. On this README you'll see how the backend routes work. So let's get started.</p>
+<p>On the terminal run the following code to install dependencies.</p>
 
-  <li>
-    <h3>POST '/api/users'</h3>
-    <h4>using curl -> curl -XPOST http://localhost:5001/api/users -H "content-type: application/json" -d '{"username": "UNIQUE_NAME", "email": "UNIQUE_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <ul>
-      <li>Requires Authentication: False</li>
-      <li>Creates a user profile</li>
-      <li>
-        Request argumets:
-        <p>{</p>
-        <p>- username: string,</p>
-        <p>- email: string</p>
-        <p>- password: string</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a success message</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>{</p>
-        <p>- success: true</p>
-        <p>}</p>
-      <li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When user with that email already exists</p>
-            <p>Status code -> 400 (Bad request)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "User exists"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the operation fails with no reason</p>
-            <p>Status code -> 400 (Bad request)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unknown error"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When a required data is missing</p>
-            <p>Status code -> 400 (Bad request)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Missing [ dataname ]"</p>
-            <p>}</p>
-            <p>where dataname can be email, password or username</p>
-          </li>
-        </ul>
-      <li>
-    </ul>
-  </li>
+```
+vagrant@ubuntu-focal:~/producktiv/backend$ npm install
+```
+<p>Once installation is done, you will need to start the express server. At the end you will see the following code, which means the server is waiting on you to give a request.</p>
 
+```
+vagrant@ubuntu-focal:~/producktiv/backend$ npm run start-server
+```
+```
+> files_manager@1.0.0 start-server /home/vagrant/producktiv/backend
+> nodemon --exec babel-node --presets @babel/preset-env ./server.js
 
-  <li>
-    <h3>POST '/api/login'</h3>
-    <h4>using curl -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <ul>
-      <li>Requires Authentication: False</li>
-      <li>Authenticates a user and logs in the user</li>
-      <li>
-        Request argumets:
-        <p>{</p>
-        <p>- email: string</p>
-        <p>- password: string</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a session token that expires after 24 hours</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>{</p>
-        <p>- token: "xxxabc000"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the credentials are wrong</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the operation fails with no reason</p>
-            <p>Status code -> 400</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unknown error"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-      <p>A cookie for session management is set in the response: {auth_key: xxx}</p>
-      <p>Now every request made from that device is linked to that user.</p>
-      <p>When cookie expires, the user should be redirected to login</p>
-    </ul>
-  </li>
+[nodemon] 2.0.19
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `babel-node --presets @babel/preset-env ./server.js`
+App listening on port 5001
+```
+<p>Open a second terminal where we will start the request.</p>
+
+---
+
+<h3>Creating a user</h3>
+
+`POST '/api/users'`
+
+- This will add a new user to database.
+- Request body: This is your own information
+
+```
+{
+  "username": "Samra",
+  "email": "samsol40@gmail.com",
+  "password": "helloworld"
+}
+```
+<p>Example:</p>
+
+```
+curl 0.0.0.0:5001/api/users -XPOST -H "Content-Type: application/json" -d '{"username": "Samra", "email": "samsol40@gmail.com", "password": "helloworld"}'; echo ""
+```
+- Returns: a success message with status code 201.
+```
+{"success":true}
+```
+
+<p>Now let's see what happens when there is a missing data on the body. I will exclude a username from the request body.</p>
+
+```
+{
+  "email": "samrasol40@gmail.com",
+  "password": "helloworld"
+}
+```
+- Returns: an error message with a status code 404.
+```
+{"error":"Missing username"}
+```
+
+<p>If a user of the same email exists.</p>
+
+```
+{
+  "username": "Samra",
+  "email": "samrasol40@gmail.com",
+  "password": "helloworld"
+}
+```
+- Returns: an error message with a status code 400.
+```
+{"error":"User exists"}
+```
+---
+
+<h3>Login a user</h3>
+
+<p>Let's first create base64 encoded text using this link <a href="https://base64.guru/converter">for base converter</a>. From the above email and password you can create a text that will be encoded. Example. samsol40@gmail.com:helloworld. Add a colon between the email and password. Convert this text to base64 in the link above.</p>
+
+<img src='./images/encoding.png' alt="encoded" align="center">
+
+<p>Use the encoded text that looks gibberish and add it to the request body.</p>
 
 
-  <li>
-    <h3>GET '/api/users'</h3>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Gets a list of all registered users if cookie is there</li>
-      <li>
-        Request argumets: None
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a list of ouser objects</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>{</p>
-        <p>- username: "USERNAME"</p>
-        <p>- _id: "USER_ID"</p>
-        <p>- videos: [VIDEO IDS]</p>
-        <p>- notes: [NOTE IDS]</p>
-        <p>- articles: [ARTICLES IDS]</p>
-        <p>- ratings: [RATING IDS]</p>
-        <p>- avgRating: 4.5</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> No possible failure scenerio</p>
-      </li>
-    </ul>
-  </li>
+`POST '/api/login'`
 
+- This will login a user and create a token to be used as a cookie during a session.
+- Request Header:
+```
+{
+  headers: "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
+}
+```
+<p>Example:</p>
 
-  <li>
-    <h3>DELETE '/api/logout'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl --cookie "auth_key=SESSION_TOKEN" 0.0.0.0:5001/api/logout -XDELETE ; echo ""</h4>
-    <ul>
-      <li>
-      <p>on command-line write this command</p>
-      <p>redis-cli</p>
-      <p>127.0.0.1:6379> get auth_SESSION_TOKEN</p>
-      <p>127.0.0.1:6379> "630f8655e345ae2e037cb1bf"</p>
-      <p>Above line shows that a session is stored in redis-cli, and the value is user's ID</p>
-      </li>
-      <li>Requires Authentication: True</li>
-      <li>Ends a current user session</li>
-      <li>
-        Request argumets: None
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (No content)</p>
-        <p>{</p>
-            <p>- message: "Goodbye"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the user isn't logged in</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized User"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li> 
-        </ul>
-      </li>
-      <p>on command-line write this command</p>
-      <p>redis-cli</p>
-      <p>127.0.0.1:6379> get auth_SESSION_TOKEN</p>
-      <p>127.0.0.1:6379> (nil)</p>
-      <p>As you can see the token is removed from redis</p>
-      <p>Redirect user to login</p>
-    </ul>
-  </li>
+```
+curl 0.0.0.0:5001/api/login -XPOST -H "Authorization: Basic c2Ftc29sNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="; echo ""
+```
+- Returns: The users information with the password that is hashed, and the other information like videos and you'll get a token that you will use as cookie with status code 200.
+```
+{
+  "user": 
+  {
+    "_id":"631e0e61e3a5f0219ea3059e",
+    "username":"Samra",
+    "email":"samsol40@gmail.com",
+    "password":"6adfb183a4a2c94a2f92dab5ade762a47889a5a1",
+    "videos":[],
+    "notes":[],
+    "articles":[],
+    "ratings":[],
+    "avgRating":0,
+    "token":"6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+  }
+}
+```
 
+<p>If the user doesn't exist, you'll receive an error.</p>
 
-  <li>
-    <h3>DELETE '/api/signout'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XDELETE http://localhost:5001/api/signout --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Deletes a user from the records</li>
-      <li>Deletes token from redis</li>
-      <li>
-        Request argumets: None
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (No content)</p>
-        <p>{</p>
-            <p>- message: "User Deleted"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the a user doesnt exist</p>
-            <p>Status code -> 401 (Bad request)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "User does not exist"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-      <p>The cookie for the current session is deleted</p>
-      <p>The user is deleted</p>
-      <p>Redirect to login</p>
-    </ul>
-  </li>
-  <li>
-    <h3>GET '/api/videos'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/videos --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Retrieves all videos</li>
-      <li>
-        Request argumets: None
-        Url parameter: None
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>[LIST OF ALL VIDEOS]</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+- Request Header:
+```
+{
+  headers: "Authorization: Basic c2FtcmFzb2xvbW9uNDBAZ21haWwuY29tOmhlbGxvd29ybGQ="
+}
+```
+- Returns: error about an unauthorized user with status code 401.
+```
+{"error":"Unauthorized"}
+```
+---
 
+<h3>Post a video</h3>
 
-  <li>
-    <h3>POST '/api/videos'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>
-      using curl -> curl -XPOST http://localhost:5001/api/videos -H "content-type: application/json" -d '{"videoName": "VIDEO_NAME", "description": "SHORT_DESCRIPTION", "category": "VIDEO_CATEGORY", "videoLink": "YOUTUBE_LINK"}' --cookie "auth_key=SESSION_TOKEN"
-    </h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Uploads a video</li>
-      <li>
-        Request argumets:
-        <p>{</p>
-        <p>- videoName: "VIDEO_NAME"</p>
-        <p>- description: "SHORT_DESCRIPTION"</p>
-        <p>- category: "CATEGORY"</p>
-        <p>- videoLink: "VIDEO_LINK"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 201 (Created)</p>
-        <p>{</p>
-        <p>- message: "Uploaded video"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the user isn't logged in</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized User"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the video link has been uploaded already by another user</p>
-            <p>Status code -> 300 (Multiple choices)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Video Exists"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+`POST '/api/videos'`
 
+- This will create a video in database. It will also add it to the user's video list and to a category's list of videos.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/6tNS--WetLI",
+  "description": "This is a video trial to see if a video can be installed"
+}
+```
+<p>Example:</p>
 
-  <li>
-    <h3>GET '/api/videos/:id'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/videos/VIDEO_ID --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Gets a video from the records</li>
-      <li>
-        Request argumets: None
-        Url parameter: VIDEO_ID
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a video object</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>{</p>
-        <p>- videoName: "VIDEO_NAME"</p>
-        <p>- description: "SHORT_DESCRIPTION"</p>
-        <p>- category: "CATEGORY"</p>
-        <p>- videoLink: "VIDEO_LINK"</p>
-        <P>- uploadDate: "UPLOAD_DATE"</p>
-        <P>- userId: "USER_ID"</p>
-        <P>- stats: {"viewCount: '0', "likeCount": '0', "commentCount": '0'</p>
-        <P>- comments: [COMMENT IDS]</p>
-        <P>- ratings: [RATING IDS]</p>
-        <P>- avgRating: AVG_RATING</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the user isn't logged in</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized User"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the video is not found</p>
-            <p>Status code -> 404 (Not found)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Video Doesn't exists"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XPOST -H "Content-Type: application/json" -d '{"videoName": "Trial #1 Video", "category":"Programming", "videoLink": "https://youtu.be/6tNS--WetLI", "description": "This is a video trial to see if a video can be installed"}'; echo ""
+```
+- Returns: Uploaded Message with status code 201.
+```
+{"message":"Uploaded video"}
+```
 
+<p>Now let's see what happens if there is no cookie.</p>
 
-  <li>
-    <h3>DELETE '/api/videos/:id'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XDELETE http://localhost:5001/api/videos/VIDEO_ID --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Deletes a video from the records</li>
-      <li>
-        Request argumets: None
-        Url parameter: VIDEO_ID
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>{</p>
-        <p>- message: "Video Deleted"</p>
-        <p>}</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the user isn't logged in</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Unauthorized User"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the requested video is not found</p>
-            <p>Status code -> 404 (Not found)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Video Doesn't exists"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <h3>GET '/api/users/videos'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/users/videos --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Retrieves all videos from the user's list of videos</li>
-      <li>
-        Request argumets: None
-        Url parameter: None
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>[LIST OF ALL VIDEOS OF A USER]</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/6tNS--WetLI",
+  "description": "This is a video trial to see if a video can be installed"
+}
+```
+- Returns: error message about expired session since cookie isn't provided with status code 401.
+```
+{"message":"Cookie Expired"}
+```
+<p>Now let's see what happens if there is missing video attribute.</p>
 
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "category": "Programming",
+  "videoLink": "https://youtu.be/6tNS--WetLI",
+  "description": "This is a video trial to see if a video can be installed"
+}
+```
+- Returns: Error message about missing attribute with status code 404.
+```
+{"error":"Missing Video Name"}
+```
 
- <li>
-    <h3>GET '/api/categories/:name'</h3>
-    <h4>To get SESSION_TOKEN -> curl -XPOST http://localhost:5001/api/login -H "content-type: application/json" -d '{"email": "USER_EMAIL", "password": "USER_PASSWORD"}'</h4>
-    <h4>using curl -> curl -XGET http://localhost:5001/api/categories/Programming --cookie "auth_key=SESSION_TOKEN"</h4>
-    <ul>
-      <li>Requires Authentication: True</li>
-      <li>Retrieves all videos of a specific category and stores them for 3 days in redis for easier retrieval next time</li>
-      <li>
-        Request argumets: None
-        Url parameter: name of category
-      </li>
-      <li>
-        <p>ON SUCCESS -> Returns a message</p>
-        <p>Status code -> 200 (OK)</p>
-        <p>[RETURNS A LIST OF ALL VIDEOS BELONGING TO SIMILAR CATEGORY]</p>
-      </li>
-      <li>
-        <p>ON FAILURE -> Returns An object</p>
-        <ul>
-          <li>
-            <p>When sending a non existing category from command line</p>
-            <p>Status code -> 401 (Unauthorized)</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- error: "Category Doesn't exist"</p>
-            <p>}</p>
-          </li>
-          <li>
-            <p>When the there is no cookie or when given the wrong cookie</p>
-            <p>Status code -> 401</p>
-            <p>Returns:</p>
-            <p>{</p>
-            <p>- message: "Cookie Expired"</p>
-            <p>}</p>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
+<p>If someone tries to add a video that already exists in database..</p>
+
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/6tNS--WetLI",
+  "description": "This is a video trial to see if a video can be installed"
+}
+```
+- Returns: Message about an existing video with status code 300.
+```
+{ message: "Video Exists"}
+```
+
+<p>If a URL isn't valid.</p>
+
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Body:
+```
+{
+  "videoName": "Trial #1 Video",
+  "category": "Programming",
+  "videoLink": "https://youtu.be/2_34seHytlro5609",
+  "description": "This is a video trial to see if a video can be installed"
+}
+```
+- Returns: Message about video URL invalid with status code 404.
+```
+{message: "Video URL is incorrect"}
+```
+---
+<h3>Show all users</h3>
+
+`GET '/api/users'`
+
+- This will show all users.
+- Request body: None.
+
+<p>Example:</p>
+
+```
+ curl  0.0.0.0:5001/api/users -XGET; echo ""
+```
+- Returns: All the users.
+```
+{
+  "users":
+  [{
+    "_id":"631e0e61e3a5f0219ea3059e",
+    "username":"Samra",
+    "videos":
+      [{
+        "videoName":"Trial #1 Video",
+        "category":"Programming",
+        "userId":"631e0e61e3a5f0219ea3059e",
+        "uploadDate":"2022-09-11T17:49:56.870Z",
+        "description":"This is a video trial to see if a video can be installed",
+        "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
+        "userName":"Samra",
+        "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
+        "stats":
+          {
+            "viewCount":"1011400",
+            "likeCount":"19725",
+            "commentCount":"0"
+          },
+        "comments":[],
+        "ratings":[],
+        "avgRating":0,
+        "_id":"631e1fc79fbea132961d6574"
+      }],
+    "notes":[],
+    "articles":[],
+    "ratings":[],
+    "avgRating":0
+  ]}
+}
+```
+<p>If there are no users in database</p>
+
+- Returns: an empty list
+
+```
+{"users":[]}
+```
+---
+<h3>Show user's videos</h3>
+
+`GET '/api/users/videos'`
+
+- This will show all user's videos.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/videos -XGET; echo ""
+```
+- Returns: All the user's videos with status code 200.
+```
+{
+  "videos":
+  [{
+    "videoName":"Trial #1 Video",
+    "category":"Programming",
+    "userId":"631e0e61e3a5f0219ea3059e",
+    "uploadDate":"2022-09-11T17:49:56.870Z",
+    "description":"This is a video trial to see if a video can be installed",
+    "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
+    "userName":"Samra",
+    "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
+    "stats":
+      {
+        "viewCount":"1011400",
+        "likeCount":"19725",
+        "commentCount":"0"
+      },
+    "comments":[],
+    "ratings":[],
+    "avgRating":0,
+    "_id":"631e1fc79fbea132961d6574"
+  }]
+}
+```
+
+<p>If there are no videos related to a user</p>
+
+- Returns: an empty list.
+```
+{"videos":[]}
+```
+---
+<h3>Videos in database</h3>
+
+`GET '/api/videos'`
+
+- This will show all videos by all users.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request body: None.
+
+<p>Example:</p>
+
+```
+ curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos -XGET; echo ""
+```
+- Returns: All the videos by all users with status code 200.
+```
+{
+  "videos":
+  [{
+    "videoName":"Trial #1 Video",
+    "category":"Programming",
+    "userId":"631e0e61e3a5f0219ea3059e",
+    "uploadDate":"2022-09-11T17:49:56.870Z",
+    "description":"This is a video trial to see if a video can be installed",
+    "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
+    "userName":"Samra",
+    "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
+    "stats":
+      {
+        "viewCount":"1011400",
+        "likeCount":"19725",
+        "commentCount":"0"
+      },
+    "comments":[],
+    "ratings":[],
+    "avgRating":0,
+    "_id":"631e1fc79fbea132961d6574"
+  }]
+}
+```
+- N.B This results seems to resemble the videos of a user. The reason for this is we only have one user on our database and it is for conserving space. 
+
+<p>If no video exists in the database</p>
+
+- Returns: error message with status code 404.
+```
+{ error: 'No Videos Available' }
+```
+
+---
+<h3>Get a video</h3>
+
+`GET '/api/videos/${id}'`
+
+- This will show all the information of a specific video.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Arguments: Id of the video.
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XGET; echo ""
+```
+- Returns: All of the information of a specific video with status code 200.
+```
+{
+  "video":
+    {
+      "_id":"631e1fc79fbea132961d6574",
+      "videoName":"Trial #1 Video",
+      "category":"Programming",
+      "userId":"631e0e61e3a5f0219ea3059e",
+      "uploadDate":"2022-09-11T17:49:56.870Z",
+      "description":"This is a video trial to see if a video can be installed",
+      "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
+      "userName":"Samra",
+      "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
+      "stats":
+        {
+          "viewCount":"1011400",
+          "likeCount":"19725",
+          "commentCount":"0"
+        },
+      "comments":[],
+      "ratings":[],
+      "avgRating":0
+    }
+}
+```
+<p>If a video by that id doesn't exist</p>
+
+- Returns: error message with status code 404.
+```
+{ error: 'Video Doesn't exist' }
+```
+---
+<h3>Get category</h3>
+
+`GET '/api/categories/{$name}'`
+
+- This will show all the information of a category.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Arguments: Name of a category.
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/categories/Programming -XGET; echo ""
+```
+- Returns: All of the information of a category with status code 200.
+```
+{
+  "videos":
+  [{
+    "videoName":"Trial #1 Video",
+    "category":"Programming",
+    "userId":"631e0e61e3a5f0219ea3059e",
+    "uploadDate":"2022-09-11T17:49:56.870Z",
+    "description":"This is a video trial to see if a video can be installed",
+    "embedVideo":"https://www.youtube.com/embed/6tNS--WetLI",
+    "userName":"Samra",
+    "videoThumbnail":"https://i.ytimg.com/vi/6tNS--WetLI/hqdefault.jpg",
+    "stats":
+    {
+      "viewCount":"1011400",
+      "likeCount":"19725",
+      "commentCount":"0"
+    },
+    "comments":[],
+    "ratings":[],
+    "avgRating":0,
+    "_id":"631e1fc79fbea132961d6574"
+  }]
+}
+```
+- N.B This results seems to resemble the videos of a user. The reason for this is we only have one user on our database and it is for conserving space. When you have a lot of users, all the programming videos will be listed together.
+
+<p>If a category doesn't exist</p>
+
+- Returns: error message with status code 404.
+```
+{ error: 'Category Doesn't exist' }
+```
+---
+<h3>Delete a video</h3>
+
+`DELETE '/api/videos/{$id}'`
+
+- This will delete a video from video database, user's video list and category's video list.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request Arguments: Id of a Video.
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/videos/631e1fc79fbea132961d6574 -XDELETE; echo""
+```
+- Returns: Successful message of deletion with status code 200.
+```
+{"message":"Video Deleted"}
+```
+<p>If the given ID of the video doesn't exist</p>
+
+- Returns: error message with status code 404.
+```
+{"error":"Video Doesn't exist"}
+```
+---
+<h3>Logout a user</h3>
+
+`DELETE '/api/logout'`
+
+- This will logout a user and delete it's session/ token.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/logout -XDELETE; echo ""
+```
+- Returns: Successful message of logging off and status code 200.
+```
+{"message":"GoodBye"}
+```
+---
+<h3>Delete a user</h3>
+
+`DELETE '/api/users/flush'`
+
+- This will delete a user and all the user's video from the video database and category's list.
+- Request Cookie:
+```
+cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c"
+```
+- Request body: None.
+
+<p>Example:</p>
+
+```
+curl --cookie "auth_key=6d8d4e13-00ad-4c1e-8d06-6142cd39be2c" 0.0.0.0:5001/api/users/flush -XDELETE; echo ""
+```
+- Returns: Successful message of deleting a user with status code 200.
+```
+{"message":"User Deleted"}
+```
+<p>If the given cookie is wrong</p>
+
+- Returns: error message with status code 401.
+```
+{error: 'User does not exist'}
+```
+---

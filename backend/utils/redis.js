@@ -18,13 +18,14 @@ class RedisClient {
   // This function will set key to value in redis and that key will only be used for 24 hrs
   async set (key, value) {
     await this.client.set(key, value);
-    await this.client.expire(key, 1000 * 60 * 60 * 24);
+    await this.client.expire(key, 60 * 60 * 24);
   }
 
-  // This function will set key to a list of videos in redis and that key will only be used for 3 days
+  // This function will set key to a list of videos in redis and that key will only be used for 12 hours
+  // It will then refresh and add more videos if they exist or remove if they don't exist
   async setCategory (key, value) {
     await this.client.set(key, value);
-    await this.client.expire(key, 1000 * 60 * 60 * 24 * 3);
+    await this.client.expire(key, 60 * 60 * 12);
   }
 
   // This function will get key from redis and returns a value
@@ -38,7 +39,7 @@ class RedisClient {
     }
   }
 
-  // This function will delete a key before time if user is signing or logging out
+  // This function will delete a key before time if user is logging out
   async del (key) {
     await this.client.del(key);
   }
