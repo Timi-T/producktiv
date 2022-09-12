@@ -39,7 +39,7 @@ class RedisClient {
     }
   }
 
-  // This function will delete a key before time if user is signing or logging out
+  // This function will delete a key before time if user is logging out
   async del (key) {
     await this.client.del(key);
   }

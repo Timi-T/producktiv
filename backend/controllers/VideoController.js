@@ -13,22 +13,22 @@ require('dotenv').config();
 const APIKEY = process.env.API_KEY;
 
 // This function will check if a query has all the required information for creating a video
-function validateForm(videoName, description, category, videoLink) {
+function validateForm (videoName, description, category, videoLink) {
   if (!videoName) {
-    return { error: 'Missing Video Name'};
+    return { error: 'Missing Video Name' };
   } else if (!description) {
-    return { error: 'Missing description'};
+    return { error: 'Missing description' };
   } else if (!category) {
-    return { error: 'Missing category'};
+    return { error: 'Missing category' };
   } else if (!videoLink) {
-    return { error: 'Missing Video Link'};
+    return { error: 'Missing Video Link' };
   } else {
     return false;
   }
-};
+}
 
 // This function will get the id of a video link
-async function getId(url) {
+async function getId (url) {
   const getURL = util.promisify(request.get).bind(request);
   const jsons = await getURL(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${url}&key=${APIKEY}`);
   const data = JSON.parse(jsons.body);
@@ -52,10 +52,12 @@ async function getVideoObj (url) {
 // This call back will upload a video and add it to the user's video as well
 // and categories video list
 exports.createVideo = async (request, response) => {
+  // Validate user and cookie existance
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
-  } else { 
+  } else {
+    // Collect all data required to create a Video
     const cookie = request.cookies.auth_key;
     const userId = await redisClient.get(`auth_${cookie}`);
     const { videoName } = request.body;
@@ -64,14 +66,18 @@ exports.createVideo = async (request, response) => {
     const { videoLink } = request.body;
     const uploadDate = new Date().toJSON();
     const valid = validateForm(videoName, description, category, videoLink);
-
+    // Validate all information neccessary for creating a video
     if (!valid) {
+      // Check if API on the link has a items key
       const items = await getId(videoLink);
-      const regex = new RegExp("https:\/\/youtu.be\/.*");
+      // Check that a video has this pattern
+      const regex = new RegExp('https:\/\/youtu.be\/.*');
 
+      // Check and validate videoLink
       if ((!regex.test(videoLink)) || (!items)) {
         response.status(404).send({ message: 'Video URL is incorrect' });
       } else {
+        // Take information from API to add the parameters to create the videp
         const videoObj = await getVideoObj(videoLink);
         const videoThumbnail = items.snippet.thumbnails.high.url;
         const vidId = items.id.videoId;
@@ -90,9 +96,11 @@ exports.createVideo = async (request, response) => {
         }
         const user = await dbClient.get('users', { _id: ObjectId(userId) });
         const userName = user.username;
+        // Create a video object and create a video document
         const video = new Video(videoName, userId, uploadDate, description, category, embedVideo, videoStats, userName, videoThumbnail);
         const vid = await dbClient.postVideo('videos', video);
         if (vid !== 'Video Exists') {
+          // If video doesn't exist create a document and add it to the user's list and categry's list
           await dbClient.client.db('producktiv').collection('users').updateOne({ _id: ObjectId(userId) }, { $push: { videos: vid[0] } });
           const categoryName = await dbClient.get('categories', { name: category });
           if (!categoryName) {
@@ -116,10 +124,12 @@ exports.createVideo = async (request, response) => {
 
 // Get all videos posted by all users
 exports.getAllVideos = async (request, response) => {
+  // Validate cookie and user existance
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
+    // Get all videos from collection
     const videos = await dbClient.getVideos('videos');
     if (videos) {
       response.status(200).send({ videos });
@@ -129,37 +139,40 @@ exports.getAllVideos = async (request, response) => {
   }
 };
 
-// This callback function will get all video from database
+// This callback function will get a video from database
 exports.getVideo = async (request, response) => {
+  // Validate cookie and user existance
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
+    // Get video based on the ID given and display all the information of the video
     const { id } = request.params;
     const video = await dbClient.get('videos', { _id: ObjectId(id) });
     if (video) {
-      const vid = uuid();
-      const key = `vid_${vid}`;
-      await redisClient.set(key, id.toString());
       response.status(200).send({ video });
     } else {
-      response.status(404).send({ error: 'Video Doesn\'t exists' });
+      response.status(404).send({ error: 'Video Doesn\'t exist' });
     }
-  } 
+  }
 };
 
 // This callback function will delete a video from database
 // and from the list of videos of a user
 exports.deleteVideo = async (request, response) => {
+  // Validate cookie and user existence
   const validateRequest = await Auth.sessionAuth(request, response);
   if (!validateRequest) {
     response.status(401).send({ message: 'Cookie Expired' });
   } else {
     const { id } = request.params;
+    // From cookie get user and user videos
     const cookie = request.cookies.auth_key;
     const userId = await redisClient.get(`auth_${cookie}`);
     const user = await dbClient.get('users', { _id: ObjectId(userId) });
     const videos = user.videos;
+    // Loop over the video list to find the video id that is the same id as parameter given
+    // and delete them from categories and user's list
     for (const vid of videos) {
       const vidId = (vid._id).toString();
       if (vidId === id) {
@@ -167,11 +180,12 @@ exports.deleteVideo = async (request, response) => {
         await dbClient.client.db('producktiv').collection('categories').updateOne({ name: vid.category }, { $pull: { videos: vid } });
       }
     }
+    // Delete video from video collection
     const video = await dbClient.del('videos', { _id: ObjectId(id) });
     if (video === 'Deleted') {
       response.status(200).send({ message: 'Video Deleted' });
     } else {
-      response.status(404).send({ error: 'Video Doesn\'t exists' });
+      response.status(404).send({ error: 'Video Doesn\'t exist' });
     }
   }
 };
