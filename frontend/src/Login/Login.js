@@ -26,7 +26,6 @@ export class Login extends React.Component {
     event.preventDefault()
     this.props.logIn(this.state.email, this.state.password)
   }
-
   render() {
     // console.log(this.props)
     const {errorCode} = this.props
