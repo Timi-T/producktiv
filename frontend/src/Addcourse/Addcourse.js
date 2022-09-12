@@ -107,7 +107,7 @@ export class Addcourse extends React.Component {
             </label>
           </div>
           <div className="category-box">
-            <label for="category"><span>Category:</span><br />
+            <label htmlFor="category"><span>Category:</span><br />
             <select name="category-options" id="category" value={this.state.category} onChange={this.handleChangeCategory} required>
               <option value="">Please choose a category</option>
               <option value="Art">Art</option>

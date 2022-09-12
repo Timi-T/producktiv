@@ -10,7 +10,7 @@ export class Signup extends React.Component {
       email: "",
       password: "",
       isLoading: false,
-      signUpSuccess: null
+      statusCode: null
     }
   }
 
@@ -41,6 +41,7 @@ export class Signup extends React.Component {
       headers: {'Content-Type': 'application/json'}
     })
     .then((response) => {
+      this.setState({statusCode: response.status})
       console.log(response)
       if (!response.ok) {
         throw Error(`${response.status}: ${response.statusText}`)
@@ -49,26 +50,26 @@ export class Signup extends React.Component {
     })
     .then((data) => {
       this.setState({isLoading: false})
-      this.setState({signUpSuccess: true})
       this.clearSignUpForm()
     })
     .catch((error)=>{
       this.setState({isLoading: false})
-      this.setState({signUpSuccess: false})
       console.log(error)
     })
   }
 
   
   render () {
-    const {isLoading, signUpSuccess} = this.state
+    const {isLoading, statusCode} = this.state
     const loadingText = "Creating account..."
-    const signUpSuccessText = () => {
-      if (signUpSuccess === null) {
+    const statusCodeText = () => {
+      if (statusCode === null) {
         return <p>Create your Productiv account</p>
-      } else if (signUpSuccess === true){
+      } else if (statusCode === 201){
         return <p style={{color:"green"}}>Account Created! Proceed to log in.</p>
-      } else if (signUpSuccess === false){
+      } else if (statusCode === 400){
+        return <p style={{color:"red"}}>This email is already linked to an account. </p>
+      } else if (statusCode === 401){
         return <p style={{color:"red"}}>Sorry, an error occured! Try again. </p>
       }
     }
@@ -80,7 +81,7 @@ export class Signup extends React.Component {
       <div className="signup-box">
         <div className="signup-heading">
           <h1>SIGNUP</h1>
-          {signUpSuccessText()}
+          {statusCodeText()}
         </div>
         <div className="signup-details">
           <div className="username-box">

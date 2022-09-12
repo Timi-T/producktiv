@@ -22,7 +22,6 @@ export const Usercourses = () => {
       return response.json()
       })
     .then((data) => {
-      console.log(data)
       setVideos(data.videos)
       setIsLoading(false)
     })
@@ -30,6 +29,7 @@ export const Usercourses = () => {
       setIsLoading(false)
       console.log(error)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const selectVideo = (id) => {
@@ -44,7 +44,6 @@ export const Usercourses = () => {
       credentials: "include" 
     })
     .then((response) => {
-      console.log(response)
       if (!response) {
         if (response.status === 401) {
           resetUser()
@@ -61,33 +60,31 @@ export const Usercourses = () => {
     })
   }
 
-  // const userVideos = user.videos
-  // console.log(userVideos)
   return(
     <>
     <div className="all-courses user-courses">
-    <h1 style={{marginBottom:".2em"}}>My Courses</h1>
-    {isLoading && <Loader loadingText={"Loading submitted courses..."}/>}
-    {!isLoading &&
-    <>
-    {
-      videos.length === 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
+      <h1 style={{marginBottom:".2em"}}>My Courses</h1>
+      {isLoading && <Loader loadingText={"Loading submitted courses..."}/>}
+      {!isLoading &&
       <>
-        <p> View all the course videos you have submitted.</p>
-        <div className="videos-list user-courses">
-          {
-            videos.map((item, index) => {
-              return (
-              <Videocard deleteVideo={deleteVideo} selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
-              )
-            })
-          }
-        </div>
+        {
+          videos.length === 0 ? <p>Nothing to see here, you have not submitted any courses.</p> : (
+          <>
+            <p> View all the course videos you have submitted.</p>
+            <div className="videos-list user-courses">
+              {
+                videos.map((item, index) => {
+                  return (
+                  <Videocard deleteVideo={deleteVideo} selectVideo={selectVideo} key={index} id={item._id} videoName={item.videoName} embedVideo={item.embedVideo} description={item.description} videoThumbnail={item.videoThumbnail}/>
+                  )
+                })
+              }
+            </div>
+          </>
+          )
+        }
       </>
-      )
-    }
-    </>
-    }
+      }
     </div>
     </>
   )

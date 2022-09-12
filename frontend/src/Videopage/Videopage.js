@@ -27,9 +27,7 @@ export const Videopage = () => {
     <NavLink to="/videos" className="back-to-courses"><ImArrowLeft2 style={{height:".8em"}}/> Back to courses</NavLink>
     <div className="all-courses video-display">
       <h1>{videoData.videoName}</h1>
-      {/* <div className="video"> */}
-      <iframe width="560" height="315" src={videoData.embedVideo} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-      {/* </div> */}
+      <iframe width="560" height="315" src={videoData.embedVideo} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen=""></iframe>
       <div className="video-details">
         <div className="video-stats">
           <p><ImEye/> {stats.viewCount} views</p>

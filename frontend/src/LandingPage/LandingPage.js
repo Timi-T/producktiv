@@ -21,7 +21,6 @@ export default class LandingPage extends React.Component {
     const {isLoginScreen} = this.state
     const loginbtnText = isLoginScreen ? "Sign up now" : "Sign in"
     const loginMsgText =isLoginScreen ? "Not a member?" : "Already a member?"
-    // console.log(this.props)
     return(
       <>
       <div className="about-app">
@@ -41,14 +40,14 @@ export default class LandingPage extends React.Component {
         <div className="team-info">
           <p>Built by:</p>
           <ul>
-            <li><p>Opeyemi Ogunbode (Backend and DevOps)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/" target="_blank"><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/Timi-T" target="_blank"><ImGithub/></a></p></li>
-            <li><p>Rihana (Backend)&nbsp;&nbsp;<a href="#0" target="_blank"><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/avocadoclouds" target="_blank"><ImGithub/></a> </p></li>
-            <li><p> Samra Solomon (Backend)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/samra-solomon-24b745208/" target="_blank"><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/samie-ya" target="_blank"><ImGithub/></a></p></li>
-            <li><p>Tony Baidoo (Frontend)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/tony-baidoo/" target="_blank"><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/tcrz" target="_blank"><ImGithub/></a></p></li>
+            <li><p>Opeyemi Ogunbode (Backend and DevOps)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/" target="_blank" rel="noreferrer"><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/Timi-T" target="_blank" rel="noreferrer" ><ImGithub/></a></p></li>
+            <li><p>Rihana Ali Saeid (Backend)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/rihana-ali-saeid-68352b1bb/" target="_blank" rel="noreferrer" ><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/avocadoclouds" target="_blank" rel="noreferrer" ><ImGithub/></a> </p></li>
+            <li><p> Samra Solomon (Backend)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/samra-solomon-24b745208/" target="_blank" rel="noreferrer" ><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/samie-ya" target="_blank" rel="noreferrer" ><ImGithub/></a></p></li>
+            <li><p>Tony Baidoo (Frontend)&nbsp;&nbsp;<a href="https://www.linkedin.com/in/tony-baidoo/" target="_blank" rel="noreferrer" ><ImLinkedin/></a>&nbsp;&nbsp;<a href="https://github.com/tcrz" target="_blank" rel="noreferrer" ><ImGithub/></a></p></li>
           </ul>
         </div>
         <div>
-          <p><ImGithub/><a href="https://github.com/Timi-T/producktiv/" target="_blank">&nbsp;Link to Github Repo</a></p>
+          <p><ImGithub/><a href="https://github.com/Timi-T/producktiv/" target="_blank" rel="noreferrer">&nbsp;Link to Github Repo</a></p>
         </div>
         
       </div>

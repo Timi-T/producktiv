@@ -57,7 +57,6 @@ logOut = () => {
       })
     .then((data) => {
       this.resetUser()
-      // this.setState({token: undefined, loggedIn: false})
     })
     .catch((error) => {
       console.log(error)
@@ -72,9 +71,7 @@ logIn = (email, password) => {
     fetch('http://localhost:5001/api/login', 
     {
       method: "POST",
-      // body: JSON.stringify({email, password}),
       credentials: "include",
-      // headers: {'Content-Type': 'application/json'}
       headers: {Authorization: basic}
     })
     .then((response) => {
@@ -90,7 +87,6 @@ logIn = (email, password) => {
       this.updateUser(data.user)
       console.log(data.user)
       localStorage.setItem('user', JSON.stringify(data.user))
-      // this.setToken(token)
       this.setErrorCode(null)
     })
     .catch((error) => {
@@ -101,38 +97,35 @@ logIn = (email, password) => {
 }
 
   render() {
-    console.log(this.state.user)
     const {isLoading, errorCode, user} = this.state
     const logIn = this.logIn
     const logOut = this.logOut
     const resetUser = this.resetUser
     return (
-       (!user.token ? (
-       <LandingPageBody>
-        <Routes>
-        <Route path="/login" element={<LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>}/>
-        <Route path="*" element={<Navigate to="/login" replace/>}/>
-        </Routes>
-          {/* <LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/> */}
-      </LandingPageBody>) :
-      <AppContext.Provider value={{user, resetUser}}>
-        <Sidemenu logOut={logOut}>
+      (
+        !user.token ? (
+        <LandingPageBody>
           <Routes>
-            {/* <Route path="/" element={<Coursespage/>}/> */}
-            <Route path="/videos" element={<Coursespage/>}/>
-            <Route path="/courses" element={<Usercourses/>}/>
-            <Route path="/videoplay" element={<Videopage/>}/>
-            <Route path="/add-course" element={<Addcourse/>}/>
-            <Route path="*" element={<Navigate to="/videos" replace/>}/>
+          <Route path="/login" element={<LandingPage errorCode={errorCode} isLoading={isLoading} logIn={logIn}/>}/>
+          <Route path="*" element={<Navigate to="/login" replace/>}/>
           </Routes>
-        </Sidemenu>
-      </AppContext.Provider>
-
+        </LandingPageBody>
+        ) : (
+          <AppContext.Provider value={{user, resetUser}}>
+            <Sidemenu logOut={logOut}>
+              <Routes>
+                <Route path="/videos" element={<Coursespage/>}/>
+                <Route path="/courses" element={<Usercourses/>}/>
+                <Route path="/videoplay" element={<Videopage/>}/>
+                <Route path="/add-course" element={<Addcourse/>}/>
+                <Route path="*" element={<Navigate to="/videos" replace/>}/>
+              </Routes>
+            </Sidemenu>
+          </AppContext.Provider>
         )
-        
+      )
     );
   }
-  
 }
 
 export default App;

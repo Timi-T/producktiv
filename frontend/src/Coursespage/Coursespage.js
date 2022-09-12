@@ -10,7 +10,7 @@ export const Coursespage = () => {
   const {resetUser} = React.useContext(AppContext)
   const [videos, setVideos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState("")
+  const [error, setError] = useState(null)
   const getVideos = (resource) => {
     setError("")
     setIsLoading(true)
@@ -25,7 +25,6 @@ export const Coursespage = () => {
         return response.json()
         })
       .then((data) => {
-        console.log(data)
         setVideos(data.videos)
         setIsLoading(false)
       })
@@ -59,15 +58,15 @@ export const Coursespage = () => {
     <div className="all-courses">
       <h1>Explore</h1>
       <div className="categories">
-      <input type="radio" id="all" name="course-choice"/><label htmlFor="all" class="selected" onClick={()=>categorySort(undefined)}>All categories</label>
-      <input type="radio" id="programming" name="course-choice"/><label htmlFor="programming" class="selected" onClick={()=>categorySort("Programming")}><ImEmbed2/>Programming</label>
-      <input type="radio" id="art" name="course-choice"/><label htmlFor="art" class="selected" onClick={()=>categorySort("Art")}><ImPencil2/>Art</label>
-      <input type="radio" id="business" name="course-choice"/><label htmlFor="business" class="selected" onClick={()=>categorySort("Business")}><ImStatsDots/>Business</label>
-      <input type="radio" id="lifestyle" name="course-choice"/><label htmlFor="lifestyle" class="selected" onClick={()=>categorySort("Lifestyle")}><ImAccessibility/>Lifestyle</label>
+      <input type="radio" id="all" name="course-choice"/><label htmlFor="all" className="selected" onClick={()=>categorySort(undefined)}>All categories</label>
+      <input type="radio" id="programming" name="course-choice"/><label htmlFor="programming"  className="selected" onClick={()=>categorySort("Programming")}><ImEmbed2/>Programming</label>
+      <input type="radio" id="art" name="course-choice"/><label htmlFor="art"  className="selected" onClick={()=>categorySort("Art")}><ImPencil2/>Art</label>
+      <input type="radio" id="business" name="course-choice"/><label htmlFor="business"  className="selected" onClick={()=>categorySort("Business")}><ImStatsDots/>Business</label>
+      <input type="radio" id="lifestyle" name="course-choice"/><label htmlFor="lifestyle"  className="selected" onClick={()=>categorySort("Lifestyle")}><ImAccessibility/>Lifestyle</label>
       </div>
-      {error.length !== 0 && <div className="error"><p>Sorry, an error occured while loading videos. Try again.</p></div> }
+      {error && <div className="error"><p>Sorry, an error occured while loading videos. Try again.</p></div>}
       { isLoading ? <Loader loadingText={"Loading content..."}/> : (
-        videos.length === 0 ? <div className="notice"><p>There are no videos in this category. Add one?</p></div> : <div className="videos-list">
+        !error && videos.length === 0 ? <div className="notice"><p>There are no videos in this category. Add one?</p></div> : !error && <div className="videos-list">
         {
           videos.map((item, index) => {
             return (

@@ -7,23 +7,23 @@ export const Videocard = (props) => {
   const data = props.selectVideo(props.id)
   return (
     
-    <article class="video">
+    <article  className="video">
       <Link to="/videoplay" state={{videoData: data}}
      className="videoplay">
       <img src={props.videoThumbnail} alt="video-thumbnail"/>
-      <div class="details">
-        <div class="video-name">
+      <div  className="details">
+        <div  className="video-name">
           <h3>{props.videoName}</h3>
         </div>
-        <div class="description">
+        <div  className="description">
           <p>{props.description}</p>
           </div>
-        <div class="author">
+        <div  className="author">
           <p>{props.userName}</p>
         </div>
       </div>
       </Link>
-      <div class="delete">
+      <div  className="delete">
           <p onClick={() => props.deleteVideo(props.id)}><ImBin/>delete</p>
       </div>
     </article>
