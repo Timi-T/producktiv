@@ -14,7 +14,7 @@ export const Coursespage = () => {
   const getVideos = (resource) => {
     setError("")
     setIsLoading(true)
-    fetch(`http://localhost:5001/api/${resource}`, { credentials: "include"})
+    fetch(`https://producktiv-backend.onrender.com/api/${resource}`, { credentials: "include"})
       .then((response) => {
         if (!response.ok) {
           if (response.status === 401 ){

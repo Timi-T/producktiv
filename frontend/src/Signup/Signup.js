@@ -35,7 +35,7 @@ export class Signup extends React.Component {
     this.setState({isLoading: true})
     const {email, password, username} = this.state
 
-    fetch('http://localhost:5001/api/users', {
+    fetch('https://producktiv-backend.onrender.com/api/users', {
       method: "POST",
       body: JSON.stringify({username, email, password}),
       headers: {'Content-Type': 'application/json'}
