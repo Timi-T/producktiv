@@ -55,7 +55,7 @@ export default class LandingPage extends React.Component {
         <div id='about'>
           <h2 id='about-title'>about</h2>
           <h4 id='project-repo'>
-            [ Project Repository : <div className='icon'><a a href='https://github.com/Timi-T/producktiv/' target={'blank'}><BsGithub /></a></div> ]
+            [ Project Repository : <div className='icon'><a href='https://github.com/Timi-T/producktiv/' target={'blank'}><BsGithub /></a></div> ]
           </h4>
           <p className='brief-desc'>
             The objective of Producktiv is to bring together people from different fields who would like to
@@ -77,9 +77,9 @@ export default class LandingPage extends React.Component {
                   Opeyemi Software Engineer based in Lagos, Nigeria. He is responsible for parts of the backend, frontend and devops for this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/roadsidedev?t=bXZWtAMHdw_wjpzRrbC7Yw&s=31' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a href='https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/' target={'blank'}><BsLinkedin /></a></div>
+                <div className='icon'><a href='https://twitter.com/roadsidedev?t=bXZWtAMHdw_wjpzRrbC7Yw&s=31' target={'blank'}><BsTwitter /></a></div>
               </div>
             </div>
             <div className='person'>
@@ -91,9 +91,9 @@ export default class LandingPage extends React.Component {
                   Samra is a Software Engineer based in Addis Ababa, Ethiopia. She is responsible for the backend of this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/samie-ya' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/samra-solomon-24b745208' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/Samie67514029' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a href='https://github.com/samie-ya' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a href='https://www.linkedin.com/in/samra-solomon-24b745208' target={'blank'}><BsLinkedin /></a></div>
+                <div className='icon'><a href='https://twitter.com/Samie67514029' target={'blank'}><BsTwitter /></a></div>
               </div>
             </div>
             <div className='person'>
@@ -105,9 +105,9 @@ export default class LandingPage extends React.Component {
                   Tony is a Software Engineer based in Accra, Ghana. He is responsible for the frontend of this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/tcrz' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/tony-baidoo' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/iam_tonnie' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a href='https://github.com/tcrz' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a href='https://www.linkedin.com/in/tony-baidoo' target={'blank'}><BsLinkedin /></a></div>
+                <div className='icon'><a href='https://twitter.com/iam_tonnie' target={'blank'}><BsTwitter /></a></div>
               </div>
             </div>
             <div className='person'>
@@ -116,12 +116,11 @@ export default class LandingPage extends React.Component {
                 <h4 className='person-name'>Rihana</h4>
               </div>
               <p className='person-text'>
-                Rihana is a Software Engineer based in X. She is responsible for the backend of this project.
+                Rihana is a Software Engineer based in Riyadh, Saudi Arabia. She is responsible for the backend of this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/roadsidedev?t=bXZWtAMHdw_wjpzRrbC7Yw&s=31' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a href='https://github.com/avocadoclouds' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a href='https://www.linkedin.com/in/rihana-ali-saeid-68352b1bb/' target={'blank'}><BsLinkedin /></a></div>
               </div>
             </div>
           </div>
