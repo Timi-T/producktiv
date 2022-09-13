@@ -32,6 +32,7 @@ jobs:
           SOURCE: ""
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
+
           TARGET: ${{ secrets.PRODUCKTIV_WKDIR }}
           EXCLUDE: "/dist/, /node_modules/"
       - name: ssh into server and start application
