@@ -9,12 +9,19 @@ class DBClient {
     const host = process.env.DB_HOST || 'localhost';
     const port = process.env.DB_PORT || 27017;
     const database = process.env.DB_DATABASE || 'producktiv';
-    const uri = `mongodb://${host}:${port}`;
+    //const uri = `mongodb://${host}:${port}`;
+    const uri = `mongodb+srv://producktiv:producktiv@productiv.qmorhmh.mongodb.net/?retryWrites=true&w=majority`
     const client = new MongoClient(uri, { useUnifiedTopology: true });
-    client.connect();
+    (
+      async () => {
+        console.log('Connecting to Mongo database');
+        await client.connect();
+        this.setupDB(['Art', 'Business', 'Lifestyle', 'Programming', 'all']);
+      }
+    )();
     this.client = client;
     this.database = database;
-    this.setupDB(['Art', 'Business', 'Lifestyle', 'Programming']);
+    //this.setupDB(['Art', 'Business', 'Lifestyle', 'Programming']);
   }
 
   async setupDB (categories) {

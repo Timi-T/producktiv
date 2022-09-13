@@ -30,7 +30,11 @@ export const Coursespage = () => {
       })
       .catch((error)=>{
         setIsLoading(false)
-        setError(error)
+        if (error.message === '404: Not Found') {
+          setVideos([])
+        } else {
+          setError(error)
+        }
         console.log(error)
       })
   }
