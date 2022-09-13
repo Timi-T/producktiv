@@ -175,7 +175,8 @@
     align-content: space-between;
     gap: 20px;
     size: 1.5rem;
-    align-self: center;
+    align-self: flex-start;
+    padding-left: 20px;
     margin-top: 20px;
 }
 
@@ -191,4 +192,10 @@
 
 a {
     color: white;
+}
+
+#project-repo {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }

@@ -5,7 +5,9 @@ import './LandingPage.css'
 import img1 from './pro-pic1.jpg';
 import img2 from './pro-pic2.jpg';
 import img3 from './pro-pic3.jpg';
-import ope from './ope.jpg'
+import ope from './ope.jpg';
+import samra from './samra.jpg';
+import blank from './blank.jpg';
 import { BsGithub, BsLinkedin, BsTwitter } from "react-icons/bs"
 
 export default class LandingPage extends React.Component {
@@ -52,6 +54,9 @@ export default class LandingPage extends React.Component {
         </div>
         <div id='about'>
           <h2 id='about-title'>about</h2>
+          <h4 id='project-repo'>
+            [ Project Repository : <div className='icon'><a a href='https://github.com/Timi-T/producktiv/' target={'blank'}><BsGithub /></a></div> ]
+          </h4>
           <p className='brief-desc'>
             The objective of Producktiv is to bring together people from different fields who would like to
             collaborate and share ideas with other people. This helps you as a tutor to get your content out
@@ -69,7 +74,7 @@ export default class LandingPage extends React.Component {
                 <h4 className='person-name'>Opeyemi</h4>
               </div>
               <p className='person-text'>
-                  Opeyemi is a boy. he is from lagos nigeria. he is 23 years old. he is a software engineer
+                  Opeyemi Software Engineer based in Lagos, Nigeria. He is responsible for parts of the backend, frontend and devops for this project.
               </p>
               <div className='contacts'>
                 <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
@@ -79,39 +84,39 @@ export default class LandingPage extends React.Component {
             </div>
             <div className='person'>
               <div className='person-desc'>
-                <img className='person-image' id='img2' src={img2} alt="img" />
+                <img className='person-image' id='img2' src={samra} alt="img" />
                 <h4 className='person-name'>Samra</h4>
               </div>
               <p className='person-text'>
-                  Samra is a girl. she is from Ethopia. she is x years old. She is a software engineer
+                  Samra is a Software Engineer based in Addis Ababa, Ethiopia. She is responsible for the backend of this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/roadsidedev?t=bXZWtAMHdw_wjpzRrbC7Yw&s=31' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a a href='https://github.com/samie-ya' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a a href='https://www.linkedin.com/in/samra-solomon-24b745208' target={'blank'}><BsLinkedin /></a></div>
+                <div className='icon'><a a href='https://twitter.com/Samie67514029' target={'blank'}><BsTwitter /></a></div>
               </div>
             </div>
             <div className='person'>
               <div className='person-desc'>
-                <img className='person-image' id='img2' src={img1} alt="img" />
+                <img className='person-image' id='img2' src={blank} alt="img" />
                 <h4 className='person-name'>Tony</h4>
               </div>
               <p className='person-text'>
-                  Tony is a boy. he is from Accra Ghana. he is x years old. he is a software engineer.
+                  Tony is a Software Engineer based in Accra, Ghana. He is responsible for the frontend of this project.
               </p>
               <div className='contacts'>
-                <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
-                <div className='icon'><a a href='https://www.linkedin.com/in/opeyemi-ogunbode-33441814a/' target={'blank'}><BsLinkedin /></a></div>
-                <div className='icon'><a a href='https://twitter.com/roadsidedev?t=bXZWtAMHdw_wjpzRrbC7Yw&s=31' target={'blank'}><BsTwitter /></a></div>
+                <div className='icon'><a a href='https://github.com/tcrz' target={'blank'}><BsGithub /></a></div>
+                <div className='icon'><a a href='https://www.linkedin.com/in/tony-baidoo' target={'blank'}><BsLinkedin /></a></div>
+                <div className='icon'><a a href='https://twitter.com/iam_tonnie' target={'blank'}><BsTwitter /></a></div>
               </div>
             </div>
             <div className='person'>
               <div className='person-desc'>
-                <img className='person-image' id='img2' src={img3} alt="img" />
+                <img className='person-image' id='img2' src={blank} alt="img" />
                 <h4 className='person-name'>Rihana</h4>
               </div>
               <p className='person-text'>
-                Rihana is a girl. She is from Kenya. she is x years old. She is a software engineer.
+                Rihana is a Software Engineer based in X. She is responsible for the backend of this project.
               </p>
               <div className='contacts'>
                 <div className='icon'><a a href='https://github.com/Timi-T' target={'blank'}><BsGithub /></a></div>
