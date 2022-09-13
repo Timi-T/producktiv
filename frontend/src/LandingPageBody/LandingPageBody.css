@@ -1,0 +1,10 @@
+.landingPageBody {
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    overflow-x:hidden;
+    /* background: red; */
+    /* border: 1px solid blue; */
+    display: flex;
+    justify-content: space-between;
+}

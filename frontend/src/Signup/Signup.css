@@ -1,0 +1,72 @@
+.signup-box {
+    margin: 0 auto;
+    /* border: 1px solid red; */
+    padding:10px;
+    width: 70%;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation-duration: 0.3s;
+    animation-name: slidein;
+    /* overflow:hidden */
+}
+
+.signup-box h1 {
+    font-size: 2em;
+}
+
+.signup-box p {
+    font-weight: 500;
+}
+
+.signup-heading {
+    /* text-align: center; */
+    /* border: 1px solid black; */
+    padding: 0.5em;
+    margin-bottom: 1em;
+    width: 70%;
+}
+
+.signup-details {
+    width: 70%;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 0.5em;
+}
+
+.signup-details input {
+    padding: 0.7em;
+    margin-top: 0.1em;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: .3s ease-in-out;
+    font-size: .8em
+}
+
+.signup-details input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--text-color);
+}
+
+
+.signup-details input[type="submit"] {
+    background: var(--btn-color-primary);
+    font-weight: 600;
+    border: 0;
+    width: 50%;
+    color: var(--text-color)
+    /* transition: 0.2s ease-in */
+}
+
+/* .signup-details input[type="submit"]:hover {
+    color: var(--btn-color-primary);
+    background: darkblue
+} */
+
+.signup-details label span {
+    font-size: 0.87rem
+}

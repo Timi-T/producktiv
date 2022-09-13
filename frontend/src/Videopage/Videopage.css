@@ -1,0 +1,43 @@
+.video-display{
+    height: 100%;
+    /* border: 2px solid blue; */
+    display:flex;
+    flex-direction: column
+}
+
+.back-to-courses {
+    color: var(--text-color);
+    padding: .7em;
+    float:right
+}
+
+.video-display iframe {
+    /* border: 2px solid red; */
+    /* display: block; */
+    /* margin: auto; */
+    /* margin: 0 auto */
+}
+
+.video-details {
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+    gap: .8em 
+}
+
+.video-details p{
+    /* border: 1px solid blue; */
+    
+}
+
+.video-stats {
+    font-weight: 500;
+    display: flex;
+    gap: 1em
+}
+
+.description h1 {
+    font-size: 1.33em;
+    margin: 0
+}

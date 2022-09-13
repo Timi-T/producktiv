@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+html {
+font-size: 20px;
+}
+
+h1, p {
+  color: var(--text-color)
+}
+
+
+:root{
+  --btn-color-primary: #F9C62E;
+  /* slate */
+  --background-color: #f8fafc;
+  --text-color: #334155
+}
+
+button, input[type="submit"] {
+  cursor: pointer
+}
+
+/* login/signup slide in animation */
+@keyframes slidein {
+  0% {
+    transform: translateX(90%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}

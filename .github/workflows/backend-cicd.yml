@@ -2,13 +2,13 @@
 name: Productive-cicd
 on:
   push:
-    branches: [ "frontend" ]
+    branches: [ "backend" ]
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend/
+        working-directory: ./backend/
     strategy:
       matrix:
         node-version: [16.x]
@@ -19,10 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-          npm i
-          npm run build
-          rm -r node_modules
       - name: Deploy to Server
         if: ${{ success() }}
         uses: easingthemes/ssh-deploy@main
@@ -32,7 +28,6 @@ jobs:
           SOURCE: ""
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
-
           TARGET: ${{ secrets.PRODUCKTIV_WKDIR }}
           EXCLUDE: "/dist/, /node_modules/"
       - name: ssh into server and start application
@@ -44,8 +39,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             pm2 delete all
-            rm -r producktiv/frontend
-            cp -r /home/ubuntu/dump/frontend /home/ubuntu/producktiv/frontend
-            cd producktiv/frontend
-            npm install
-            pm2 start npm -- start
+            rm -r producktiv/backend
+            cp -r /home/ubuntu/dump/backend /home/ubuntu/producktiv/backend
+            npm install --prefix ./producktiv/backend
+            pm2 start npm -- producktiv/backend start
+            npm install --prefix ./producktiv/frontend
+            pm2 start npm -- producktiv/frontend start

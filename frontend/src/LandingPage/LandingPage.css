@@ -1,0 +1,201 @@
+.about-app, .login-section {
+    /* border: 1px solid green; */
+    flex: 1
+}
+
+.login-section {
+    background: var(--background-color);
+    flex: 2
+}
+
+#full-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    background-color: #f8fafc;
+}
+
+#top-page {
+    display: flex;
+    flex-direction: row;
+}
+
+#top-left {
+    max-width: 40%;
+}
+
+#bottom-page {
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+    gap: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    color: #334155;
+    background-color: #f8fafc;
+}
+
+#bottom-text {
+    margin-top: 70px;
+    font-size: 1.2rem;
+}
+
+#intro-text {
+    max-width: 80%;
+    color: #334155;
+    margin-left: 30px;
+    margin-top: 30px;
+    text-align: justify;
+    font-size: 1.2rem;
+}
+
+.about-app  {
+    flex: 1.2;
+    background: #334155;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: flex-start;
+    padding: 30px;
+    border-bottom-right-radius: 80px;
+    height: 100px;
+}
+
+.image {
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+
+.landing-text {
+    color: #f8fafc;
+    font-size: 2rem;
+    align-self: center;
+}
+
+#main-img1 {
+    margin-top: 50px;
+    width: 90%;
+}
+
+.about-app h1 {
+    font-size: 3rem;
+    color: #f8fafc;
+    text-align: center
+}
+
+.login-header {
+    /* background: red; */
+    text-align: right;
+    padding: 2em;
+    font-size: .8em
+}
+
+.login-header .login-toggle {
+    text-decoration: underline;
+    border: none;
+    background: none;
+    color: blue;
+    /* padding: 3em; */
+    font-size: 1em
+}
+
+#about {
+    background-color: #334155;
+    padding-bottom: 200px;
+    color: #f8fafc;
+    padding: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#about-title {
+    padding-bottom: 10px;
+    padding: 10px;
+    border-bottom: solid .5px #f8fafc;
+    margin-bottom: 20px;
+    width: 10%;
+}
+
+.brief-desc {
+    color: #f8fafc;
+    font-size: .8rem;
+}
+
+#developers {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-top: 15px;
+}
+
+#meet-team {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-bottom: solid .5px #f8fafc;
+    width: auto;
+}
+
+.person {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 25%;
+}
+
+.person-desc {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.person-image {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin-top: 0;
+    align-self: center;
+}
+
+.person-text {
+    width: 70%;
+    color: #f8fafc;
+    margin-left: 20px;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    gap: 20px;
+    size: 1.5rem;
+    align-self: flex-start;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.icon {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.person-name {
+    width: 100%;
+    line-height: 100px;
+}
+
+a {
+    color: white;
+}
+
+#project-repo {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
