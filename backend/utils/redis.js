@@ -8,7 +8,8 @@ class RedisClient {
   // Constructor will create a redis client and connect to redis server
   // If error occurs while connecting to server it will log error message to console
   constructor () {
-    const url = 'redis://red-ccfgbh9a6gdgjihghf4g:6379';
+    //const url = 'redis://red-ccfgbh9a6gdgjihghf4g:6379';
+    const url = process.env.REDISURL;
     this.client = createClient({
       url,
     });
