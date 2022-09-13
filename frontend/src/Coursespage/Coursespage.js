@@ -22,6 +22,7 @@ export const Coursespage = () => {
           }
           throw Error(`${response.status}: ${response.statusText}`)
         }
+        console.log(response);
         return response.json()
         })
       .then((data) => {
