@@ -12,9 +12,11 @@ const app = express();
 
 
 app.use(cors({
-  origin: true,
+  origin: 'https://producktiv.onrender.com',
   credentials: true
 }));
+
+app.set('trust proxy', 1);
 
 app.use(express.json());
 app.use(cookieParser());
