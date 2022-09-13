@@ -18,7 +18,7 @@ class AuthController {
     const user = await db.get('users', { email, password: sha1(password) });
     if (user) {
       const authKey = uuid();
-      res.cookie('auth_key', authKey, { maxAge: 1000 * 60 * 60 * 24, sameSite: 'strict' });
+      res.cookie('auth_key', authKey, { maxAge: 1000 * 60 * 60 * 24 });
       redisClient.set(`auth_${authKey}`, String(user._id));
       user.token = authKey;
       res.status(200).send({ user });
