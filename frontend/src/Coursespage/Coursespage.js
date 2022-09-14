@@ -14,7 +14,7 @@ export const Coursespage = () => {
   const getVideos = (resource) => {
     setError("")
     setIsLoading(true)
-    fetch(`https://producktiv-backend.onrender.com/api/${resource}`, { credentials: "include"})
+    fetch(`https://producktiv-backend.onrender.com/api/${resource}`, { credentials: "include", headers: { Cookie: document.cookie } })
       .then((response) => {
         if (!response.ok) {
           if (response.status === 401 ){
@@ -26,7 +26,6 @@ export const Coursespage = () => {
         })
       .then((data) => {
         setVideos(data.videos)
-        console.log(data.request)
         setIsLoading(false)
       })
       .catch((error)=>{

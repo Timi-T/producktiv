@@ -122,7 +122,7 @@ exports.getAllVideos = async (request, response) => {
   } else {
     const videos = await dbClient.getVideos('videos');
     if (videos) {
-      response.status(200).send({ videos, request });
+      response.status(200).send({ videos });
     } else {
       response.status(404).send({ error: 'No Videos Available' });
     }
