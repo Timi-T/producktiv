@@ -32,9 +32,6 @@ class AuthController {
     if (!auth_key) {
       auth_key = req.query.auth_key;
     }
-    console.log('query', req.query);
-    console.log(typeof req.query);
-    console.log('auth_key', auth_key);
     const userId = await redisClient.get(`auth_${auth_key}`);
     if (userId) {
       return true;

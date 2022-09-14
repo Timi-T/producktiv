@@ -50,7 +50,7 @@ class UserController {
     } else { 
       let cookie = request.cookies.auth_key;
       if (!cookie) {
-        cookie = req.query.auth_key;
+        cookie = request.query.auth_key;
       }
       const key = `auth_${cookie}`;
       const userId = await redisClient.get(key);
@@ -92,7 +92,7 @@ class UserController {
     } else {
       let cookie = request.cookies.auth_key;
       if (!cookie) {
-        cookie = req.query.auth_key;
+        cookie = request.query.auth_key;
       }
       const key = `auth_${cookie}`;
       await redisClient.del(key);
@@ -120,7 +120,7 @@ class UserController {
     } else {
       let cookie = request.cookies.auth_key;
       if (!cookie) {
-        cookie = req.query.auth_key;
+        cookie = request.query.auth_key;
       }
       const userId = await redisClient.get(`auth_${cookie}`);
       const user = await dbClient.get('users', { _id: ObjectId(userId) });

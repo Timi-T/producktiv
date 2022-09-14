@@ -58,7 +58,7 @@ exports.createVideo = async (request, response) => {
   } else { 
     let cookie = request.cookies.auth_key;
     if (!cookie) {
-      cookie = req.query.auth_key;
+      cookie = request.query.auth_key;
     }
     const userId = await redisClient.get(`auth_${cookie}`);
     const { videoName } = request.body;
@@ -127,7 +127,8 @@ exports.getAllVideos = async (request, response) => {
     if (videos) {
       response.status(200).send({ videos });
     } else {
-      response.status(404).send({ error: 'No Videos Available' });
+      //response.status(404).send({ error: 'No Videos Available' });
+      response.status(200).send({ videos: [] });
     }
   }
 };
@@ -161,7 +162,7 @@ exports.deleteVideo = async (request, response) => {
     const { id } = request.params;
     let cookie = request.cookies.auth_key;
     if (!cookie) {
-      cookie = req.query.auth_key;
+      cookie = request.query.auth_key;
     }
     const userId = await redisClient.get(`auth_${cookie}`);
     const user = await dbClient.get('users', { _id: ObjectId(userId) });
