@@ -39,6 +39,7 @@ async function getId(url) {
 // Function to validate a submitted link
 async function getVideoObj (url) {
   try {
+    console.log('Getting video id');
     const items = await getId(url);
     console.log('Gotten video id');
     const vidId = items.id.videoId;
