@@ -39,9 +39,7 @@ async function getId(url) {
 // Function to validate a submitted link
 async function getVideoObj (url) {
   try {
-    console.log('Getting video id');
     const items = await getId(url);
-    console.log('Gotten video id');
     const vidId = items.id.videoId;
     const getURL = util.promisify(request.get).bind(request);
     const jsons = await getURL(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${vidId}&key=${APIKEY}`);
