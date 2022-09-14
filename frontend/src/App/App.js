@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import LandingPageBody from '../LandingPageBody/LandingPageBody';
 import LandingPage from '../LandingPage/LandingPage';
 import { Navigate, Routes, Route } from "react-router-dom";
@@ -65,10 +66,11 @@ logOut = () => {
 
 logIn = (email, password) => {
   this.setState({isLoading: true})
+  const [cookies, setCookie] = useCookies(['auth_key']);
   const combo = `${email}:${password}`;
   const buffer = Buffer.from(combo).toString('base64');
   const basic = `Basic ${buffer}`;
-    fetch('https://producktiv-backend.onrender.com/api/login', 
+    fetch('https://producktiv-backend.onrender.com/api/login',
     {
       method: "POST",
       credentials: "include",
@@ -85,6 +87,7 @@ logIn = (email, password) => {
     .then((data) => {
       this.setState({isLoading: false})
       this.updateUser(data.user)
+      setCookie('auth_key', data.user.token, { path: '/', maxAge: 60 * 60 * 24 })
       console.log(data.user)
       localStorage.setItem('user', JSON.stringify(data.user))
       this.setErrorCode(null)
