@@ -26,6 +26,7 @@ export const Coursespage = () => {
         })
       .then((data) => {
         setVideos(data.videos)
+        console.log(data.request)
         setIsLoading(false)
       })
       .catch((error)=>{
