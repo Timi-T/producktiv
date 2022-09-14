@@ -40,8 +40,7 @@ export class Addcourse extends React.Component {
     const {resetUser} = this.context
     event.preventDefault()
     this.setState({isLoading: true})
-    //fetch('https://producktiv-backend.onrender.com/api/videos',
-    fetch('http://localhost:5001/api/videos',
+    fetch('https://producktiv-backend.onrender.com/api/videos',
     {
       method: "POST",
       body: JSON.stringify({
