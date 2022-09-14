@@ -69,8 +69,7 @@ logIn = (email, password) => {
   const combo = `${email}:${password}`;
   const buffer = Buffer.from(combo).toString('base64');
   const basic = `Basic ${buffer}`;
-    //fetch('https://producktiv-backend.onrender.com/api/login',
-    fetch('http://localhost:5001/api/login',
+    fetch('https://producktiv-backend.onrender.com/api/login',
     {
       method: "POST",
       credentials: "include",
