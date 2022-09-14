@@ -1,6 +1,5 @@
 import './App.css';
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import LandingPageBody from '../LandingPageBody/LandingPageBody';
 import LandingPage from '../LandingPage/LandingPage';
 import { Navigate, Routes, Route } from "react-router-dom";
@@ -58,6 +57,7 @@ logOut = () => {
       })
     .then((data) => {
       this.resetUser()
+      document.cookie = ''
     })
     .catch((error) => {
       console.log(error)
@@ -66,7 +66,6 @@ logOut = () => {
 
 logIn = (email, password) => {
   this.setState({isLoading: true})
-  const [cookies, setCookie] = useCookies(['auth_key']);
   const combo = `${email}:${password}`;
   const buffer = Buffer.from(combo).toString('base64');
   const basic = `Basic ${buffer}`;
@@ -87,7 +86,10 @@ logIn = (email, password) => {
     .then((data) => {
       this.setState({isLoading: false})
       this.updateUser(data.user)
-      setCookie('auth_key', data.user.token, { path: '/', maxAge: 60 * 60 * 24 })
+      const d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      let expires = "expires="+ d.toUTCString();
+      document.cookie = "auth_key=" + data.user.token + ";" + expires + ";path=/";
       console.log(data.user)
       localStorage.setItem('user', JSON.stringify(data.user))
       this.setErrorCode(null)
