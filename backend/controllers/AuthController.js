@@ -29,7 +29,7 @@ class AuthController {
 
   async sessionAuth(req, res) {
     const { auth_key } = req.cookies
-    console.log(req.headers)
+    console.log(req.headers.Cookie)
     const userId = await redisClient.get(`auth_${auth_key}`);
     if (userId) {
       return true;
