@@ -87,7 +87,7 @@ logIn = (email, password) => {
       this.setState({isLoading: false})
       this.updateUser(data.user)
       const d = new Date();
-      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      d.setTime(d.getTime() + (1*24*60*60*1000));
       let expires = "expires="+ d.toUTCString();
       document.cookie = "auth_key=" + data.user.token + ";" + expires + ";path=/";
       console.log(data.user)
