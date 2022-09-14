@@ -57,6 +57,9 @@ exports.createVideo = async (request, response) => {
     response.status(401).send({ message: 'Cookie Expired' });
   } else { 
     const cookie = request.cookies.auth_key;
+    if (!cookie) {
+      const cookie = req.query.auth_key;
+    }
     const userId = await redisClient.get(`auth_${cookie}`);
     const { videoName } = request.body;
     const { description } = request.body;
@@ -157,6 +160,9 @@ exports.deleteVideo = async (request, response) => {
   } else {
     const { id } = request.params;
     const cookie = request.cookies.auth_key;
+    if (!cookie) {
+      const cookie = req.query.auth_key;
+    }
     const userId = await redisClient.get(`auth_${cookie}`);
     const user = await dbClient.get('users', { _id: ObjectId(userId) });
     const videos = user.videos;

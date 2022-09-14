@@ -44,7 +44,7 @@ resetUser = () => {
 }
 
 logOut = () => {
-    fetch('https://producktiv-backend.onrender.com/api/logout', {
+    fetch(`https://producktiv-backend.onrender.com/api/logout?${document.cookie}`, {
       method: "DELETE",
       credentials: 'include',
     })

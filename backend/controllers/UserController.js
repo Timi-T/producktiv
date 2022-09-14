@@ -49,6 +49,9 @@ class UserController {
       response.status(401).send({ message: 'Cookie Expired' });
     } else { 
       const cookie = request.cookies.auth_key;
+      if (!cookie) {
+        const cookie = req.query.auth_key;
+      }
       const key = `auth_${cookie}`;
       const userId = await redisClient.get(key);
       const given = { _id: ObjectId(userId) };
@@ -88,6 +91,9 @@ class UserController {
       response.status(401).send({ message: 'Cookie Expired' });
     } else {
       const cookie = request.cookies.auth_key;
+      if (!auth_key) {
+        const cookie = req.query.auth_key;
+      }
       const key = `auth_${cookie}`;
       await redisClient.del(key);
       response.clearCookie('auth_key');
@@ -113,6 +119,9 @@ class UserController {
       response.status(401).send({ message: 'Cookie Expired' });
     } else {
       const cookie = request.cookies.auth_key;
+      if (!cookie) {
+        const cookie = req.query.auth_key;
+      }
       const userId = await redisClient.get(`auth_${cookie}`);
       const user = await dbClient.get('users', { _id: ObjectId(userId) });
       response.status(200).send({ videos: user.videos });
