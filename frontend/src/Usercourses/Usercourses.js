@@ -11,7 +11,8 @@ export const Usercourses = () => {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
   setIsLoading(true)
-  fetch("https://producktiv-backend.onrender.com/api/users/videos", { credentials: "include"})
+  //fetch("https://producktiv-backend.onrender.com/api/users/videos", { credentials: "include"})
+  fetch("http://localhost:5001/api/users/videos", { credentials: "include"})
     .then((response) => {
       if (!response.ok) {
         if (response.status === 401){
@@ -39,7 +40,8 @@ export const Usercourses = () => {
 
   const deleteVideo = (id) => {
     const vids = videos.filter((vid)=> vid._id !== id)
-    fetch(`https://producktiv-backend.onrender.com/api/videos/${id}`, { 
+    //fetch(`https://producktiv-backend.onrender.com/api/videos/${id}`, {
+    fetch(`http://localhost:5001/api/videos/${id}`, { 
       method: "DELETE",
       credentials: "include" 
     })
