@@ -53,7 +53,7 @@ export default class LandingPage extends React.Component {
           </div>
           <div className="info">
             <img className='info-image' id='img2' src={img2} alt="img" />
-            <h3 id='bottom-text'> Build your weaknesses by learning from other tutors</h3>
+            <h3 id='bottom-text'> Improve your weaknesses by learning from other tutors</h3>
           </div>
         </div>
         <div id='about-section'>
