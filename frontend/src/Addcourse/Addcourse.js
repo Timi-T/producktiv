@@ -36,6 +36,15 @@ export class Addcourse extends React.Component {
     this.setState({description: event.target.value})
   }
 
+  resetInputs = () => {
+    this.setState({
+      videoName: "",
+      videoLink: "",
+      category: "",
+      description: ""
+    })
+  }
+
   handleCourseSubmit = (event) => {
     const {resetUser} = this.context
     event.preventDefault()
@@ -64,6 +73,7 @@ export class Addcourse extends React.Component {
     })
     .then((response) => {
       this.setState({isLoading: false})
+      this.resetInputs()
     })
     .catch((error) => {
       this.setState({isLoading: false})
