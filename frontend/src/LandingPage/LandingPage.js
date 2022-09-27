@@ -49,11 +49,11 @@ export default class LandingPage extends React.Component {
         <div id='info-section'>
           <div className="info">
             <img className='info-image' id='img1' src={img1} alt="img" />
-            <h3 id='bottom-text'>Reinforce your knowledge and skills as you tutor others.</h3>
+            <h3 id='info-text'>Reinforce your knowledge and skills as you tutor others.</h3>
           </div>
           <div className="info">
             <img className='info-image' id='img2' src={img2} alt="img" />
-            <h3 id='bottom-text'> Improve your weaknesses by learning from other tutors</h3>
+            <h3 id='info-text'> Improve your weaknesses by learning from other tutors</h3>
           </div>
         </div>
         <div id='about-section'>
@@ -62,13 +62,11 @@ export default class LandingPage extends React.Component {
           <p className='app-desc'>
             The objective of Producktiv is to bring together people from different fields who would like to
             collaborate and share ideas with other people. This helps you as a tutor, to share useful resources as well as get your content out
-            there and as a student, to learn various skills without any cost to you.<br/>
+            there and as a student, to learn various skills without any cost to you.
             This project was built by a collaboration of young and bright minds from the ALX-Softtware Engineering program
-            as a final protfolio project.
-          </p>
-          <div id='project-repo'>
+            as a final protfolio project.<br/><br/>
             <a href='https://github.com/Timi-T/producktiv/' target={'blank'}><BsGithub /> Link to the Project Repository</a>
-          </div>
+          </p>
           <h2 id='team-info'>Meet the Team!</h2>
           <div id='developers'>
             <div className='person'>

@@ -2,6 +2,7 @@
     margin: 0 auto;
     /* border: 1px solid red; */
     padding:10px;
+    padding-bottom: 2em;
     width: 70%;
     margin-top: 2em;
     display: flex;
@@ -61,15 +62,39 @@
     border: 0;
     width: 50%;
     color: var(--text-color)
-    /* transition: 0.2s ease-in */
 }
 
-/* .login-details input[type="submit"]:hover {
-    color: var(--btn-color-primary);
-    background: darkblue
-} */
 
 .login-details label span, .signup-details label span {
     font-size: 0.87rem;
     color: var(--text-color)
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+    .login-box, .signup-box {
+        width: 100%
+    }
+
+    .login-heading, .signup-heading,
+    .login-details, .signup-details,
+    .login-details input, .signup-details input,
+    .login-details input[type="submit"],
+    .signup-details input[type="submit"] {
+        width: 100%
+    }
+}
+
+@media (min-width: 481px) and (max-width: 1023px) {
+    .login-box, .signup-box {
+        width: 80%
+    }
+
+    .login-details input, .signup-details input {
+        width: 90%
+    }
+
+    .login-details input[type="submit"],
+    .signup-details input[type="submit"] {
+        width: 50%
+    }
 }

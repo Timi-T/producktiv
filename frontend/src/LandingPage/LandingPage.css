@@ -30,12 +30,12 @@
 
 #main-section {
     display: flex;
-    flex-direction: row;
 }
 
 #main-app-info {
     /* border: 1px solid red; */
-    max-width: 40%;
+    width: 40%;
+    padding-bottom: 2em;
 }
 
 .landing-text {
@@ -72,40 +72,6 @@ h3#intro-text {
     font-weight: 500
 }
 
-#info-section {
-    /* background-color: red; */
-    display: flex;
-    margin-top: 2.5em;
-    width: 100%;
-    color: #334155;
-    /* background-color: #f8fafc; */
-}
-
-.info {
-    width: 55%;
-    margin: 1.5em;
-    padding: .3em .8em;
-    display: flex;
-    gap: .5em;
-    background: white;
-    border: 1px solid var(--text-color);
-    box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.15);
-}
-
-#bottom-text {
-    /* margin-top: 70px; */
-    font-size: 1.2em;
-    font-weight: 500;
-    margin: auto 0;
-}
-
-.info-image {
-    /* border: 2px solid var(--text-color); */
-    height: 180px;
-    width: 180px;
-    border-radius: 50%;
-}
-
 .login-header {
     /* background: red; */
     text-align: right;
@@ -122,12 +88,52 @@ h3#intro-text {
     font-size: 1em
 }
 
+#info-section {
+    /* background-color: red; */
+    display: flex;
+    margin: 0 auto;
+    padding-top: 2em;
+    width: 100%;
+    color: #334155;
+    background: var(--background-color);
+    justify-content: space-around;
+    align-items: center;
+    /* background-color: #f8fafc; */
+}
+
+.info {
+    flex-basis: 45%;
+    margin: 1.5em 1em;
+    padding: .3em .8em;
+    display: flex;
+    gap: 1.5em;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--text-color);
+    box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.15);
+}
+
+#info-text {
+    /* margin-top: 70px; */
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: auto 0;
+    text-align: center;
+}
+
+.info-image {
+    /* border: 2px solid var(--text-color); */
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+}
+
+
 #about-section {
     /* border: 1px solid salmon; */
     background-color: #334155;
-    padding-bottom: 200px;
     color: #f8fafc;
-    padding: 30px 50px;
+    padding: 1.5em 2em;
     margin: 0 auto;
 }
 
@@ -145,26 +151,23 @@ h1#about-title {
 
 .app-desc {
     color: #f8fafc;
-    font-size: .9em;
-    text-align: left;
+    font-size: .95em;
+    text-align: center;
 
 }
 
-#project-repo {
-    margin-top: .3em;
-}
 
-#project-repo a{
+.app-desc a{
     color: var(--background-color);
 }
 
-#project-repo a:hover{
+.app-desc a:hover{
     color:  var(--btn-color-primary);
 }
 
 #team-info {
     margin: 0 auto;
-    width: 45%;
+    width: 75%;
     text-align: center;
     margin-top: 2em;
     margin-bottom: 30px;
@@ -231,4 +234,50 @@ h1#about-title {
 
 .icon svg {
     color: var(--text-color);
+}
+
+
+/* Responsivenss */
+@media (min-width: 320px) and (max-width: 800px) {
+    #main-section, #info-section, .info {
+        flex-direction: column;
+    }
+
+    #main-app-info {
+        border-bottom: 5px solid white;
+        width: 100%;
+    }
+
+    #info-section {
+        border-top: 5px solid white;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    #full-page h1 {
+        font-size: 2em;
+    }
+
+    #about-section {
+        padding: 1.5em 1.5em;
+    }
+
+    #developers {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .main-image {
+        width: 80%
+    }
+
+    #about-section {
+        padding: 1.5em 1em;
+    }
+
+    #developers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
