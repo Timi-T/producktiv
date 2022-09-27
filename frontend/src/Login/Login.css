@@ -1,9 +1,9 @@
-.login-box {
+.login-box, .signup-box {
     margin: 0 auto;
     /* border: 1px solid red; */
     padding:10px;
     width: 70%;
-    margin-top: 3em;
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,15 +12,15 @@
     /* overflow:hidden */
 }
 
-.login-box h1 {
-    font-size: 2em;
+.login-box h1, .signup-box h1 {
+    /* font-size: 2em; */
 }
 
-.login-box p {
+.login-box p, .signup-box p {
     font-weight: 500;
 }
 
-.login-heading {
+.login-heading, .signup-heading {
     /* text-align: center; */
     /* border: 1px solid black; */
     padding: 0.5em;
@@ -28,7 +28,7 @@
     width: 70%;
 }
 
-.login-details {
+.login-details, .signup-details {
     width: 70%;
     /* border: 1px solid black; */
     display: flex;
@@ -37,7 +37,7 @@
     padding: 0.5em;
 }
 
-.login-details input {
+.login-details input, .signup-details input {
     padding: 0.7em;
     margin-top: 0.1em;
     width: 90%;
@@ -48,13 +48,14 @@
     
 }
 
-.login-details input:focus {
+.login-details input:focus, .signup-details input:focus {
     outline: none;
     box-shadow: 0 0 0 1px var(--text-color);
 }
 
 
-.login-details input[type="submit"] {
+.login-details input[type="submit"],
+.signup-details input[type="submit"] {
     background: var(--btn-color-primary);
     font-weight: 600;
     border: 0;
