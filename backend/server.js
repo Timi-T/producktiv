@@ -12,7 +12,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://producktiv.onrender.com',
+  origin: 'https://produckktiv.onrender.com',
   credentials: true
 }));
 
