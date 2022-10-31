@@ -1,4 +1,4 @@
-// Server application
+// Server application.
 
 const express = require('express');
 
