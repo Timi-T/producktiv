@@ -12,7 +12,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://tcrz.github.io',
   credentials: true
 }));
 
