@@ -12,7 +12,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://producktiv.netlify.app',
+  origin: ['https://producktiv.netlify.app', 'http://localhost:3000'],
   credentials: true
 }));
 
