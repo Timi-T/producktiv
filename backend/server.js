@@ -12,7 +12,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'https://producktiv.netlify.app/',
+  origin: 'https://producktiv.netlify.app',
   credentials: true
 }));
 
